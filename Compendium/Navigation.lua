@@ -23,16 +23,16 @@ local SECTIONS = {
     -- its tooltip and page title are the pet's own name.
     { key = "pet",       label = "Pet",                   root = "pet",      art = SECTION_ART.pet, needsPet = true },
     { key = "abilities", label = "Abilities Index",       root = "index",    art = SECTION_ART.abilities },
+    { key = "types",     label = "Pet Index",             root = "types",    art = SECTION_ART.types },
+    { key = "spawns",    label = "Rare Index",            root = "spawns",   art = SECTION_ART.spawns },
     { key = "training",  label = "General Training Info", root = "training", art = SECTION_ART.training },
-    { key = "types",     label = "Pet Types",             root = "types",    art = SECTION_ART.types },
-    { key = "spawns",    label = "Rare Pet Spawns",       root = "spawns",   art = SECTION_ART.spawns },
     { key = "options",   label = "Options",               root = "options",  art = SECTION_ART.options },
 }
 local SECTION_BY_MODE = {
     pet = "pet", learned = "pet", unlearned = "pet",
     index = "abilities", detail = "abilities", tamedetail = "abilities",
     training = "training",
-    types = "types", typedetail = "types",
+    types = "types", typedetail = "types", creaturedetail = "types",
     spawns = "spawns", raredetail = "spawns",
     options = "options", profiles = "options",
 }
@@ -59,6 +59,10 @@ for _, sec in ipairs(SECTIONS) do VALID_LAST_SECTION[sec.root] = true end
 
 local function SetAbilitiesMode(mode, data, returnMode)
     savedScrollByMode[ns.abilitiesMode] = Scroll.offset
+    -- Coming back from a creature's page to the family list it was opened
+    -- from: return to the same spot in that list instead of the top.
+    local backToSameFamily = (ns.abilitiesMode == "creaturedetail" and mode == "typedetail"
+        and data ~= nil and data == ns.selectedFamilyId)
     ns.abilitiesMode = mode
     -- Remember the last section opened (by its top page), so the
     -- Compendium reopens there next time.
@@ -74,9 +78,13 @@ local function SetAbilitiesMode(mode, data, returnMode)
         ns.selectedRare = data
     elseif mode == "tamedetail" then
         ns.selectedTameTeacher = data
+    elseif mode == "creaturedetail" then
+        ns.selectedCreature = data
     end
     ns.RefreshAbilitiesPanel()
-    if mode == "detail" or mode == "typedetail" or mode == "raredetail" or mode == "tamedetail" then
+    if backToSameFamily then
+        Scroll.Set(savedScrollByMode.typedetail or 0)
+    elseif mode == "detail" or mode == "typedetail" or mode == "raredetail" or mode == "tamedetail" or mode == "creaturedetail" then
         Scroll.Set(0) -- a detail page is new content every time - always start at the top
     else
         Scroll.Set(savedScrollByMode[mode] or 0)

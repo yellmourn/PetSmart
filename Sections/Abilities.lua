@@ -473,6 +473,7 @@ ns.Pages.tamedetail = function(ctx)
     else
         ctx.AddLine("Family: " .. mob.family, 0.8, 0.8, 0.8)
         ctx.AddLine("Pet Level: " .. tostring(mob.levels), 0.8, 0.8, 0.8)
+        ctx.AddLine(ns.FamilyDietText(mob.family), 0.8, 0.8, 0.8)
         local pointCount = spawnInfo and spawnInfo.points and #spawnInfo.points or 0
         local zoneLine = "Zone: " .. tostring(mob.zone)
         if pointCount > 1 then
@@ -491,10 +492,24 @@ ns.Pages.tamedetail = function(ctx)
         elseif pointCount > 1 then
             ctx.AddLine("Tracking this pet pins every known spawn area at once (one pin per area it's known to appear in, not every individual sighting), regardless of your Multi-Tracking setting.", 0.6, 0.6, 0.6)
         end
+        ns.DressingRoom.Show(mob.name)
     end
 end
 
+-- "Diet: Bread, Fish, ..." for a family (by ID or name), from
+-- FamilyInfoData.lua - shown on every creature page (rares, teacher pets
+-- and the Pet Types creature lists).
+local function FamilyDietText(family)
+    local familyId = type(family) == "number" and family or (ns.FAMILY_BY_NAME and ns.FAMILY_BY_NAME[family])
+    local info = familyId and ns.FAMILY_INFO and ns.FAMILY_INFO[familyId]
+    if info and info.diet and #info.diet > 0 then
+        return "Diet: " .. table.concat(info.diet, ", ")
+    end
+    return "Diet: Unknown"
+end
+
 -- Exported for the other PetSmart files.
+ns.FamilyDietText = FamilyDietText
 ns.BuildFamilyAbilityNames = BuildFamilyAbilityNames
 ns.GetAbilityCategory = GetAbilityCategory
 ns.GetAbilityDisplayName = GetAbilityDisplayName

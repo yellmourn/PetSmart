@@ -1,5 +1,29 @@
 # PetSmart Changelog
 
+## v1.60.1g
+
+### New: Pet Index (formerly Pet Types)
+- **Every tameable creature:** each pet family's page now lists every creature you can tame for that family, lowest level first, with its level and zone. There are over 600 creatures across all 18 families, including WoW: Forever's new creatures on Zephras Isle, in Riverglades, Shen'dralas and elsewhere.
+- **Rare and teacher icons:** a silver paw marks a rare and a bronze paw marks a pet that teaches an ability when tamed. A key under the family name explains them.
+- **Creature pages:** click any creature for its page with:
+  - family, level (with Elite where it applies), diet and zone
+  - what it teaches or already knows when tamed
+  - a note if only Horde hunters can tame it
+  - a description for rares and teacher pets
+  - a Track button for rares and teacher pets, the same as elsewhere
+- **Back button:** going back from a creature returns you to the same spot in its family's list.
+- The Pet Index page has a short hint under its title.
+
+### New: 3D model viewer
+- Rare, teacher pet and creature pages now have a model viewer at the bottom showing the creature in 3D.
+- **Controls:** drag to turn it, right-drag to move it, use the mouse wheel to zoom, and double-click to reset the view.
+
+### Other changes
+- **Renamed:** Rare Pet Spawns is now the **Rare Index**.
+- **Navigation:** the section icons are now in this order: Current Pet, Abilities Index, Pet Index, Rare Index, General Training Info, Options.
+- **Diet:** rare and teacher pet pages now show the family's diet.
+- **Pet food:** Tallstriders are no longer offered meat in the feed panel.
+
 ## v1.60.1f
 
 - **Minimap button:** The minimap button now uses the standard LibDBIcon-1.0 library, so minimap button managers like Leatrix Plus can pick it up. Your saved button position carries over.

@@ -33,6 +33,9 @@ local XP = ns.XP
 
 ns.Pages = ns.Pages or {}
 
+-- The subtitle's normal (gold) colour, captured before any page changes it.
+local SUBTITLE_R, SUBTITLE_G, SUBTITLE_B = abilitiesPanel.subtitle:GetTextColor()
+
 ns.RefreshAbilitiesPanel = function()
     if not abilitiesPanel:IsShown() then return end
     -- Pet dismissed (or died/stabled) while one of its pages was open: its
@@ -77,7 +80,7 @@ ns.RefreshAbilitiesPanel = function()
     -- Gear-icon watermark: Options and Manage Profiles only.
     optionsBgTexture:SetShown(ns.abilitiesMode == "options" or ns.abilitiesMode == "profiles")
     -- Beast-medallion watermark: Pet Types and its detail page only.
-    petTypesBgTexture:SetShown(ns.abilitiesMode == "types" or ns.abilitiesMode == "typedetail")
+    petTypesBgTexture:SetShown(ns.abilitiesMode == "types" or ns.abilitiesMode == "typedetail" or ns.abilitiesMode == "creaturedetail")
     -- Dragon-medallion watermark: Rare Pet Spawns and its detail page only.
     rareSpawnsBgTexture:SetShown(ns.abilitiesMode == "spawns" or ns.abilitiesMode == "raredetail")
     -- Paw-book watermark: the Abilities Index and pages opened from it.
@@ -91,6 +94,9 @@ ns.RefreshAbilitiesPanel = function()
     -- family, rare, creature or "Manage Profiles") and show it.
     abilitiesPanel.subtitle:Hide()
     abilitiesPanel.subtitle2:Hide()
+    -- Pages that tint the subtitle (e.g. Pet Types' grey hint) get the
+    -- normal colour back on every other page.
+    abilitiesPanel.subtitle:SetTextColor(SUBTITLE_R, SUBTITLE_G, SUBTITLE_B)
 
     -- Paw-shield back button - detail pages only; each section's
     -- top page is reached from its icon instead. Its destination is one
@@ -109,6 +115,8 @@ ns.RefreshAbilitiesPanel = function()
             backTarget = ns.detailReturnMode
         elseif ns.abilitiesMode == "typedetail" then
             backTarget = "types"
+        elseif ns.abilitiesMode == "creaturedetail" then
+            backTarget = "typedetail"
         elseif ns.abilitiesMode == "raredetail" then
             backTarget = "spawns"
         elseif ns.abilitiesMode == "tamedetail" then
@@ -116,7 +124,12 @@ ns.RefreshAbilitiesPanel = function()
         elseif ns.abilitiesMode == "profiles" then
             backTarget = "options"
         end
-        if ns.abilitiesMode == "tamedetail" then
+        if ns.abilitiesMode == "creaturedetail" then
+            -- Back to the family list this creature was opened from (it
+            -- needs the family handed back in, or the page comes up empty).
+            local familyId = ns.selectedCreature and ns.selectedCreature.familyId or ns.selectedFamilyId
+            navBack:SetScript("OnClick", function() SetAbilitiesMode("typedetail", familyId) end)
+        elseif ns.abilitiesMode == "tamedetail" then
             -- Back to the ability's detail page: it needs its rank data
             -- handed back in (SetAbilitiesMode("detail") with no data would
             -- blank selectedRankData and render an empty page).
@@ -139,6 +152,8 @@ ns.RefreshAbilitiesPanel = function()
     XP.heightSlider:Hide()
     XP.colorRow:Hide()
     if PetPage.HideWidgets then PetPage.HideWidgets() end
+    -- 3D model viewer: only the rare and tame-creature pages show it.
+    if ns.DressingRoom then ns.DressingRoom.Hide() end
 
     local rowWidth = GetRowWidth()
     scrollChild:SetWidth(rowWidth)

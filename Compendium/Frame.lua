@@ -567,8 +567,9 @@ ns.selectedRankData = nil
 ns.selectedFamilyId = nil
 ns.selectedRare = nil
 ns.selectedTameTeacher = nil -- the { name, family, levels, zone } mob entry behind a "tamedetail" page
+ns.selectedCreature = nil -- the TameableCreatureData.lua entry behind a "creaturedetail" page
 ns.detailReturnMode = "unlearned" -- "unlearned" | "index" - which view "< Back" returns to from a detail page
-ns.abilitiesMode = "index" -- "pet" | "learned" | "unlearned" | "index" | "detail" | "training" | "types" | "typedetail" | "spawns" | "raredetail" | "tamedetail"
+ns.abilitiesMode = "index" -- "pet" | "learned" | "unlearned" | "index" | "detail" | "training" | "types" | "typedetail" | "spawns" | "raredetail" | "tamedetail" | "creaturedetail"
 local trainingInfoExpanded = {} -- [sectionIndex] = true once a General Training Info section has been expanded; sections start collapsed
 local indexCategoryExpanded = {} -- [categoryName] = false once an Abilities Index section has been collapsed; sections start expanded
 local savedScrollByMode = {} -- [mode] = last scroll position seen in that mode, so e.g. leaving the Abilities Index for a detail page and coming back restores where you were

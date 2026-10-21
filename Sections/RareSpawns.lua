@@ -28,7 +28,7 @@ StaticPopupDialogs["PETSMART_TRACK_ALL_ZONE"] = {
 
 
 ns.Pages.spawns = function(ctx)
-    abilitiesPanel.title:SetText("Rare Pet Spawns")
+    abilitiesPanel.title:SetText("Rare Index")
     if #ns.trackedRares == 1 then
         local only = ns.trackedRares[1]
         rareTrackBtn:SetState(true, nil, function()
@@ -108,10 +108,10 @@ end
 
 ns.Pages.raredetail = function(ctx)
     local rare = ns.selectedRare
-    -- Keep the main header on "Rare Pet Spawns" and put the rare's
+    -- Keep the main header on "Rare Index" and put the rare's
     -- own name in the subheader instead of replacing it, same as the
     -- Abilities Index/Pet Types detail pages above.
-    abilitiesPanel.title:SetText("Rare Pet Spawns")
+    abilitiesPanel.title:SetText("Rare Index")
     abilitiesPanel.subtitle:SetText(rare and rare.name or "Rare Pet")
     abilitiesPanel.subtitle:Show()
     do
@@ -131,6 +131,7 @@ ns.Pages.raredetail = function(ctx)
         local familyName = (rare.familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[rare.familyId]) or "Unknown"
         ctx.AddLine("Family: " .. familyName, 0.8, 0.8, 0.8)
         ctx.AddLine("Level: " .. tostring(rare.level), 0.8, 0.8, 0.8)
+        ctx.AddLine(ns.FamilyDietText(rare.familyId or familyName), 0.8, 0.8, 0.8)
         local pointCount = rare.points and #rare.points or 0
         local zoneLine = "Zone: " .. tostring(rare.zone)
         if pointCount > 1 then
@@ -143,5 +144,6 @@ ns.Pages.raredetail = function(ctx)
             ctx.AddLine(" ", 1, 1, 1)
             ctx.AddLine("(Map tracking unavailable for this zone.)", 0.6, 0.6, 0.6)
         end
+        ns.DressingRoom.Show(rare.name)
     end
 end

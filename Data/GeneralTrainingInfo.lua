@@ -29,7 +29,7 @@ ns.GENERAL_TRAINING_INFO = {
         title = "Pet Food & Happiness",
         lines = {
             "Your pet's happiness affects its damage output: Happy pets deal 125% damage, Content pets deal 100%, and Unhappy pets deal only 75%.",
-            "There are six food categories: Bread, Cheese, Fish, Fruit, Fungus, and Meat. Each pet family will only eat certain categories - see that family's entry in Pet Types for its diet. Boars are the only family that will eat anything from all six categories.",
+            "There are six food categories: Bread, Cheese, Fish, Fruit, Fungus, and Meat. Each pet family will only eat certain categories - see that family's entry in the Pet Index for its diet. Boars are the only family that will eat anything from all six categories.",
             "Lower-loyalty pets need to be fed more often to stay happy; higher-loyalty pets go longer between feedings.",
         },
     },

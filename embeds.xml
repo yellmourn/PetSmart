@@ -24,6 +24,8 @@
 <Script file="Data\GeneralTrainingInfo.lua"/>
 <Script file="Data\PetAbilitiesData.lua"/>
 <Script file="Data\PetopiaTameData.lua"/>
+<Script file="Data\CreatureModelData.lua"/>
+<Script file="Data\TameableCreatureData.lua"/>
 
 <!-- Shared setup -->
 <Script file="Core\Init.lua"/>
@@ -50,6 +52,7 @@
 <!-- Compendium navigation and page drawing -->
 <Script file="Compendium\Navigation.lua"/>
 <Script file="Compendium\Refresh.lua"/>
+<Script file="Compendium\DressingRoom.lua"/>
 
 <!-- Compendium sections (one file per section icon) -->
 <Script file="Sections\Pet.lua"/>

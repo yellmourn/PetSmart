@@ -32,7 +32,7 @@ local FAMILY_DIET = {
     ["scorpid"]      = { "Meat" },
     ["serpent"]      = { "Fish", "Meat" },
     ["spider"]       = { "Meat" },
-    ["tallstrider"]  = { "Cheese", "Fruit", "Fungus", "Meat" },
+    ["tallstrider"]  = { "Cheese", "Fruit", "Fungus" },
     ["turtle"]       = { "Fish", "Fruit", "Fungus" },
     ["wind serpent"] = { "Bread", "Cheese", "Fish" },
     ["wolf"]         = { "Meat" },
@@ -48,14 +48,29 @@ local function ToSet(list)
     return any and set or nil
 end
 
+-- Food types a family will never eat on WoW: Forever, removed even if the
+-- client's GetPetFoodTypes() reports them.
+local FAMILY_NEVER_EATS = {
+    ["tallstrider"] = { "Meat" },
+}
+
+local function ApplyCorrections(set, family)
+    local never = family and FAMILY_NEVER_EATS[family:lower()]
+    if set and never then
+        for _, t in ipairs(never) do set[t] = nil end
+        if not next(set) then return nil end
+    end
+    return set
+end
+
 -- Returns a set like { Meat = true, Fish = true } or nil if unknown.
 local function GetPetDiet()
     if not UnitExists("pet") then return nil end
+    local family = UnitCreatureFamily and UnitCreatureFamily("pet")
     if GetPetFoodTypes then
-        local set = ToSet({ GetPetFoodTypes() })
+        local set = ApplyCorrections(ToSet({ GetPetFoodTypes() }), family)
         if set then return set end
     end
-    local family = UnitCreatureFamily and UnitCreatureFamily("pet")
     if family and FAMILY_DIET[family:lower()] then
         return ToSet(FAMILY_DIET[family:lower()])
     end
