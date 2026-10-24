@@ -42,13 +42,7 @@ local ADDON_NAME, ns = ...
 -- precise enough to place a pin at all; those still get a real zone and
 -- flavor text, just no Track button.
 --
--- wowhead.com/forever was re-checked specifically for this pass (including
--- Zephras Isle's own fauna, e.g. Vuldren/Ursera/Galestrider) and still has
--- no indexed per-creature NPC pages for ordinary world mobs at all
--- (Forever is too new/niche for generic-NPC pages to exist yet), and
--- wow-petopia.com/classic's per-family browse pages don't carry exact
--- coordinates either - so classic Wowhead's own comment threads were the
--- only source that actually panned out for this pass.
+-- Classic Era version: only the teacher pets that exist in Classic are kept.
 --------------------------------------------------------------------------
 
 -- `radius` is this entry's spawn-area overlay size, in the same 0-100
@@ -88,8 +82,6 @@ local raw = {
     { name = "Githyiss the Vile", zone = "Teldrassil", x = 39.0, y = 28.0, radius = 2.5, -- approximate (per warcraft.wiki.gg, Shadowthread Cave)
       description = "Guards the Webwood Egg inside Shadowthread Cave, home to Teldrassil's webwood spiders." },
 
-    { name = "Vulgara the Insatiable", zone = "Zephras Isle", x = 42.8, y = 52.2, radius = 2.5,
-      description = "A wolf found on Zephras Isle, at the spot marked on the map." },
 
     -- Spread across wide areas: the highlighted zones (and pin spots) come from
     -- Data/TameTeacherAreaData.lua, traced around wowhead.com/classic's pin cloud.
@@ -177,8 +169,6 @@ local raw = {
     { name = "Green Recluse", zone = "Duskwood", fromAreas = true,
       description = "Found in several wide hunting grounds across Duskwood - see the highlighted zones on the map." },
 
-    { name = "Juvenile Vuldren", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Large Loch Crocolisk", zone = "Loch Modan", fromAreas = true,
       description = "Found in several wide hunting grounds across Loch Modan - see the highlighted zones on the map." },
@@ -240,8 +230,6 @@ local raw = {
     { name = "Vilebranch Raiding Wolf", zone = "The Hinterlands", fromAreas = true,
       description = "Found in several wide hunting grounds across The Hinterlands - see the highlighted zones on the map." },
 
-    { name = "Vuldren", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Webwood Silkspinner", zone = "Teldrassil", fromAreas = true,
       description = "Found in several wide hunting grounds across Teldrassil - see the highlighted zones on the map." },
@@ -366,8 +354,6 @@ local raw = {
     { name = "Plagued Swine", zone = "Eastern Plaguelands", fromAreas = true,
       description = "Found in several wide hunting grounds across Eastern Plaguelands - see the highlighted zones on the map." },
 
-    { name = "Highlands Ursera", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Ice Claw Bear", zone = "Dun Morogh", fromAreas = true,
       description = "Found in several wide hunting grounds across Dun Morogh - see the highlighted zones on the map." },
@@ -378,20 +364,12 @@ local raw = {
     { name = "Scorpid Worker", zone = "Durotar", fromAreas = true,
       description = "Found in several wide hunting grounds across Durotar - see the highlighted zones on the map." },
 
-    { name = "Scrawny Ursera", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Strigid Owl", zone = "Teldrassil", fromAreas = true,
       description = "Found in several wide hunting grounds across Teldrassil - see the highlighted zones on the map." },
 
-    { name = "Urs'anah", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Ursera Scavenger", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Elmpaw", zone = "Elwynn Forest", fromAreas = true,
-      description = "Found in several wide hunting grounds across Elwynn Forest - see the highlighted zones on the map." },
 
     { name = "Encrusted Surf Crawler", zone = "Durotar", fromAreas = true,
       description = "Found in several wide hunting grounds across Durotar - see the highlighted zones on the map." },
@@ -411,8 +389,6 @@ local raw = {
     { name = "Venomtail Scorpid", zone = "Durotar", fromAreas = true,
       description = "Found in several wide hunting grounds across Durotar - see the highlighted zones on the map." },
 
-    { name = "Windsong Crawler", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Young Forest Bear", zone = "Elwynn Forest", fromAreas = true,
       description = "Found in several wide hunting grounds across Elwynn Forest - see the highlighted zones on the map." },
@@ -432,8 +408,6 @@ local raw = {
     { name = "Gray Bear", zone = "Hillsbrad Foothills", fromAreas = true,
       description = "Found in several wide hunting grounds across Hillsbrad Foothills - see the highlighted zones on the map." },
 
-    { name = "Shadowgale Ursera", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Shore Crawler", zone = "Westfall", fromAreas = true,
       description = "Found in several wide hunting grounds across Westfall - see the highlighted zones on the map." },
@@ -492,8 +466,6 @@ local raw = {
     { name = "Winterspring Screecher", zone = "Winterspring", fromAreas = true,
       description = "Found in several wide hunting grounds across Winterspring - see the highlighted zones on the map." },
 
-    { name = "Child of Jai'vhanel", zone = "Darkshore", fromAreas = true,
-      description = "Found in several wide hunting grounds across Darkshore - see the highlighted zones on the map." },
 
     { name = "Durotar Tiger", zone = "Durotar", fromAreas = true,
       description = "Found in several wide hunting grounds across Durotar - see the highlighted zones on the map." },
@@ -522,11 +494,7 @@ local raw = {
     { name = "Nightsaber", zone = "Teldrassil", fromAreas = true,
       description = "Found in several wide hunting grounds across Teldrassil - see the highlighted zones on the map." },
 
-    { name = "Prideclaw", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Shriekling Fledgling", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Giant Foreststrider", zone = "Darkshore", fromAreas = true,
       description = "Found in several wide hunting grounds across Darkshore - see the highlighted zones on the map." },
@@ -681,11 +649,7 @@ local raw = {
     { name = "Ironbeak Screecher", zone = "Felwood", fromAreas = true,
       description = "Found in several wide hunting grounds across Felwood - see the highlighted zones on the map." },
 
-    { name = "Galestrider", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Ornery Galestrider", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Longtooth Howler", zone = "Feralas", fromAreas = true,
       description = "Found in several wide hunting grounds across Feralas - see the highlighted zones on the map." },
@@ -723,11 +687,7 @@ local raw = {
     { name = "Shadowmaw Panther", zone = "Stranglethorn Vale", fromAreas = true,
       description = "Found in several wide hunting grounds across Stranglethorn Vale - see the highlighted zones on the map." },
 
-    { name = "Shadowgale Shriekling", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Shriekling Matriarch", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
     { name = "Corrupted Scorpid", zone = "Durotar", fromAreas = true,
       description = "Found in several wide hunting grounds across Durotar - see the highlighted zones on the map." },
@@ -768,24 +728,12 @@ local raw = {
     { name = "Un'Goro Thunderer", zone = "Un'Goro Crater", fromAreas = true,
       description = "Found in several wide hunting grounds across Un'Goro Crater - see the highlighted zones on the map." },
 
-    { name = "Vuldren Alpha", zone = "Zephras Isle", fromAreas = true,
-      description = "Found in several wide hunting grounds across Zephras Isle - see the highlighted zones on the map." },
 
-    { name = "Moss Stalker", zone = "Silverpine Forest", fromAreas = true,
-      description = "Found in several wide hunting grounds across Silverpine Forest - see the highlighted zones on the map." },
 
-    { name = "Bloodwing Bat", zone = "Hillsbrad Foothills", fromAreas = true,
-      description = "Found in several wide hunting grounds across Hillsbrad Foothills - see the highlighted zones on the map." },
 
-    { name = "Foothills Duskbat", zone = "Silverpine Forest", fromAreas = true,
-      description = "Found in several wide hunting grounds across Silverpine Forest - see the highlighted zones on the map." },
 
-    { name = "Gray Fox", zone = "Duskwood", fromAreas = true,
-      description = "Found in several wide hunting grounds across Duskwood - see the highlighted zones on the map." },
 
     -- No exact point found - zone and flavor text only, no Track button.
-    { name = "Ukorsbane", zone = "Durotar", fromAreas = true,
-      description = "An elite spider found in Durotar. It drops Ukor's Lost Pack, an item that starts a quest." },
     { name = "Princess", zone = "Elwynn Forest", fromAreas = true,
       description = "A unique boar roaming Elwynn Forest; player reports of her exact spot don't agree closely enough to pin with confidence." },
     { name = "Prowler", zone = "Elwynn Forest", fromAreas = true,

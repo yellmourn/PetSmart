@@ -24,7 +24,6 @@ local FAMILY_DIET = {
     ["cat"]          = { "Fish", "Meat" },
     ["crab"]         = { "Bread", "Fish", "Fruit", "Fungus" },
     ["crocolisk"]    = { "Fish", "Meat" },
-    ["fox"]          = { "Meat" },
     ["gorilla"]      = { "Fruit", "Fungus" },
     ["hyena"]        = { "Fruit", "Meat" },
     ["owl"]          = { "Meat" },
@@ -48,7 +47,7 @@ local function ToSet(list)
     return any and set or nil
 end
 
--- Food types a family will never eat on WoW: Forever, removed even if the
+-- Food types a family will never eat, removed even if the
 -- client's GetPetFoodTypes() reports them.
 local FAMILY_NEVER_EATS = {
     ["tallstrider"] = { "Meat" },
@@ -93,10 +92,9 @@ local KNOWN_ITEMS = {
 }
 
 -- Same idea, by exact item name (lower-case) - for items whose ID isn't
--- recorded here, e.g. Forever-only foods.
+-- recorded here.
 local KNOWN_NAMES = {
     ["melon juice"] = "NONE",               -- player drink (mana), not pet food
-    ["red delicious stormapple"] = "Fruit", -- Forever fruit
 }
 
 local KEYWORDS = {

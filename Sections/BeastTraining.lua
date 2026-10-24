@@ -92,7 +92,7 @@ local function AbilityByName(lname)
 end
 
 -- Which rank a Beast Training entry is, when its text doesn't say: by its
--- spell ID, its description (matched against the wowhead.com/forever rank
+-- spell ID, its description (matched against the Petopia Classic rank
 -- tooltips in Data\PetAbilityDescriptions.lua), or its required pet level.
 local function ResolveRank(e)
     if e.rank then return e.rank end
@@ -144,7 +144,7 @@ end
 -- where they came from (for /petsmart bt).
 function BT.ReadOpenWindow()
     local out, src = {}, nil
-    -- WoW: Forever's Beast Training window is a trainer-style window (Training
+    -- Some clients show Beast Training as a trainer-style window (Training
     -- Points, "Already known", a Train button), read with the trainer API.
     -- An NPC trainer uses the same API, so it's only read when no NPC is being
     -- talked to - i.e. the window came from the Beast Training spell.
@@ -435,8 +435,8 @@ end
 
 -- The hunter's own (player) spellbook - not the pet's.
 -- Does the hunter permanently know this pet-ability rank (i.e. it's in their
--- Beast Training)? Spell IDs are WoW: Forever's own pet-ability IDs from
--- wowhead.com/forever (Data\PetAbilitiesData.lua). C_SpellBook.IsSpellKnown is
+-- Beast Training)? Spell IDs are Classic Era's pet-ability IDs from
+-- wowhead.com/classic (Data\PetAbilitiesData.lua). C_SpellBook.IsSpellKnown is
 -- the modern-client check; the older globals are fallbacks. Only the player's
 -- (hunter's) spellbook is asked - never the pet's - so a pet that knows an
 -- ability doesn't make it count as trainable.

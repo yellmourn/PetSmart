@@ -4,7 +4,7 @@ local ADDON_NAME, ns = ...
 -- Data-file loader helpers.
 --
 -- FamilyData.lua, FamilyInfoData.lua and PetAbilitiesData.lua are
--- hunter-pet reference data for WoW: Forever. PetAbilitiesData.lua calls
+-- hunter-pet reference data for WoW Classic Era. PetAbilitiesData.lua calls
 -- a small DB-builder function (ns.NewPetAbilityDB) to register each
 -- ability and its ranks. This file MUST load before it (see the .toc
 -- file order).
@@ -22,7 +22,7 @@ function ns.NewPetAbilityDB()
 
     -- displayName is optional: when the game's own GetSpellInfo(spellId)
     -- can resolve a real, correct name, leave it nil. Pass it explicitly
-    -- for Forever-custom abilities where that lookup may not resolve to
+    -- for abilities where that lookup may not resolve to
     -- the right (or any) name.
     local function ability(key, families, displayName)
         local entry = { key = key, families = families, displayName = displayName, ranks = {} }

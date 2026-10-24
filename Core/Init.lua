@@ -74,79 +74,22 @@ local DEFAULT_PROFILE_NAME = "Default"
 -- elsewhere in this file.
 
 
--- WoW: Forever characters have a two-part name ("First Last") and there
--- are no realms; the full name is unique, so it's the character's key.
--- Depending on the client build the surname may come back as part of
--- UnitName's string or as the second return of UnitFullName/UnitName
--- (which on realm clients is the realm instead - that's ignored).
+-- Characters are keyed "Name - Realm", the usual way on realm clients, so
+-- the same name on two realms gets separate settings.
 local function Plain(v)
     if v == nil or (issecretvalue and issecretvalue(v)) or type(v) ~= "string" then return nil end
     v = v:gsub("^%s+", ""):gsub("%s+$", "")
     return v ~= "" and v or nil
 end
+
 local function GetCharName()
-    local first, second
-    if UnitFullName then
-        local ok, a, b = pcall(UnitFullName, "player")
-        if ok then first, second = Plain(a), Plain(b) end
-    end
-    if not first then
-        local a, b = UnitName("player")
-        first, second = Plain(a), Plain(b)
-    end
-    first = first or "Unknown"
-    if first:find(" ", 1, true) then return first end -- already "First Last"
-    if second then
-        local realm = Plain(GetRealmName and GetRealmName()) or ""
-        local norm = Plain(GetNormalizedRealmName and GetNormalizedRealmName()) or realm:gsub("[%s%-']", "")
-        if second ~= realm and second ~= norm and second ~= realm:gsub("[%s%-']", "") then
-            return first .. " " .. second
-        end
-    end
-    return first
+    return Plain((UnitName("player"))) or "Unknown"
 end
 
 local function GetCharKey()
-    return GetCharName()
-end
-
--- Older saves keyed characters as "Name - Realm" (first name only). Moves
--- this character's old entries over to the full-name key, and renames its
--- personal profile from the first name to the full name when nothing else
--- uses it, so the profile manager shows "First Last".
-local function MigrateCharKey()
-    local key = GetCharKey()
-    local first = Plain((UnitName("player"))) or key
-    first = first:match("^(%S+)") or first
-    local legacy = {}
-    if GetRealmName then
-        local realm = Plain(GetRealmName())
-        if realm then legacy[#legacy + 1] = first .. " - " .. realm end
-    end
-    legacy[#legacy + 1] = first
-    for _, old in ipairs(legacy) do
-        if old ~= key then
-            for _, map in ipairs({ PetSmartDB.profileKeys, PetSmartDB.panelShownByChar }) do
-                if map and map[old] ~= nil then
-                    if map[key] == nil then map[key] = map[old] end
-                    map[old] = nil
-                end
-            end
-        end
-    end
-    local assigned = PetSmartDB.profileKeys[key]
-    if assigned and assigned == first and key ~= first and PetSmartDB.profiles[first]
-        and not PetSmartDB.profiles[key] then
-        local shared = false
-        for k, v in pairs(PetSmartDB.profileKeys) do
-            if v == first and k ~= key then shared = true; break end
-        end
-        if not shared then
-            PetSmartDB.profiles[key] = PetSmartDB.profiles[first]
-            PetSmartDB.profiles[first] = nil
-            PetSmartDB.profileKeys[key] = key
-        end
-    end
+    local name = GetCharName()
+    local realm = Plain(GetRealmName and GetRealmName())
+    return realm and (name .. " - " .. realm) or name
 end
 
 -- Fills in any key PROFILE_DEFAULTS has that this profile table doesn't
@@ -192,15 +135,14 @@ local function EnsureProfiles()
         PetSmartDB.profiles[DEFAULT_PROFILE_NAME] = seed
     end
 
-    MigrateCharKey()
     local charKey = GetCharKey()
     local assigned = PetSmartDB.profileKeys[charKey]
     if assigned == nil then
         -- This character has never used PetSmart before (no assignment at
         -- all, not even a stale one) - give it its own profile named after
         -- the character instead of dropping it into the shared Default
-        -- profile. The key is the full first-and-second name, unique in
-        -- Forever, so it doubles as a human-readable profile name.
+        -- profile. The key is "Name - Realm", so it doubles as a
+        -- human-readable profile name.
         local personalName = charKey ~= "Unknown" and charKey or DEFAULT_PROFILE_NAME
         if PetSmartDB.profiles[personalName] then
             -- Extremely unlikely collision (e.g. a profile already made by

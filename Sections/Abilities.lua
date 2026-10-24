@@ -71,7 +71,7 @@ end
 -- A family's "specialty" is the one ability restricted to that family
 -- alone (as opposed to shared abilities like Bite/Claw/Dash that many
 -- families learn) - e.g. Prowl for Cat, Dismember for Crocolisk,
--- Furious Howl for Wolf. Every Forever pet family has exactly one.
+-- Furious Howl for Wolf. In Classic Era only some families have one.
 local function GetFamilySpecialty(familyId)
     if not ns.PET_ABILITY_ORDER then return nil end
     for _, key in ipairs(ns.PET_ABILITY_ORDER) do
@@ -195,7 +195,7 @@ local function BuildDetailLines(data)
     local lines = {}
 
     -- Tooltip/effect text for this specific rank - the hand-transcribed
-    -- wowhead.com/forever table first (covers every rank, not just each
+    -- Petopia Classic table first (covers every rank, not just each
     -- family's rank-1 specialty move), falling back to the live spell
     -- API for anything not in that table (e.g. a couple of resistance
     -- aura top ranks Wowhead hasn't published a page for yet).
@@ -243,7 +243,7 @@ local function BuildDetailLines(data)
     return lines
 end
 
--- Maps FamilyInfoData.lua's "spec" field (the Forever-verified "Tree"
+-- Maps FamilyInfoData.lua's "spec" field (Petopia Classic's "Family Role"
 -- column from the user's pet-family spreadsheet) to the label shown in
 -- the Pet Types panel.
 local SPEC_LABEL = { offense = "Offensive", defense = "Defensive", general = "General" }

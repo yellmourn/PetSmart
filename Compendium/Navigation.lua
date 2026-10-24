@@ -162,13 +162,12 @@ local FAMILY_ART = {
     [1] = "Wolf", [3] = "Spider", [4] = "Bear", [5] = "Boar", [6] = "Crocolisk",
     [7] = "CarrionBird", [8] = "Crab", [9] = "Gorilla", [11] = "Raptor",
     [12] = "Tallstrider", [20] = "Scorpid", [21] = "Turtle", [24] = "Bat",
-    [25] = "Hyena", [26] = "BirdofPrey", [27] = "WindSerpent", [40] = "Fox",
+    [25] = "Hyena", [26] = "BirdofPrey", [27] = "WindSerpent", -- 26 = Owl
 }
 function PetPage.FamilyArt()
     local family = UnitExists("pet") and UnitCreatureFamily and UnitCreatureFamily("pet")
     if not family or ns.AnySecret(family) then return SECTION_ART.pet end
     local id = ns.FAMILY_BY_NAME and ns.FAMILY_BY_NAME[family]
-    if not id and family == "Owl" then id = 26 end -- pre-rename name for Bird of Prey
     if id == 2 then return SECTION_ART.pet end -- Cat: the seated black lion is its medallion
     local file = id and FAMILY_ART[id]
     return file and (FAMILY_ART_DIR .. file) or SECTION_ART.pet

@@ -51,10 +51,12 @@ local function Num(n)
     return tostring(n)
 end
 
--- Pet critical strike chance, WoW: Forever rules: the pet has 100% of the
--- hunter's own critical strike chance, plus 2% per rank of the Ferocity
--- talent (2/4/6/8/10%).
-PetPage.FEROCITY_PER_RANK = 2
+-- Pet critical strike chance. Classic Era's Ferocity talent adds 3% pet
+-- crit per rank, but there's no confirmed source for the pet's base crit
+-- chance on Classic, so the stat is hidden (SHOW_CRIT) rather than shown
+-- with a guessed number.
+PetPage.FEROCITY_PER_RANK = 3
+PetPage.SHOW_CRIT = false
 
 function PetPage.FerocityRanks()
     local ranks = 0
@@ -126,7 +128,7 @@ function PetPage.GeneralStats()
             out[#out + 1] = { "Attack Power", "%s", { Num((base or 0) + (pos or 0) + (neg or 0)) }, c, "ap" }
         end
     end
-    do
+    if PetPage.SHOW_CRIT then
         local playerCrit, ferocity = PetPage.Crit()
         if AnySecret(playerCrit) then
             -- can't add the Ferocity bonus to a secret value: show it alongside

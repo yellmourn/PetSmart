@@ -2,11 +2,7 @@ local ADDON_NAME, ns = ...
 
 -- Reference text for the "General Training Info" panel. HAND-WRITTEN,
 -- condensed from Wowhead's Classic hunter pets guide
--- (wowhead.com/classic/guide/classic-wow-hunter-pets) for everything
--- except the Compact Critter Carrier lines (folded into Stable Masters &
--- Stable Slots, since it's another way to reach a stabled pet), which
--- come from its own Wowhead Forever item/spell page
--- (wowhead.com/forever/spell=1266920/compact-critter-carrier).
+-- (wowhead.com/classic/guide/classic-wow-hunter-pets).
 --
 -- Each entry is { title = "...", lines = { "...", "...", ... } }, shown
 -- in order as a gold section title followed by its body lines.
@@ -63,8 +59,6 @@ ns.GENERAL_TRAINING_INFO = {
         lines = {
             "A Stable Master is an NPC found in most friendly hubs who lets you store extra pets you aren't currently using.",
             "You can only have one active pet out at a time, but you can keep two more stabled with a Stable Master - three pets total.",
-            "Compact Critter Carrier - a Hunter-only crafted item, made by Blacksmiths. Using it places a Compact Critter Carrier that lasts 3 minutes, letting Hunters in your group access their stabled pets from anywhere, without needing to find a Stable Master.",
-            "Casting the Compact Critter Carrier has a 45 second cast time and a 30 minute cooldown, and requires level 40 to use.",
         },
     },
     {

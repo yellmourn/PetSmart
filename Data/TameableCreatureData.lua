@@ -1,41 +1,31 @@
 local ADDON_NAME, ns = ...
 
 --------------------------------------------------------------------------
--- Every tameable creature, by pet family, for the Pet Types pages.
---
--- Sources: wow-petopia.com/classic (every family's look pages, collected
--- 2026-10-20), the user's WoW: Forever tameable-creature spreadsheet
--- (Forever-only creatures and corrections, which win over Petopia where
--- both list a creature), and this addon's own rare and tame-teacher lists
--- (RareSpawnData.lua, PetopiaTameData.lua), so every rare and teacher pet
--- is included. Owls are listed under Bird of Prey, as on Forever.
--- NPC IDs: wowhead.com/forever (Petopia's classic Wowhead IDs, which
--- Forever shares, for everything else).
+-- Every tameable creature in WoW Classic Era, by pet family, for the Pet
+-- Index pages. Source: wow-petopia.com/classic (every family's look pages).
+-- NPC IDs are Classic's own (wowhead.com/classic, as linked by Petopia).
 --
 -- Each entry: { name, level, zone, npc, tag, knows, horde }
 --   tag   = "Rare", "Elite" or "Rare Elite" (nil for ordinary creatures)
---   knows = the ability it already has when tamed (Petopia / spreadsheet)
+--   knows = the ability it already has when tamed
 --   horde = true if only Horde hunters can tame it
--- Whether a creature is one of the addon's rares or teacher pets is
--- worked out from those lists at runtime (Sections/PetTypes.lua).
+-- Whether a creature is one of the addon's rares or teacher pets is worked
+-- out from those lists at runtime (Sections/PetTypes.lua).
 --------------------------------------------------------------------------
 
 ns.TAMEABLE_CREATURES = {
-    ["Bat"] = { -- 20 creatures
+    ["Bat"] = { -- 17 creatures
         { name = "Duskbat", level = "1-2", zone = "Tirisfal Glades", npc = 1512 },
         { name = "Mangy Duskbat", level = "3-4", zone = "Tirisfal Glades", npc = 1513 },
         { name = "Greater Duskbat", level = "6-7", zone = "Tirisfal Glades", npc = 1553, knows = "Cower 1" },
         { name = "Vampiric Duskbat", level = "8-9", zone = "Tirisfal Glades", npc = 1554 },
         { name = "Ressan the Needler", level = "11", zone = "Tirisfal Glades", npc = 10357, tag = "Rare" },
-        { name = "Foothills Duskbat", level = "12-13", zone = "Silverpine Forest", npc = 277882, knows = "Sonic Blast 1" },
         { name = "Vile Bat", level = "22-23", zone = "Shadowfang Keep (Dungeon)", npc = 3866, tag = "Elite" },
         { name = "Blood Seeker", level = "23-24", zone = "Shadowfang Keep (Dungeon)", npc = 3868, tag = "Elite" },
-        { name = "Bloodwing Bat", level = "25-26", zone = "Hillsbrad Foothills", npc = 277881, knows = "Sonic Blast 2" },
         { name = "Kraul Bat", level = "30-31", zone = "Razorfen Kraul (Dungeon)", npc = 4538, tag = "Elite", knows = "Cower 3, Dive 1" },
         { name = "Blind Hunter", level = "32", zone = "Razorfen Kraul (Dungeon)", npc = 4425, tag = "Rare Elite" },
         { name = "Greater Kraul Bat", level = "32", zone = "Razorfen Kraul (Dungeon)", npc = 4539, tag = "Elite", knows = "Cower 3, Dive 1" },
         { name = "Shrike Bat", level = "38-39", zone = "Uldaman (Dungeon)", npc = 4861, tag = "Elite", knows = "Cower 4, Dive 1, Screech 2" },
-        { name = "Blind Screecher", level = "41-42", zone = "Shen'dralas", npc = 255174 },
         { name = "Dark Screecher", level = "50-52", zone = "Blackrock Depths (Dungeon)", npc = 8927, knows = "Dive 3, Screech 3" },
         { name = "Plaguebat", level = "53-55", zone = "Eastern Plaguelands", npc = 8600, knows = "Cower 5, Dive 3" },
         { name = "Noxious Plaguebat", level = "54-56", zone = "Eastern Plaguelands", npc = 8601, knows = "Cower 5" },
@@ -43,27 +33,19 @@ ns.TAMEABLE_CREATURES = {
         { name = "Bloodseeker Bat", level = "60", zone = "Zul'Gurub (Raid)", npc = 11368 },
         { name = "Frenzied Bloodseeker Bat", level = "60", zone = "Zul'Gurub (Raid)", npc = 14965 },
     },
-    ["Bear"] = { -- 50 creatures
-        { name = "Scrawny Ursera", level = "3-4", zone = "Thendal Grove, Zephras Isle", npc = 250926, knows = "Claw 1" },
-        { name = "Ursera Scavenger", level = "4", zone = "Thendal Cave, Zephras Isle", npc = 250937, knows = "Claw 1" },
-        { name = "Urs'anah", level = "5", zone = "Thendal Cave, Zephras Isle", npc = 251115, knows = "Claw 1" },
+    ["Bear"] = { -- 40 creatures
         { name = "Young Black Bear", level = "5-6", zone = "Dun Morogh", npc = 1128 },
         { name = "Black Bear", level = "6-7", zone = "Dun Morogh", npc = 1129 },
-        { name = "Highlands Ursera", level = "7", zone = "Zephras Isle", npc = 250928, knows = "Claw 1" },
         { name = "Ice Claw Bear", level = "7-8", zone = "Dun Morogh", npc = 1196, knows = "Claw 1" },
         { name = "Young Forest Bear", level = "8-9", zone = "Elwynn Forest", npc = 822, knows = "Claw 2" },
         { name = "Thistle Cub", level = "9-10", zone = "Darkshore", npc = 6789 },
-        { name = "Matriarch Bristlefur", level = "10", zone = "Elwynn Forest", npc = 276189, tag = "Rare", knows = "Claw 2" },
-        { name = "Shadowgale Ursera", level = "10", zone = "Ruins of Bana'aethal, Zephras Isle", npc = 250927, knows = "Claw 2" },
         { name = "Elder Black Bear", level = "11-12", zone = "Loch Modan", npc = 1186 },
         { name = "Ferocious Grizzled Bear", level = "11-12", zone = "Silverpine Forest", npc = 1778, knows = "Claw 2" },
         { name = "Mangeclaw", level = "11", zone = "Dun Morogh", npc = 1961, knows = "Claw 2" },
         { name = "Thistle Bear", level = "11-12", zone = "Darkshore", npc = 2163, knows = "Claw 2" },
         { name = "Bjarn", level = "12", zone = "Dun Morogh", npc = 1130, tag = "Rare", knows = "Claw 2" },
-        { name = "Elmpaw", level = "12", zone = "Stone Cairn Lake, Elwynn Forest", npc = 248299, knows = "Claw 2" },
         { name = "Giant Grizzled Bear", level = "12-13", zone = "Silverpine Forest", npc = 1797 },
         { name = "Grizzled Black Bear", level = "13-14", zone = "Loch Modan", npc = 1188 },
-        { name = "Mystmane", level = "13", zone = "Shadowgale Forest, Zephras Isle", npc = 259388, tag = "Rare", knows = "Savage Rend 1" },
         { name = "Old Vicejaw", level = "14", zone = "Silverpine Forest", npc = 12432, tag = "Rare" },
         { name = "Black Bear Patriarch", level = "16-17", zone = "Loch Modan", npc = 1189, knows = "Claw 3" },
         { name = "Grizzled Thistle Bear", level = "16-17", zone = "Darkshore", npc = 2165 },
@@ -74,11 +56,9 @@ ns.TAMEABLE_CREATURES = {
         { name = "Vicious Gray Bear", level = "22-23", zone = "Hillsbrad Foothills", npc = 2354 },
         { name = "Elder Ashenvale Bear", level = "25-26", zone = "Ashenvale", npc = 3810, knows = "Claw 4" },
         { name = "Elder Gray Bear", level = "25-26", zone = "Hillsbrad Foothills", npc = 2356 },
-        { name = "Maddened Rotclaw", level = "25-26", zone = "Mosshide Fen, Wetlands", npc = 271334, knows = "Swipe 2" },
         { name = "Big Samras", level = "27", zone = "Hillsbrad Foothills", npc = 14280, tag = "Rare" },
         { name = "Giant Ashenvale Bear", level = "29-30", zone = "Ashenvale", npc = 3811 },
         { name = "Ursol'lok", level = "31", zone = "Ashenvale", npc = 12037, tag = "Rare" },
-        { name = "Bear", level = "41-42", zone = "Shen'dralas", npc = 263681 },
         { name = "Ironfur Bear", level = "41-42", zone = "Feralas", npc = 5268, knows = "Claw 6" },
         { name = "Old Grizzlegut", level = "43", zone = "Feralas", npc = 5352, tag = "Rare", knows = "Claw 6" },
         { name = "Grizzled Ironfur Bear", level = "44-45", zone = "Feralas", npc = 5272 },
@@ -95,24 +75,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Elder Shardtooth", level = "57-58", zone = "Winterspring", npc = 7445, knows = "Claw 8" },
         { name = "Rabid Shardtooth", level = "59-60", zone = "Winterspring", npc = 7446 },
     },
-    ["Bird of Prey"] = { -- 15 creatures
-        { name = "Strigid Owl", level = "5-6", zone = "Teldrassil", npc = 1995, knows = "Claw 1" },
-        { name = "Strigid Screecher", level = "7-8", zone = "Teldrassil", npc = 1996 },
-        { name = "Strigid Hunter", level = "8-9", zone = "Teldrassil", npc = 1997, knows = "Claw 2" },
-        { name = "Child of Jai'vhanel", level = "10", zone = "Darkshore", npc = 270298, knows = "Cower 1" },
-        { name = "Shadowgale Shriekling", level = "10-11", zone = "Shadowgale Forest, Zephras Isle", npc = 256092 },
-        { name = "Nightscreech", level = "11", zone = "Teldrassil", npc = 276101, tag = "Rare" },
-        { name = "Jai'vhanel", level = "12", zone = "Darkshore", npc = 270196 },
-        { name = "Marsh Owl", level = "34-35", zone = "Hillsbrad Foothills", npc = 272389 },
-        { name = "Ironbeak Owl", level = "48-49", zone = "Felwood", npc = 7097, knows = "Dive 2, Screech 3" },
-        { name = "Ironbeak Hunter", level = "50-51", zone = "Felwood", npc = 7099, knows = "Claw 7, Dive 3" },
-        { name = "Ironbeak Screecher", level = "52-53", zone = "Felwood", npc = 7098, knows = "Dive 3" },
-        { name = "Olm the Wise", level = "52", zone = "Felwood", npc = 14343, tag = "Rare", knows = "Claw 7, Dive 3" },
-        { name = "Stormpike Owl", level = "53-54", zone = "Alterac Valley (Battleground)", npc = 14283, horde = true },
-        { name = "Winterspring Owl", level = "54-56", zone = "Winterspring", npc = 7455, knows = "Claw 7, Dive 3" },
-        { name = "Winterspring Screecher", level = "57-59", zone = "Winterspring", npc = 7456, knows = "Claw 8, Dive 3, Screech 4" },
-    },
-    ["Boar"] = { -- 33 creatures
+    ["Boar"] = { -- 31 creatures
         { name = "Mottled Boar", level = "1-2", zone = "Durotar", npc = 3098, knows = "Charge 1" },
         { name = "Young Thistle Boar", level = "1-2", zone = "Teldrassil", npc = 1984, knows = "Charge 1" },
         { name = "Thistle Boar", level = "2-3", zone = "Teldrassil", npc = 1985, knows = "Charge 1" },
@@ -141,13 +104,11 @@ ns.TAMEABLE_CREATURES = {
         { name = "Bellygrub", level = "24", zone = "Redridge Mountains", npc = 345, knows = "Charge 3" },
         { name = "Raging Agam'ar", level = "25-26", zone = "Razorfen Kraul (Dungeon)", npc = 4514, tag = "Elite", knows = "Charge 3" },
         { name = "Rotting Agam'ar", level = "28", zone = "Razorfen Kraul (Dungeon)", npc = 4512, tag = "Elite", knows = "Charge 3" },
-        { name = "Young Paletusk", level = "36-37", zone = "Riverglades", npc = 258331 },
-        { name = "Mature Paletusk", level = "38-39", zone = "Riverglades", npc = 255851 },
         { name = "Ashmane Boar", level = "48-49", zone = "Blasted Lands", npc = 5992, knows = "Charge 5" },
         { name = "Grunter", level = "50", zone = "Blasted Lands", npc = 8303, tag = "Rare", knows = "Charge 5, Dash 3" },
         { name = "Plagued Swine", level = "60", zone = "Eastern Plaguelands", npc = 16117, knows = "Charge 6" },
     },
-    ["Carrion Bird"] = { -- 33 creatures
+    ["Carrion Bird"] = { -- 31 creatures
         { name = "Wiry Swoop", level = "5-7", zone = "Mulgore", npc = 2969 },
         { name = "Swoop", level = "7-9", zone = "Mulgore", npc = 2970 },
         { name = "Taloned Swoop", level = "8-10", zone = "Mulgore", npc = 2971 },
@@ -169,8 +130,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Dread Flyer", level = "36-37", zone = "Desolace", npc = 4693, knows = "Dive 1" },
         { name = "Buzzard", level = "37-39", zone = "Badlands", npc = 2830 },
         { name = "Elder Mesa Buzzard", level = "37-38", zone = "Arathi Highlands", npc = 2580 },
-        { name = "Low Plains Buzzard", level = "37-38", zone = "Riverglades", npc = 263343 },
-        { name = "High Plains Buzzard", level = "38-39", zone = "Riverglades", npc = 259269 },
         { name = "Dread Ripper", level = "39-40", zone = "Desolace", npc = 4694, knows = "Screech 2" },
         { name = "Giant Buzzard", level = "39-41", zone = "Badlands", npc = 2831 },
         { name = "Roc", level = "42-43", zone = "Tanaris", npc = 5428, knows = "Dive 2" },
@@ -182,14 +141,12 @@ ns.TAMEABLE_CREATURES = {
         { name = "Spiteflayer", level = "52", zone = "Blasted Lands", npc = 8299, tag = "Rare", knows = "Dive 3" },
         { name = "Zaricotl", level = "55", zone = "Badlands", npc = 2931, tag = "Rare Elite", knows = "Dive 3" },
     },
-    ["Cat"] = { -- 75 creatures
+    ["Cat"] = { -- 68 creatures
         { name = "Young Nightsaber", level = "1", zone = "Teldrassil", npc = 2031 },
         { name = "Mangy Nightsaber", level = "2", zone = "Teldrassil", npc = 2032 },
         { name = "Mountain Cougar", level = "3", zone = "Mulgore", npc = 2961 },
         { name = "Juvenile Snow Leopard", level = "5-6", zone = "Dun Morogh", npc = 1199, knows = "Cower 1" },
         { name = "Nightsaber", level = "5-6", zone = "Teldrassil", npc = 2042, knows = "Cower 1" },
-        { name = "Prideclaw", level = "5", zone = "Shen'dar Highlands, Zephras Isle", npc = 251245, knows = "Cower 1" },
-        { name = "Snow Leopard Prowler", level = "6", zone = "Dun Morogh", npc = 269075 },
         { name = "Durotar Tiger", level = "7-8", zone = "Durotar", npc = 3121, knows = "Cower 1" },
         { name = "Flatland Cougar", level = "7-8", zone = "Mulgore", npc = 3035, knows = "Cower 1" },
         { name = "Nightsaber Stalker", level = "7-8", zone = "Teldrassil", npc = 2043 },
@@ -197,9 +154,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Elder Nightsaber", level = "8-9", zone = "Teldrassil", npc = 2033 },
         { name = "Duskstalker", level = "9", zone = "Teldrassil", npc = 14430, tag = "Rare" },
         { name = "Flatland Prowler", level = "9", zone = "Mulgore", npc = 3566 },
-        { name = "Shal'ma", level = "9", zone = "Durotar", npc = 276198, tag = "Rare" },
         { name = "Feral Nightsaber", level = "10-11", zone = "Teldrassil", npc = 2034 },
-        { name = "Ghostfang", level = "10", zone = "Dun Morogh", npc = 276111, tag = "Rare" },
         { name = "Moonstalker Runt", level = "10-11", zone = "Darkshore", npc = 2070, knows = "Cower 1" },
         { name = "The Rake", level = "10", zone = "Mulgore", npc = 5807, tag = "Rare" },
         { name = "Savannah Huntress", level = "11-12", zone = "The Barrens", npc = 3415 },
@@ -237,8 +192,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Sin'Dall", level = "37", zone = "Stranglethorn Vale", npc = 729, knows = "Dash 1" },
         { name = "Stranglethorn Tigress", level = "37-38", zone = "Stranglethorn Vale", npc = 772 },
         { name = "Ridge Huntress", level = "38-39", zone = "Badlands", npc = 2732, knows = "Cower 4" },
-        { name = "Wildplains Huntress", level = "38-39", zone = "Riverglades", npc = 259055 },
-        { name = "Wildplains Patriarch", level = "38-39", zone = "Riverglades", npc = 259054 },
         { name = "Shadow Panther", level = "39-40", zone = "Swamp of Sorrows", npc = 768, knows = "Prowl 1" },
         { name = "Bhag'thera", level = "40", zone = "Stranglethorn Vale", npc = 728, tag = "Elite", knows = "Dash 2" },
         { name = "Ridge Stalker Patriarch", level = "40-41", zone = "Badlands", npc = 2734, knows = "Dash 2, Prowl 2" },
@@ -257,14 +210,12 @@ ns.TAMEABLE_CREATURES = {
         { name = "Zulian Panther", level = "60", zone = "Zul'Gurub (Raid)", npc = 11365, tag = "Elite", knows = "Dash 3" },
         { name = "Zulian Prowler", level = "60", zone = "Zul'Gurub (Raid)", npc = 15101 },
         { name = "Zulian Tiger", level = "60", zone = "Zul'Gurub (Raid)", npc = 11361, tag = "Elite" },
-        { name = "Prowler", level = "?", zone = "Shen'dralas", npc = 255207 },
     },
-    ["Crab"] = { -- 25 creatures
+    ["Crab"] = { -- 23 creatures
         { name = "Pygmy Surf Crawler", level = "5-6", zone = "Durotar", npc = 3106, knows = "Claw 1" },
         { name = "Surf Crawler", level = "7-8", zone = "Durotar", npc = 3107 },
         { name = "Encrusted Surf Crawler", level = "9-10", zone = "Durotar", npc = 3108, knows = "Claw 2" },
         { name = "Pygmy Tide Crawler", level = "9-10", zone = "Darkshore", npc = 2231 },
-        { name = "Windsong Crawler", level = "9", zone = "Gustberry Lowlands, Zephras Isle", npc = 254588, knows = "Claw 2" },
         { name = "Corrupted Surf Crawler", level = "10-11", zone = "Durotar", npc = 3228 },
         { name = "Young Reef Crawler", level = "10-11", zone = "Darkshore", npc = 2234 },
         { name = "Tide Crawler", level = "12-14", zone = "Darkshore", npc = 2232, knows = "Claw 2" },
@@ -281,12 +232,11 @@ ns.TAMEABLE_CREATURES = {
         { name = "Snapping Crustacean", level = "23-24", zone = "Blackfathom Deeps (Dungeon)", npc = 4822, tag = "Elite", knows = "Claw 3" },
         { name = "Barbed Crustacean", level = "25-26", zone = "Blackfathom Deeps (Dungeon)", npc = 4823, tag = "Elite", knows = "Claw 4" },
         { name = "Enraged Reef Crawler", level = "30-32", zone = "Desolace", npc = 12347 },
-        { name = "Shore Crawler", level = "39-40", zone = "Riverglades", npc = 256807 },
         { name = "Silt Crawler", level = "40-41", zone = "Swamp of Sorrows", npc = 922, knows = "Claw 6" },
         { name = "Southern Sand Crawler", level = "40-41", zone = "Stranglethorn Vale", npc = 2544 },
         { name = "Monstrous Crawler", level = "43-44", zone = "Swamp of Sorrows", npc = 1088, knows = "Claw 6" },
     },
-    ["Crocolisk"] = { -- 25 creatures
+    ["Crocolisk"] = { -- 24 creatures
         { name = "Dreadmaw Crocolisk", level = "9-11", zone = "Durotar", npc = 3110, knows = "Bite 1" },
         { name = "Corrupted Dreadmaw Crocolisk", level = "11-12", zone = "The Barrens", npc = 3231 },
         { name = "Loch Crocolisk", level = "14-15", zone = "Loch Modan", npc = 1693, knows = "Bite 2" },
@@ -305,20 +255,12 @@ ns.TAMEABLE_CREATURES = {
         { name = "Elder Saltwater Crocolisk", level = "38", zone = "Stranglethorn Vale", npc = 2635, tag = "Elite" },
         { name = "Mottled Drywallow Crocolisk", level = "38-39", zone = "Dustwallow Marsh", npc = 4344, knows = "Bite 5" },
         { name = "Sawtooth Crocolisk", level = "38-39", zone = "Swamp of Sorrows", npc = 1082 },
-        { name = "Freshwater Crocolisk", level = "39", zone = "Riverglades", npc = 259046 },
         { name = "Ripscale", level = "39", zone = "Dustwallow Marsh", npc = 14233, tag = "Rare", knows = "Bite 6" },
         { name = "Drywallow Daggermaw", level = "40-41", zone = "Dustwallow Marsh", npc = 4345, knows = "Bite 6" },
         { name = "Sawtooth Snapper", level = "41-42", zone = "Swamp of Sorrows", npc = 1087, knows = "Bite 6" },
         { name = "Deadmire", level = "45", zone = "Dustwallow Marsh", npc = 4841, knows = "Bite 6" },
         { name = "Sewer Beast", level = "50", zone = "Stormwind City", npc = 3581, tag = "Rare", knows = "Bite 7" },
         { name = "Zulian Crocolisk", level = "60", zone = "Zul'Gurub (Raid)", npc = 15043, tag = "Elite" },
-    },
-    ["Fox"] = { -- 5 creatures
-        { name = "Juvenile Vuldren", level = "1", zone = "Thendal Grove, Zephras Isle", npc = 250873, knows = "Bite 1" },
-        { name = "Slydris", level = "6", zone = "Zephras Isle", npc = 255887, tag = "Rare" },
-        { name = "Vuldren", level = "6", zone = "Shen'dar Highlands, Zephras Isle", npc = 250868, knows = "Bite 1" },
-        { name = "Vulgren Alpha", level = "10", zone = "Gustberry Lowlands, Zephras Isle", npc = 250874, knows = "Bite 2" },
-        { name = "Gray Fox", level = "22", zone = "The Darkened Bank, Duskwood", npc = 277645, knows = "Trickster's Dance 1" },
     },
     ["Gorilla"] = { -- 15 creatures
         { name = "Mistvale Gorilla", level = "32-33", zone = "Stranglethorn Vale", npc = 1108, knows = "Thunderstomp 1" },
@@ -362,12 +304,21 @@ ns.TAMEABLE_CREATURES = {
         { name = "Snickerfang Hyena", level = "49-50", zone = "Blasted Lands", npc = 5985 },
         { name = "Ravage", level = "51", zone = "Blasted Lands", npc = 8300, tag = "Rare", knows = "Dash 3" },
     },
-    ["Raptor"] = { -- 45 creatures
+    ["Owl"] = { -- 10 creatures
+        { name = "Strigid Owl", level = "5-6", zone = "Teldrassil", npc = 1995, knows = "Claw 1" },
+        { name = "Strigid Screecher", level = "7-8", zone = "Teldrassil", npc = 1996 },
+        { name = "Strigid Hunter", level = "8-9", zone = "Teldrassil", npc = 1997, knows = "Claw 2" },
+        { name = "Ironbeak Owl", level = "48-49", zone = "Felwood", npc = 7097, knows = "Dive 2, Screech 3" },
+        { name = "Ironbeak Hunter", level = "50-51", zone = "Felwood", npc = 7099, knows = "Claw 7, Dive 3" },
+        { name = "Ironbeak Screecher", level = "52-53", zone = "Felwood", npc = 7098, knows = "Dive 3" },
+        { name = "Olm the Wise", level = "52", zone = "Felwood", npc = 14343, tag = "Rare", knows = "Claw 7, Dive 3" },
+        { name = "Stormpike Owl", level = "53-54", zone = "Alterac Valley (Battleground)", npc = 14283, horde = true },
+        { name = "Winterspring Owl", level = "54-56", zone = "Winterspring", npc = 7455, knows = "Claw 7, Dive 3" },
+        { name = "Winterspring Screecher", level = "57-59", zone = "Winterspring", npc = 7456, knows = "Claw 8, Dive 3, Screech 4" },
+    },
+    ["Raptor"] = { -- 41 creatures
         { name = "Bloodtalon Taillasher", level = "6-8", zone = "Durotar", npc = 3122 },
         { name = "Bloodtalon Scythemaw", level = "8-10", zone = "Durotar", npc = 3123 },
-        { name = "Shriekling Fledgling", level = "8-9", zone = "Shriekling Den, Zephras Isle", npc = 253282, knows = "Cower 1" },
-        { name = "Bloodtalon Matriarch", level = "9", zone = "Echo Isles, Durotar", npc = 268530 },
-        { name = "Shriekling Matriarch", level = "9", zone = "Shriekling Den, Zephras Isle", npc = 253283 },
         { name = "Corrupted Bloodtalon Scythemaw", level = "10-11", zone = "Durotar", npc = 3227 },
         { name = "Sunscale Lashtail", level = "11-13", zone = "The Barrens", npc = 3254 },
         { name = "Sunscale Screecher", level = "13-15", zone = "The Barrens", npc = 3255 },
@@ -389,7 +340,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Highland Razormaw", level = "27-28", zone = "Wetlands", npc = 1018 },
         { name = "Elder Razormaw", level = "29", zone = "Wetlands", npc = 1019 },
         { name = "Sarltooth", level = "29", zone = "Wetlands", npc = 1353 },
-        { name = "Carnage", level = "30", zone = "Wetlands", npc = 271336 },
         { name = "Highland Strider", level = "30-31", zone = "Arathi Highlands", npc = 2559 },
         { name = "Young Stranglethorn Raptor", level = "30-31", zone = "Stranglethorn Vale", npc = 855 },
         { name = "Razormaw Matriarch", level = "31", zone = "Wetlands", npc = 1140, tag = "Rare" },
@@ -443,22 +393,18 @@ ns.TAMEABLE_CREATURES = {
         { name = "Stonelash Pincer", level = "56-57", zone = "Silithus", npc = 11736, knows = "Scorpid Poison 4" },
         { name = "Stonelash Flayer", level = "58-59", zone = "Silithus", npc = 11737, knows = "Scorpid Poison 4" },
     },
-    ["Spider"] = { -- 84 creatures
+    ["Spider"] = { -- 77 creatures
         { name = "Young Night Web Spider", level = "2-3", zone = "Tirisfal Glades", npc = 1504 },
         { name = "Night Web Spider", level = "3-4", zone = "Tirisfal Glades", npc = 1505, knows = "Bite 1" },
         { name = "Webwood Spider", level = "3-4", zone = "Teldrassil", npc = 1986 },
         { name = "Forest Spider", level = "5-6", zone = "Elwynn Forest", npc = 30, knows = "Bite 1" },
         { name = "Githyiss the Vile", level = "5", zone = "Teldrassil", npc = 1994, knows = "Bite 1" },
         { name = "Night Web Matriarch", level = "5", zone = "Tirisfal Glades", npc = 1688, knows = "Bite 1" },
-        { name = "Ridgeshade Creeper", level = "5-6", zone = "Durotar", npc = 266850 },
-        { name = "Ridgeshade Lurker", level = "5-6", zone = "Durotar", npc = 266849 },
         { name = "Webwood Lurker", level = "5-6", zone = "Teldrassil", npc = 1998 },
         { name = "Webwood Venomfang", level = "7-8", zone = "Teldrassil", npc = 1999, knows = "Bite 1" },
         { name = "Mine Spider", level = "8-9", zone = "Elwynn Forest", npc = 43 },
-        { name = "Ukorsbane", level = "8", zone = "Durotar", npc = 266851, tag = "Elite", knows = "Bite 1" },
         { name = "Webwood Silkspinner", level = "8-9", zone = "Teldrassil", npc = 2000, knows = "Bite 2" },
         { name = "Vicious Night Web Spider", level = "9-10", zone = "Tirisfal Glades", npc = 1555, knows = "Bite 2" },
-        { name = "Befouled Webwood", level = "10-11", zone = "Teldrassil", npc = 272096 },
         { name = "Forest Lurker", level = "10-11", zone = "Loch Modan", npc = 1195, knows = "Bite 2" },
         { name = "Giant Webwood Spider", level = "10-11", zone = "Teldrassil", npc = 2001, knows = "Bite 2" },
         { name = "Mother Fang", level = "10", zone = "Elwynn Forest", npc = 471, tag = "Rare" },
@@ -470,7 +416,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Deepmoss Hatchling", level = "14", zone = "Stonetalon Mountains", npc = 4263 },
         { name = "Krethis Shadowspinner", level = "15", zone = "Silverpine Forest", npc = 12433, tag = "Rare" },
         { name = "Tarantula", level = "15-16", zone = "Redridge Mountains", npc = 442, knows = "Bite 2" },
-        { name = "Broodwidow", level = "16", zone = "Ruins of Lordaeron", npc = 250619, knows = "Dash 3" },
         { name = "Deepmoss Creeper", level = "16-17", zone = "Stonetalon Mountains", npc = 4005, knows = "Bite 3" },
         { name = "Deepmoss Venomspitter", level = "17-18", zone = "Stonetalon Mountains", npc = 4007 },
         { name = "Wood Lurker", level = "17-18", zone = "Loch Modan", npc = 1185, knows = "Bite 3" },
@@ -494,7 +439,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Wildthorn Venomspitter", level = "24-25", zone = "Ashenvale", npc = 3820 },
         { name = "Carrion Recluse", level = "25-26", zone = "Duskwood", npc = 949 },
         { name = "Elder Moss Creeper", level = "26-27", zone = "Hillsbrad Foothills", npc = 2348, knows = "Bite 4" },
-        { name = "Highland Spider", level = "27-28", zone = "Excavation Site, Wetlands", npc = 260803, knows = "Bite 4" },
         { name = "Naraxis", level = "27", zone = "Duskwood", npc = 574, tag = "Rare", knows = "Bite 4" },
         { name = "Wildthorn Lurker", level = "28-29", zone = "Ashenvale", npc = 3821, knows = "Bite 4" },
         { name = "Plains Creeper", level = "32-33", zone = "Arathi Highlands", npc = 2563, knows = "Bite 5" },
@@ -506,7 +450,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Sorrow Spinner", level = "36-37", zone = "Swamp of Sorrows", npc = 858 },
         { name = "Darkfang Venomspitter", level = "37-38", zone = "Dustwallow Marsh", npc = 4414 },
         { name = "Darkmist Lurker", level = "37-38", zone = "Dustwallow Marsh", npc = 4377 },
-        { name = "Venomweb Spitter", level = "37", zone = "Riverglades", npc = 270664 },
         { name = "Darkfang Creeper", level = "38-39", zone = "Dustwallow Marsh", npc = 4412, knows = "Bite 5" },
         { name = "Darkmist Silkspinner", level = "38-39", zone = "Dustwallow Marsh", npc = 4379 },
         { name = "Darkmist Widow", level = "40", zone = "Dustwallow Marsh", npc = 4380, tag = "Rare" },
@@ -529,14 +472,11 @@ ns.TAMEABLE_CREATURES = {
         { name = "Razzashi Venombrood", level = "60", zone = "Zul'Gurub (Raid)", npc = 14532, tag = "Elite" },
         { name = "Spawn of Mar'li", level = "60", zone = "Zul'Gurub (Raid)", npc = 15041 },
     },
-    ["Tallstrider"] = { -- 15 creatures
+    ["Tallstrider"] = { -- 11 creatures
         { name = "Plainstrider", level = "1-2", zone = "Mulgore", npc = 2955 },
-        { name = "Galestrider", level = "5-6", zone = "Shen'dar Highlands, Zephras Isle", npc = 251661 },
         { name = "Adult Plainstrider", level = "6-7", zone = "Mulgore", npc = 2956 },
         { name = "Elder Plainstrider", level = "8-9", zone = "Mulgore", npc = 2957, knows = "Cower 1" },
-        { name = "Ornery Galestrider", level = "8", zone = "Gustberry Lowlands, Zephras Isle", npc = 251707 },
         { name = "Mazzranache", level = "9", zone = "Mulgore", npc = 3068, tag = "Rare", knows = "Cower 1" },
-        { name = "Fernfeather", level = "10", zone = "Windfield Orchard, Zephras Isle", npc = 256492, tag = "Rare" },
         { name = "Foreststrider Fledgling", level = "11-13", zone = "Darkshore", npc = 2321, knows = "Cower 1" },
         { name = "Greater Plainstrider", level = "11-12", zone = "The Barrens", npc = 3244 },
         { name = "Fleeting Plainstrider", level = "12-13", zone = "The Barrens", npc = 3246, knows = "Cower 1" },
@@ -544,15 +484,13 @@ ns.TAMEABLE_CREATURES = {
         { name = "Ornery Plainstrider", level = "16-17", zone = "The Barrens", npc = 3245, knows = "Cower 2" },
         { name = "Giant Foreststrider", level = "17-19", zone = "Darkshore", npc = 2323, knows = "Cower 2" },
         { name = "Strider Clutchmother", level = "20", zone = "Darkshore", npc = 2172, tag = "Rare" },
-        { name = "Roving Tallstrider", level = "37-38", zone = "Riverglades", npc = 263348 },
     },
-    ["Turtle"] = { -- 24 creatures
+    ["Turtle"] = { -- 22 creatures
         { name = "Oasis Snapjaw", level = "15-16", zone = "The Barrens", npc = 3461, knows = "Bite 2" },
         { name = "Kresh", level = "20", zone = "Wailing Caverns (Dungeon)", npc = 3653, tag = "Elite", knows = "Bite 3, Shell Shield 1" },
         { name = "Aku'mai Fisher", level = "23-24", zone = "Blackfathom Deeps (Dungeon)", npc = 4824, tag = "Elite", knows = "Bite 3, Shell Shield 1" },
         { name = "Ghamoo-ra", level = "25", zone = "Blackfathom Deeps (Dungeon)", npc = 4887, tag = "Elite", knows = "Bite 4, Shell Shield 1" },
         { name = "Aku'mai Snapjaw", level = "26-27", zone = "Blackfathom Deeps (Dungeon)", npc = 4825, tag = "Elite", knows = "Bite 4, Shell Shield 1" },
-        { name = "Highland Tortoise", level = "26", zone = "Excavation Site, Wetlands", npc = 260809, knows = "Bite 4" },
         { name = "Snapjaw", level = "30-31", zone = "Hillsbrad Foothills", npc = 2408, knows = "Bite 4, Shell Shield 1" },
         { name = "Sparkleshell Tortoise", level = "30-31", zone = "Thousand Needles", npc = 4142 },
         { name = "Cranky Benj", level = "32", zone = "Alterac Mountains", npc = 14223, tag = "Rare", knows = "Bite 4, Shell Shield 1" },
@@ -570,7 +508,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Coralshell Tortoise", level = "50-52", zone = "Azshara", npc = 6369 },
         { name = "Ironback", level = "51", zone = "The Hinterlands", npc = 8213, tag = "Rare", knows = "Bite 7" },
         { name = "Coralshell Lurker", level = "53-54", zone = "Azshara", npc = 6352 },
-        { name = "Krek the Noxious", level = "?", zone = "Riverglades", npc = 263615, tag = "Elite" },
     },
     ["Wind Serpent"] = { -- 21 creatures
         { name = "Deviate Coiler", level = "15-16", zone = "Wailing Caverns (Dungeon)", npc = 3630, tag = "Elite", knows = "Lightning Breath 2" },
@@ -595,7 +532,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Spawn of Hakkar", level = "51", zone = "The Temple of Atal'Hakkar (Dungeon)", npc = 5708, tag = "Elite", knows = "Dive 3, Lightning Breath 5" },
         { name = "Son of Hakkar", level = "60", zone = "Zul'Gurub (Raid)", npc = 11357, tag = "Elite", knows = "Lightning Breath 6" },
     },
-    ["Wolf"] = { -- 71 creatures
+    ["Wolf"] = { -- 66 creatures
         { name = "Ragged Young Wolf", level = "1", zone = "Dun Morogh", npc = 705 },
         { name = "Young Scavenger", level = "1", zone = "Tirisfal Glades", npc = 1508 },
         { name = "Young Wolf", level = "1", zone = "Elwynn Forest", npc = 299 },
@@ -608,9 +545,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Gray Forest Wolf", level = "7-8", zone = "Elwynn Forest", npc = 1922, knows = "Bite 1" },
         { name = "Prairie Stalker", level = "7-8", zone = "Mulgore", npc = 2959, knows = "Bite 1" },
         { name = "Winter Wolf", level = "7-8", zone = "Dun Morogh", npc = 1131, knows = "Bite 1" },
-        { name = "Rabid Forest Wolf", level = "8-9", zone = "Whispering Forest, Tirisfal Glades", npc = 277730 },
         { name = "Starving Winter Wolf", level = "8-9", zone = "Dun Morogh", npc = 1133, knows = "Bite 2" },
-        { name = "Vulgara the Insatiable", level = "8", zone = "Shen'dar Highlands, Zephras Isle", npc = 254589, knows = "Bite 2" },
         { name = "Prairie Wolf Alpha", level = "9-10", zone = "Mulgore", npc = 2960, knows = "Bite 2, Furious Howl 1" },
         { name = "Prowler", level = "9-10", zone = "Elwynn Forest", npc = 118, knows = "Bite 2" },
         { name = "Coyote", level = "10-11", zone = "Westfall", npc = 834, knows = "Bite 2" },
@@ -618,7 +553,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Worg", level = "10-11", zone = "Silverpine Forest", npc = 1765, knows = "Bite 2, Furious Howl 1" },
         { name = "Coyote Packleader", level = "11-12", zone = "Westfall", npc = 833, knows = "Bite 2, Furious Howl 1" },
         { name = "Mottled Worg", level = "11-12", zone = "Silverpine Forest", npc = 1766 },
-        { name = "Coldrasp", level = "12", zone = "Whispering Forest, Tirisfal Glades", npc = 274300, tag = "Rare", knows = "Howl 1" },
         { name = "Gorefang", level = "13", zone = "Silverpine Forest", npc = 12431, tag = "Rare" },
         { name = "Bloodsnout Worg", level = "16-17", zone = "Silverpine Forest", npc = 1923, knows = "Bite 3" },
         { name = "Bleak Worg", level = "18-19", zone = "Shadowfang Keep (Dungeon)", npc = 3861, tag = "Elite" },
@@ -637,9 +571,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Crag Coyote", level = "35-36", zone = "Badlands", npc = 2727, knows = "Bite 5, Dash 1" },
         { name = "Spot", level = "35", zone = "Dustwallow Marsh", npc = 4950, knows = "Dash 1", horde = true },
         { name = "Feral Crag Coyote", level = "37-38", zone = "Badlands", npc = 2728, knows = "Dash 1" },
-        { name = "Plains Coyote", level = "37", zone = "Riverglades", npc = 259267 },
         { name = "Barnabus", level = "38", zone = "Badlands", npc = 2753, tag = "Rare", knows = "Bite 6" },
-        { name = "Sootfur", level = "38", zone = "Riverglades", npc = 258522 },
         { name = "Elder Crag Coyote", level = "39-40", zone = "Badlands", npc = 2729, knows = "Dash 1, Furious Howl 2" },
         { name = "Longtooth Runner", level = "40-41", zone = "Feralas", npc = 5286, knows = "Bite 6, Dash 2, Furious Howl 3" },
         { name = "Mangy Silvermane", level = "41-42", zone = "The Hinterlands", npc = 2923 },

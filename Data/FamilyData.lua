@@ -1,11 +1,8 @@
 local ADDON_NAME, ns = ...
 
--- Hunter pet families, limited to those that exist in WoW: Forever.
+-- Hunter pet families in WoW Classic Era (the 17 tameable families).
 -- FAMILY_BY_NAME maps the localized UnitCreatureFamily("pet") string back
--- to the family ID (locale-safe detection). Family 26 was renamed from
--- "Owl" to "Bird of Prey", and family 40 ("Fox") was added, per Forever's
--- own family changes; Dragonhawk/Ravager/Warp Stalker/Sporebat/Nether
--- Ray/Serpent were removed as they don't exist on Forever.
+-- to the family ID (locale-safe detection).
 
 ns.PET_FAMILIES = {
     [1] = "Wolf",
@@ -23,9 +20,8 @@ ns.PET_FAMILIES = {
     [21] = "Turtle",
     [24] = "Bat",
     [25] = "Hyena",
-    [26] = "Bird of Prey",
+    [26] = "Owl",
     [27] = "Wind Serpent",
-    [40] = "Fox",
 }
 
 ns.FAMILY_BY_NAME = {
@@ -146,7 +142,7 @@ ns.FAMILY_BY_NAME = {
     ["Гиена"] = 25,
     ["하이에나"] = 25,
     ["土狼"] = 25,
-    ["Bird of Prey"] = 26,
+    ["Owl"] = 26,
     ["Eule"] = 26,
     ["Chouette"] = 26,
     ["Búho"] = 26,
@@ -164,5 +160,4 @@ ns.FAMILY_BY_NAME = {
     ["천둥매"] = 27,
     ["风蛇"] = 27,
     ["風蛇"] = 27,
-    ["Fox"] = 40,
 }

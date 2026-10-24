@@ -49,9 +49,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Bloodsnout Worg"] = {
         { x1 = 43.1, y1 = 71.1, x2 = 57.4, y2 = 84.4, cx = 48.0, cy = 76.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\bloodsnout_worg_1", poly = { {48.1,71.9}, {53.2,73.1}, {53.8,79.0}, {56.6,79.3}, {56.6,83.6}, {53.6,83.6}, {50.6,78.3}, {49.9,82.6}, {47.3,82.9}, {46.7,79.6}, {43.9,78.6}, {43.9,74.3}, {47.9,74.0} } },
     },
-    ["Bloodwing Bat"] = {
-        { x1 = 11.1, y1 = 47.2, x2 = 21.5, y2 = 57.0, cx = 15.2, cy = 52.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\bloodwing_bat_1", poly = { {12.1,48.0}, {20.7,51.8}, {20.7,56.2}, {11.9,56.2} } },
-    },
     ["Bonepaw Hyena"] = {
         { x1 = 30.6, y1 = 64.1, x2 = 46.8, y2 = 81.3, cx = 39.4, cy = 73.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\bonepaw_hyena_1", poly = { {40.2,64.9}, {43.5,64.9}, {46.0,68.6}, {45.2,77.4}, {38.4,80.5}, {31.4,79.3}, {32.9,70.2} } },
         { x1 = 36.4, y1 = 16.9, x2 = 63.8, y2 = 48.6, cx = 45.6, cy = 35.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\bonepaw_hyena_2", poly = { {43.4,17.7}, {46.1,17.7}, {47.2,22.7}, {53.0,23.1}, {53.0,33.4}, {62.8,36.5}, {63.0,40.8}, {59.7,44.8}, {52.1,44.8}, {50.8,47.2}, {44.3,47.8}, {44.3,42.8}, {39.4,41.1}, {37.2,35.8}, {38.5,25.8}, {42.3,23.4} } },
@@ -61,9 +58,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Carrion Vulture"] = {
         { x1 = 26.9, y1 = 51.6, x2 = 36.9, y2 = 71.6, cx = 31.9, cy = 63.4, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\carrion_vulture_1", poly = { {27.7,52.4}, {35.5,55.9}, {36.1,65.8}, {34.5,70.8}, {27.9,67.4} } },
-    },
-    ["Child of Jai'vhanel"] = {
-        { x1 = 41.5, y1 = 54.4, x2 = 47.8, y2 = 64.5, cx = 44.5, cy = 57.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\child_of_jai_vhanel_1", poly = { {44.1,55.2}, {47.0,55.5}, {45.6,63.7}, {42.3,61.5}, {42.5,55.9} } },
     },
     ["Clattering Crawler"] = {
         { x1 = 3.0, y1 = 8.6, x2 = 16.4, y2 = 34.9, cx = 11.5, cy = 26.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\clattering_crawler_1", poly = { {4.0,9.4}, {6.9,9.4}, {7.1,10.7}, {15.6,12.0}, {15.6,28.4}, {12.2,34.1}, {9.4,34.1}, {7.1,29.8}, {7.1,24.1}, {9.4,23.1}, {9.4,14.7}, {3.8,14.4} } },
@@ -195,10 +189,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Elder Shardtooth"] = {
         { x1 = 64.9, y1 = 7.9, x2 = 80.1, y2 = 29.6, cx = 72.5, cy = 20.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\elder_shardtooth_1", poly = { {72.6,8.7}, {77.3,11.0}, {77.5,18.4}, {79.3,20.4}, {78.2,28.8}, {68.6,27.8}, {68.4,24.7}, {65.7,23.4}, {65.7,17.1}, {69.3,15.7}, {69.5,9.7} } },
     },
-    ["Elmpaw"] = {
-        { x1 = 69.2, y1 = 32.6, x2 = 81.5, y2 = 46.4, cx = 75.9, cy = 38.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\elmpaw_1", poly = { {72.7,33.4}, {80.7,35.6}, {80.1,41.8}, {70.0,45.6} } },
-        { x1 = 80.5, y1 = 74.1, x2 = 91.1, y2 = 91.9, cx = 85.6, cy = 82.6, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\elmpaw_2", poly = { {86.0,74.9}, {88.9,74.9}, {90.3,78.9}, {89.1,88.0}, {86.2,91.1}, {81.3,91.1}, {81.3,81.4} } },
-    },
     ["Encrusted Surf Crawler"] = {
         { x1 = 52.2, y1 = 3.9, x2 = 62.4, y2 = 19.5, cx = 56.9, cy = 10.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\encrusted_surf_crawler_1", poly = { {55.9,4.7}, {59.8,4.7}, {61.6,18.7}, {56.3,17.8}, {56.1,14.4}, {53.0,12.8}, {53.0,8.4} } },
     },
@@ -230,10 +220,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Fleeting Plainstrider"] = {
         { x1 = 39.3, y1 = 7.9, x2 = 66.3, y2 = 41.3, cx = 53.4, cy = 27.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\fleeting_plainstrider_1", poly = { {48.8,8.7}, {52.8,9.7}, {54.3,15.4}, {63.7,15.4}, {63.7,24.7}, {65.3,25.1}, {65.5,36.8}, {57.9,36.8}, {55.9,40.5}, {46.8,40.5}, {43.0,36.8}, {43.0,29.1}, {40.1,27.1}, {40.3,20.1}, {44.5,20.1} } },
     },
-    ["Foothills Duskbat"] = {
-        { x1 = 30.4, y1 = 9.2, x2 = 46.5, y2 = 27.6, cx = 39.2, cy = 17.6, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\foothills_duskbat_1", poly = { {35.2,10.0}, {43.0,13.7}, {45.7,26.8}, {39.2,26.8}, {36.5,24.4}, {36.5,21.7}, {34.7,19.1}, {32.7,19.1}, {31.2,11.7}, {34.3,11.4} } },
-        { x1 = 52.0, y1 = 3.9, x2 = 67.2, y2 = 20.5, cx = 57.2, cy = 11.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\foothills_duskbat_2", poly = { {55.0,4.7}, {58.1,4.7}, {59.0,6.0}, {63.7,6.0}, {66.1,4.7}, {66.4,12.0}, {61.2,12.4}, {58.4,16.7}, {57.7,19.7}, {54.8,19.7}, {52.8,17.7}, {52.8,10.4}, {55.0,7.0} } },
-    },
     ["Forest Lurker"] = {
         { x1 = 17.8, y1 = 69.8, x2 = 22.4, y2 = 80.6, cx = 20.1, cy = 78.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\forest_lurker_1", poly = { {18.6,70.6}, {21.4,70.6}, {21.6,79.8}, {18.6,79.8} } },
         { x1 = 34.5, y1 = 71.3, x2 = 40.4, y2 = 78.5, cx = 37.5, cy = 74.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\forest_lurker_2", poly = { {35.3,72.1}, {39.6,73.3}, {39.6,77.7}, {35.3,76.7} } },
@@ -257,9 +243,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Frostsaber Stalker"] = {
         { x1 = 57.2, y1 = 6.1, x2 = 73.0, y2 = 23.3, cx = 67.2, cy = 12.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\frostsaber_stalker_1", poly = { {63.5,6.9}, {71.9,8.4}, {72.2,17.2}, {65.1,18.1}, {64.8,22.5}, {61.5,22.5}, {59.5,20.9}, {58.0,10.9}, {58.5,9.0}, {63.0,10.0} } },
-    },
-    ["Galestrider"] = {
-        { x1 = 33.3, y1 = 31.3, x2 = 50.0, y2 = 66.4, cx = 41.6, cy = 51.4, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\galestrider_1", poly = { {46.1,32.1}, {49.0,33.4}, {49.2,40.5}, {48.6,42.5}, {49.0,54.5}, {48.1,54.8}, {48.1,59.9}, {44.3,60.5}, {43.9,65.2}, {41.0,65.6}, {39.2,64.9}, {39.0,59.9}, {34.3,59.9}, {34.1,44.8}, {40.8,32.8} } },
     },
     ["Ghost Saber"] = {
         { x1 = 54.6, y1 = 10.1, x2 = 64.0, y2 = 27.0, cx = 59.3, cy = 21.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ghost_saber_1", poly = { {57.7,10.9}, {63.2,14.4}, {62.8,22.8}, {60.6,25.9}, {56.9,26.2}, {55.4,22.5} } },
@@ -301,9 +284,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Gray Forest Wolf"] = {
         { x1 = 56.1, y1 = 53.7, x2 = 77.1, y2 = 74.3, cx = 69.0, cy = 64.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\gray_forest_wolf_1", poly = { {67.6,54.5}, {70.4,54.5}, {70.6,58.5}, {76.3,60.9}, {76.3,71.4}, {72.7,72.3}, {71.4,69.2}, {58.6,73.5}, {56.9,61.2}, {59.0,57.2}, {61.8,57.2}, {63.5,61.5}, {63.7,57.2} } },
     },
-    ["Gray Fox"] = {
-        { x1 = 10.4, y1 = 24.4, x2 = 19.7, y2 = 56.7, cx = 15.0, cy = 50.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\gray_fox_1", poly = { {15.9,25.2}, {12.3,29.6}, {11.2,33.1}, {11.5,50.8}, {14.3,55.9}, {17.0,55.5}, {18.9,51.3}, {18.2,49.0}, {15.3,46.4}, {14.4,42.7}, {14.3,35.0}, {17.8,28.7} } },
-    },
     ["Great Goretusk"] = {
         { x1 = 47.0, y1 = 36.6, x2 = 58.5, y2 = 46.4, cx = 50.5, cy = 40.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\great_goretusk_1", poly = { {51.7,37.4}, {57.5,38.4}, {57.7,42.7}, {52.8,42.1}, {52.6,45.6}, {47.8,45.6}, {47.8,38.7} } },
         { x1 = 2.1, y1 = 35.0, x2 = 40.7, y2 = 91.8, cx = 26.9, cy = 71.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\great_goretusk_2", poly = { {12.9,35.8}, {15.8,35.8}, {16.5,38.1}, {19.2,38.1}, {21.4,36.5}, {21.4,41.5}, {18.0,48.8}, {18.0,52.2}, {22.7,56.5}, {27.8,58.9}, {34.5,58.2}, {37.2,62.9}, {37.2,70.2}, {39.9,71.6}, {39.0,78.6}, {35.9,78.6}, {35.2,76.9}, {33.0,76.9}, {29.4,83.3}, {17.6,82.6}, {18.0,74.6}, {14.7,73.9}, {11.8,80.9}, {9.6,82.3}, {9.4,89.3}, {6.0,89.3}, {5.8,91.0}, {2.9,91.0}, {2.9,79.3}, {8.5,76.9}, {9.8,68.9}, {13.6,69.2}, {14.5,65.6}, {16.9,66.9}, {19.8,66.9}, {21.8,65.2}, {21.8,61.9}, {18.3,61.2}, {17.4,57.5}, {13.6,57.5}, {12.7,59.2}, {8.5,57.2}, {9.6,40.8} } },
@@ -328,10 +308,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Groddoc Thunderer"] = {
         { x1 = 35.1, y1 = 3.9, x2 = 52.7, y2 = 37.6, cx = 42.7, cy = 19.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\groddoc_thunderer_1", poly = { {42.1,4.7}, {45.0,4.7}, {45.4,6.0}, {46.1,8.4}, {46.1,15.7}, {47.9,20.4}, {47.9,23.1}, {51.7,24.1}, {51.9,33.8}, {47.0,36.8}, {47.0,31.1}, {44.3,30.8}, {43.9,26.4}, {41.2,24.1}, {35.9,24.1}, {35.9,19.4}, {37.9,19.4}, {38.3,18.7} } },
-    },
-    ["Highlands Ursera"] = {
-        { x1 = 40.9, y1 = 66.0, x2 = 46.2, y2 = 73.5, cx = 43.6, cy = 68.6, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\highlands_ursera_1", poly = { {42.3,66.8}, {45.4,66.8}, {44.6,72.7}, {41.7,72.7} } },
-        { x1 = 47.3, y1 = 53.4, x2 = 60.0, y2 = 66.4, cx = 52.3, cy = 63.3, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\highlands_ursera_2", poly = { {56.6,54.2}, {59.2,54.5}, {59.2,58.9}, {57.9,59.2}, {57.9,65.2}, {50.1,65.6}, {50.1,61.5}, {48.1,60.9}, {48.8,56.2}, {51.4,56.2}, {52.3,60.9}, {56.1,60.9} } },
     },
     ["Ice Claw Bear"] = {
         { x1 = 56.9, y1 = 48.5, x2 = 62.2, y2 = 55.1, cx = 59.5, cy = 52.3, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ice_claw_bear_1", poly = { {57.7,49.3}, {60.8,49.3}, {61.4,54.3}, {58.1,54.3} } },
@@ -361,9 +337,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Juvenile Snow Leopard"] = {
         { x1 = 32.7, y1 = 53.5, x2 = 47.2, y2 = 66.0, cx = 41.9, cy = 59.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\juvenile_snow_leopard_1", poly = { {40.7,54.3}, {46.4,55.5}, {46.4,61.5}, {41.9,65.2}, {33.5,63.0}, {33.7,57.4}, {38.4,57.4} } },
-    },
-    ["Juvenile Vuldren"] = {
-        { x1 = 40.6, y1 = 17.5, x2 = 48.7, y2 = 30.9, cx = 44.6, cy = 21.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\juvenile_vuldren_1", poly = { {41.8,18.3}, {47.9,18.9}, {46.9,30.1}, {41.4,29.1} } },
     },
     ["King Bangalash"] = {
         { x1 = 35.5, y1 = 30.7, x2 = 40.6, y2 = 39.5, cx = 38.0, cy = 33.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\king_bangalash_1", poly = { {36.3,31.5}, {39.8,31.8}, {39.2,38.7}, {36.3,38.4} } },
@@ -426,9 +399,6 @@ ns.TAME_TEACHER_AREAS = {
         { x1 = 30.4, y1 = 67.1, x2 = 46.2, y2 = 99.1, cx = 38.7, cy = 89.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\moonstalker_sire_1", poly = { {36.7,67.9}, {41.0,68.6}, {41.0,75.6}, {45.4,78.6}, {44.8,81.9}, {44.8,93.3}, {45.4,97.0}, {37.2,98.3}, {31.2,89.0}, {31.2,86.0}, {34.1,85.6}, {34.1,80.3}, {35.9,78.6} } },
         { x1 = 57.7, y1 = 3.9, x2 = 65.3, y2 = 15.5, cx = 61.2, cy = 11.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\moonstalker_sire_2", poly = { {60.2,4.7}, {64.5,4.7}, {62.8,14.7}, {58.5,14.0} } },
     },
-    ["Moss Stalker"] = {
-        { x1 = 31.4, y1 = 7.6, x2 = 39.8, y2 = 18.9, cx = 35.4, cy = 14.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\moss_stalker_1", poly = { {33.5,8.4}, {36.6,8.4}, {39.0,16.5}, {32.2,18.1} } },
-    },
     ["Mottled Boar"] = {
         { x1 = 38.4, y1 = 56.4, x2 = 49.1, y2 = 76.4, cx = 43.8, cy = 69.6, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\mottled_boar_1", poly = { {42.8,57.2}, {47.0,59.9}, {48.3,71.2}, {45.0,75.6}, {40.3,75.6}, {39.4,70.6}, {39.2,62.5} } },
     },
@@ -462,9 +432,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Ol' Sooty"] = {
         { x1 = 34.5, y1 = 58.8, x2 = 41.9, y2 = 66.3, cx = 38.2, cy = 62.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ol_sooty_1", poly = { {35.3,59.6}, {41.1,59.9}, {40.9,65.5}, {35.7,65.2} } },
-    },
-    ["Ornery Galestrider"] = {
-        { x1 = 43.1, y1 = 64.1, x2 = 67.2, y2 = 86.1, cx = 50.1, cy = 76.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ornery_galestrider_1", poly = { {61.9,64.9}, {66.4,65.6}, {64.6,74.6}, {56.8,73.9}, {56.1,78.6}, {52.8,78.9}, {52.8,83.6}, {47.9,85.3}, {47.7,83.9}, {43.9,83.6}, {44.1,79.6}, {46.1,79.3}, {46.1,71.9}, {50.6,71.9}, {51.2,69.9}, {56.3,69.9} } },
     },
     ["Ornery Plainstrider"] = {
         { x1 = 33.5, y1 = 20.7, x2 = 41.9, y2 = 30.8, cx = 37.5, cy = 25.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ornery_plainstrider_1", poly = { {38.2,21.5}, {40.9,21.5}, {41.1,25.9}, {38.4,30.0}, {34.3,30.0}, {34.5,23.7} } },
@@ -501,10 +468,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Prairie Wolf Alpha"] = {
         { x1 = 56.7, y1 = 53.5, x2 = 71.4, y2 = 72.9, cx = 64.0, cy = 64.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\prairie_wolf_alpha_1", poly = { {61.0,54.3}, {69.6,56.8}, {70.6,66.8}, {68.8,67.7}, {68.8,71.5}, {58.3,72.1}, {57.5,59.6}, {60.0,59.3} } },
         { x1 = 29.3, y1 = 3.9, x2 = 64.5, y2 = 42.3, cx = 48.6, cy = 20.3, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\prairie_wolf_alpha_2", poly = { {39.4,4.7}, {53.7,5.7}, {53.9,11.4}, {57.9,14.4}, {58.8,20.1}, {63.7,20.1}, {58.6,36.8}, {51.9,36.8}, {50.1,41.5}, {47.7,41.5}, {46.8,34.1}, {43.0,33.8}, {41.0,30.1}, {40.8,27.1}, {37.2,27.1}, {36.7,21.1}, {30.1,20.4}, {31.2,14.4}, {35.2,11.4}, {35.4,6.4} } },
-    },
-    ["Prideclaw"] = {
-        { x1 = 33.5, y1 = 31.0, x2 = 49.8, y2 = 58.7, cx = 42.0, cy = 43.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\prideclaw_1", poly = { {41.4,31.8}, {49.0,36.8}, {49.0,53.2}, {44.3,55.2}, {41.4,55.2}, {39.2,57.9}, {36.1,57.9}, {36.1,48.2}, {34.3,47.8}, {34.3,42.5} } },
-        { x1 = 38.4, y1 = 59.4, x2 = 53.8, y2 = 73.7, cx = 47.1, cy = 64.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\prideclaw_2", poly = { {50.1,60.2}, {53.0,60.2}, {52.8,66.9}, {49.2,66.9}, {49.0,71.9}, {45.0,72.9}, {44.5,65.9}, {39.4,65.9}, {39.2,60.9}, {49.9,60.9} } },
     },
     ["Princess"] = {
         { x1 = 66.6, y1 = 76.3, x2 = 73.5, y2 = 86.0, cx = 69.8, cy = 81.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\princess_1", poly = { {69.0,77.1}, {72.7,78.3}, {71.0,85.2}, {67.4,82.7} } },
@@ -590,20 +553,11 @@ ns.TAME_TEACHER_AREAS = {
     ["Scorpid Worker"] = {
         { x1 = 36.6, y1 = 53.4, x2 = 49.4, y2 = 77.1, cx = 43.0, cy = 63.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\scorpid_worker_1", poly = { {41.6,54.2}, {47.9,56.5}, {48.6,67.2}, {46.3,67.6}, {45.2,76.3}, {42.1,76.3}, {38.1,70.2}, {37.4,59.9} } },
     },
-    ["Scrawny Ursera"] = {
-        { x1 = 34.3, y1 = 20.7, x2 = 43.7, y2 = 32.6, cx = 39.2, cy = 25.6, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\scrawny_ursera_1", poly = { {35.1,21.5}, {42.9,22.2}, {42.9,29.0}, {36.1,31.8} } },
-    },
     ["Searing Roc"] = {
         { x1 = 29.0, y1 = 48.7, x2 = 62.5, y2 = 83.1, cx = 43.4, cy = 65.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\searing_roc_1", poly = { {29.8,49.5}, {33.2,49.5}, {33.6,51.5}, {37.2,51.5}, {44.1,49.5}, {44.3,55.2}, {50.3,55.9}, {50.6,57.5}, {54.3,57.5}, {55.0,56.9}, {54.8,64.9}, {60.1,68.6}, {60.1,74.6}, {61.7,76.6}, {61.7,80.3}, {55.7,81.3}, {54.3,78.6}, {50.6,78.6}, {50.3,74.6}, {45.2,74.6}, {43.4,79.6}, {33.4,82.3}, {32.3,70.6}, {33.0,68.2}, {33.0,62.5}, {31.8,60.5}, {32.1,53.5}, {29.8,53.2} } },
     },
     ["Shadow Panther"] = {
         { x1 = 63.3, y1 = 3.9, x2 = 96.1, y2 = 91.4, cx = 77.4, cy = 19.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shadow_panther_1", poly = { {69.7,4.7}, {75.7,4.7}, {75.9,10.0}, {84.2,10.4}, {90.0,24.4}, {91.5,36.1}, {95.3,42.5}, {94.0,51.5}, {91.3,51.8}, {91.1,66.2}, {90.9,68.2}, {90.0,68.6}, {90.0,73.6}, {89.1,78.6}, {86.6,80.9}, {79.7,80.9}, {79.5,90.6}, {75.5,90.6}, {75.5,83.9}, {72.2,83.6}, {71.9,80.6}, {66.1,79.6}, {66.1,72.6}, {64.1,70.2}, {64.6,65.2}, {70.4,66.9}, {81.1,66.9}, {81.3,64.9}, {82.6,64.5}, {82.6,61.2}, {83.7,56.2}, {89.5,55.9}, {89.5,40.5}, {88.4,39.1}, {88.4,33.1}, {84.6,31.8}, {84.2,29.1}, {67.9,28.8}, {67.5,10.7}, {65.9,5.4} } },
-    },
-    ["Shadowgale Shriekling"] = {
-        { x1 = 52.0, y1 = 30.7, x2 = 65.3, y2 = 47.6, cx = 59.8, cy = 38.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shadowgale_shriekling_1", poly = { {58.9,31.5}, {63.7,33.4}, {64.5,41.2}, {52.8,46.8}, {54.0,34.6}, {57.1,35.6} } },
-    },
-    ["Shadowgale Ursera"] = {
-        { x1 = 57.1, y1 = 29.5, x2 = 64.5, y2 = 40.7, cx = 60.8, cy = 34.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shadowgale_ursera_1", poly = { {58.5,30.3}, {61.6,30.3}, {63.7,34.6}, {63.2,39.9}, {60.4,39.9}, {57.9,35.3} } },
     },
     ["Shadowmaw Panther"] = {
         { x1 = 32.2, y1 = 15.6, x2 = 52.7, y2 = 48.3, cx = 38.7, cy = 35.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shadowmaw_panther_1", poly = { {46.3,16.4}, {51.9,17.1}, {50.8,26.8}, {47.9,30.8}, {43.9,31.1}, {43.9,38.8}, {40.1,47.5}, {35.2,47.5}, {33.0,33.8}, {38.8,28.1}, {42.8,28.1} } },
@@ -613,12 +567,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Shore Crawler"] = {
         { x1 = 22.6, y1 = 60.7, x2 = 38.7, y2 = 94.4, cx = 30.6, cy = 83.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shore_crawler_1", poly = { {23.4,61.5}, {26.5,61.5}, {27.4,69.6}, {27.4,75.6}, {30.3,75.9}, {31.0,79.9}, {34.5,82.6}, {34.7,86.6}, {37.9,87.3}, {37.2,93.6}, {34.3,93.3}, {33.2,86.6}, {28.5,86.6}, {26.5,76.3}, {26.5,70.6}, {23.8,70.2} } },
-    },
-    ["Shriekling Fledgling"] = {
-        { x1 = 47.5, y1 = 62.5, x2 = 55.0, y2 = 72.6, cx = 51.0, cy = 66.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shriekling_fledgling_1", poly = { {50.9,63.3}, {54.2,63.3}, {52.6,71.8}, {48.3,69.6}, {48.3,65.2} } },
-    },
-    ["Shriekling Matriarch"] = {
-        { x1 = 49.9, y1 = 62.2, x2 = 55.0, y2 = 70.4, cx = 52.5, cy = 66.3, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\shriekling_matriarch_1", poly = { {51.3,63.0}, {54.2,63.3}, {53.6,69.6}, {50.7,69.3} } },
     },
     ["Silithid Creeper"] = {
         { x1 = 39.7, y1 = 66.6, x2 = 51.5, y2 = 76.6, cx = 44.6, cy = 70.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\silithid_creeper_1", poly = { {42.9,67.4}, {50.7,67.4}, {50.7,71.8}, {42.1,75.8}, {40.5,68.0} } },
@@ -717,17 +665,8 @@ ns.TAME_TEACHER_AREAS = {
     ["U'cha"] = {
         { x1 = 65.9, y1 = 7.9, x2 = 71.4, y2 = 16.4, cx = 68.7, cy = 12.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\u_cha_1", poly = { {67.6,8.7}, {70.6,9.0}, {70.4,15.6}, {66.7,14.7} } },
     },
-    ["Ukorsbane"] = {
-        { x1 = 46.9, y1 = 53.6, x2 = 52.8, y2 = 60.2, cx = 50.0, cy = 56.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ukorsbane_1", poly = { {48.2,54.4}, {52.0,54.4}, {52.0,58.7}, {47.7,59.4} } },
-    },
     ["Un'Goro Thunderer"] = {
         { x1 = 60.8, y1 = 8.9, x2 = 72.5, y2 = 20.1, cx = 67.2, cy = 14.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\un_goro_thunderer_1", poly = { {67.4,9.7}, {70.6,10.0}, {71.7,17.8}, {61.6,19.3}, {62.4,12.8} } },
-    },
-    ["Urs'anah"] = {
-        { x1 = 32.7, y1 = 20.1, x2 = 37.4, y2 = 28.3, cx = 35.0, cy = 24.2, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\urs_anah_1", poly = { {33.5,20.9}, {36.3,20.9}, {36.6,27.5}, {33.5,26.8} } },
-    },
-    ["Ursera Scavenger"] = {
-        { x1 = 32.9, y1 = 18.9, x2 = 40.6, y2 = 29.8, cx = 36.4, cy = 25.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\ursera_scavenger_1", poly = { {34.3,19.7}, {38.4,21.5}, {39.8,29.0}, {33.7,26.8} } },
     },
     ["Vale Screecher"] = {
         { x1 = 54.2, y1 = 49.4, x2 = 63.2, y2 = 65.7, cx = 58.5, cy = 60.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\vale_screecher_1", poly = { {55.0,50.2}, {59.5,51.5}, {62.4,64.9}, {55.6,63.3} } },
@@ -747,12 +686,6 @@ ns.TAME_TEACHER_AREAS = {
     ["Vilebranch Raiding Wolf"] = {
         { x1 = 56.0, y1 = 61.7, x2 = 64.5, y2 = 84.4, cx = 60.1, cy = 78.9, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\vilebranch_raiding_wolf_1", poly = { {57.2,62.5}, {60.4,62.5}, {60.1,73.9}, {62.4,74.9}, {63.7,83.3}, {59.5,83.6}, {56.8,79.6}, {57.5,76.3} } },
     },
-    ["Vuldren"] = {
-        { x1 = 40.0, y1 = 33.4, x2 = 58.1, y2 = 64.9, cx = 47.4, cy = 52.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\vuldren_1", poly = { {40.8,54.9}, {41.0,42.5}, {41.2,38.2}, {45.1,34.2}, {48.0,34.5}, {57.3,59.8}, {57.3,64.1}, {54.5,64.1}, {45.7,60.4} } },
-    },
-    ["Vuldren Alpha"] = {
-        { x1 = 43.1, y1 = 59.1, x2 = 64.5, y2 = 86.1, cx = 57.8, cy = 70.7, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\vuldren_alpha_1", poly = { {57.9,59.9}, {60.8,59.9}, {60.8,66.9}, {62.8,67.6}, {63.7,76.6}, {57.0,75.9}, {56.6,78.6}, {54.1,79.6}, {54.1,84.3}, {47.0,85.3}, {46.8,83.6}, {43.9,83.6}, {43.9,79.6}, {50.3,79.3}, {52.8,67.9}, {57.7,64.9} } },
-    },
     ["Washte Pawne"] = {
         { x1 = 40.9, y1 = 72.2, x2 = 49.9, y2 = 85.7, cx = 45.0, cy = 81.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\washte_pawne_1", poly = { {42.9,73.0}, {46.0,73.3}, {46.2,78.0}, {49.1,78.3}, {49.1,83.0}, {41.7,84.9} } },
     },
@@ -768,11 +701,6 @@ ns.TAME_TEACHER_AREAS = {
     },
     ["Wildthorn Lurker"] = {
         { x1 = 79.2, y1 = 43.3, x2 = 94.3, y2 = 71.7, cx = 86.8, cy = 50.8, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\wildthorn_lurker_1", poly = { {80.0,44.1}, {93.5,44.1}, {93.5,48.4}, {92.5,69.6}, {87.8,70.9}, {80.0,63.5} } },
-    },
-    ["Windsong Crawler"] = {
-        { x1 = 43.6, y1 = 42.9, x2 = 49.5, y2 = 53.8, cx = 46.5, cy = 49.0, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\windsong_crawler_1", poly = { {45.4,43.7}, {48.3,44.0}, {48.7,53.0}, {44.4,50.2} } },
-        { x1 = 60.4, y1 = 55.7, x2 = 71.4, y2 = 66.6, cx = 64.3, cy = 62.5, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\windsong_crawler_2", poly = { {62.4,56.5}, {65.3,56.5}, {66.1,60.2}, {70.4,60.2}, {70.6,64.9}, {63.0,65.8}, {61.2,63.3} } },
-        { x1 = 40.0, y1 = 53.4, x2 = 58.9, y2 = 83.4, cx = 47.3, cy = 64.1, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\windsong_crawler_3", poly = { {51.7,54.2}, {58.1,54.2}, {58.1,58.5}, {55.0,58.5}, {51.0,63.2}, {51.0,65.2}, {55.2,75.6}, {55.7,82.6}, {51.4,79.9}, {49.4,69.6}, {47.7,68.2}, {40.8,69.2}, {40.8,64.9}, {43.9,62.9}, {44.1,59.5}, {47.2,59.9}, {47.4,57.5} } },
     },
     ["Winter Wolf"] = {
         { x1 = 30.6, y1 = 36.9, x2 = 36.6, y2 = 46.2, cx = 33.7, cy = 43.3, tex = "Interface\\AddOns\\PetSmart\\Media\\Tame-Elements\\Areas\\winter_wolf_1", poly = { {32.4,37.7}, {35.8,39.2}, {35.8,45.4}, {31.4,45.4} } },

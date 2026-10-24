@@ -73,8 +73,8 @@ end
 -- real, findable spot, researched separately from classic Wowhead's own
 -- comment threads). Most of PetopiaTameData.lua's ~320 distinct teacher
 -- names are ordinary leveled world mobs that spawn throughout a whole
--- zone with no one camp to pin - wowhead.com/forever has no indexed pages
--- for them (Forever is too new/niche) and wow-petopia.com's per-family
+-- zone with no one camp to pin - wowhead.com/classic's comments give no
+-- single camp for them and wow-petopia.com's per-family
 -- pages don't give exact coordinates either, so rather than invent a
 -- point for those, a name not covered by either source here returns nil
 -- and the tame-teacher detail page shows "no location on record" instead
