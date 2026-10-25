@@ -16,7 +16,8 @@
 <Script file="Core\Client.lua"/>
 
 <!-- Static data (pets, abilities, rares, tame areas). Data\Forever runs only on
-     WoW: Forever, Data\Classic only on WoW Classic Era (each file checks the client). -->
+     WoW: Forever, Data\Classic only on WoW Classic Era, Data\TBC only on WoW: Burning
+     Crusade Anniversary (each file checks the client). -->
 <Script file="Data\Core.lua"/>
 <Script file="Data\Forever\FamilyData.lua"/>
 <Script file="Data\Forever\RareSpawnData.lua"/>
@@ -43,6 +44,19 @@
 <Script file="Data\Classic\PetopiaTameData.lua"/>
 <Script file="Data\Classic\CreatureModelData.lua"/>
 <Script file="Data\Classic\TameableCreatureData.lua"/>
+
+<Script file="Data\TBC\FamilyData.lua"/>
+<Script file="Data\TBC\RareSpawnData.lua"/>
+<Script file="Data\TBC\TameTeacherAreaData.lua"/>
+<Script file="Data\TBC\TameTeacherSpawnData.lua"/>
+<Script file="Data\TBC\FamilyInfoData.lua"/>
+<Script file="Data\TBC\PetTypeDescriptions.lua"/>
+<Script file="Data\TBC\PetAbilityDescriptions.lua"/>
+<Script file="Data\TBC\GeneralTrainingInfo.lua"/>
+<Script file="Data\TBC\PetAbilitiesData.lua"/>
+<Script file="Data\TBC\PetopiaTameData.lua"/>
+<Script file="Data\TBC\CreatureModelData.lua"/>
+<Script file="Data\TBC\TameableCreatureData.lua"/>
 
 <!-- Shared setup -->
 <Script file="Core\Init.lua"/>

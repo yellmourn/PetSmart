@@ -215,7 +215,9 @@ local function BuildDetailLines(data)
 
     local src = data.source or ""
     if src:find("t") then
-        lines[#lines + 1] = { text = "Train from Beast Trainer - " .. FormatMoney(data.moneyCost), color = { 1, 0.82, 0.2 } }
+        -- No price is listed for ranks whose trainer cost isn't known.
+        local cost = data.moneyCost and (" - " .. FormatMoney(data.moneyCost)) or ""
+        lines[#lines + 1] = { text = "Train from Beast Trainer" .. cost, color = { 1, 0.82, 0.2 } }
     end
     if src:find("w") then
         local mobs = ns.PETOPIA_TAME_MOBS and ns.PETOPIA_TAME_MOBS[data.key] and ns.PETOPIA_TAME_MOBS[data.key][data.rank]

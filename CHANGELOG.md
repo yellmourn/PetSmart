@@ -1,5 +1,12 @@
 # PetSmart Changelog
 
+## v1.60.1i
+
+### New: WoW: Burning Crusade Anniversary support
+- PetSmart now works on WoW: Burning Crusade Anniversary (2.5.6) as well as WoW: Forever and WoW: Classic, with the right pets, abilities, rares and tame locations for each.
+- Includes the six new pet families and six new pet abilities from The Burning Crusade.
+- Pet critical strike isn't shown on WoW: Burning Crusade Anniversary yet.
+
 ## v1.60.1h
 
 ### New: WoW: Classic support

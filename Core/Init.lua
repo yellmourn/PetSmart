@@ -109,7 +109,7 @@ local function GetCharName()
 end
 
 local function GetCharKey()
-    if ns.IS_CLASSIC then
+    if not ns.IS_FOREVER then -- Classic and TBC Anniversary: "Name - Realm"
         local realm = Plain(GetRealmName and GetRealmName())
         local name = GetCharName()
         return realm and (name .. " - " .. realm) or name
@@ -122,7 +122,7 @@ end
 -- personal profile from the first name to the full name when nothing else
 -- uses it, so the profile manager shows "First Last".
 local function MigrateCharKey()
-    if ns.IS_CLASSIC then return end -- Classic keys are already "Name - Realm"
+    if not ns.IS_FOREVER then return end -- Classic/TBC keys are already "Name - Realm"
     local key = GetCharKey()
     local first = Plain((UnitName("player"))) or key
     first = first:match("^(%S+)") or first

@@ -16,7 +16,8 @@ local SlotInfo = ns.SlotInfo
 local FOOD_TYPES = { "Meat", "Fish", "Bread", "Cheese", "Fruit", "Fungus" }
 
 -- Fallback diets used if the client has no GetPetFoodTypes(). Fox is a
--- Forever-only family; it simply never comes up on Classic Era.
+-- Forever-only family and the Dragonhawk to Warp Stalker families are
+-- TBC Anniversary only; each simply never comes up on the other games.
 local FAMILY_DIET = {
     ["bat"]          = { "Fruit", "Fungus" },
     ["bear"]         = { "Bread", "Cheese", "Fish", "Fruit", "Fungus", "Meat" },
@@ -25,25 +26,34 @@ local FAMILY_DIET = {
     ["cat"]          = { "Fish", "Meat" },
     ["crab"]         = { "Bread", "Fish", "Fruit", "Fungus" },
     ["crocolisk"]    = { "Fish", "Meat" },
+    ["dragonhawk"]   = { "Fish", "Fruit", "Meat" },
     ["fox"]          = { "Meat" },
     ["gorilla"]      = { "Fruit", "Fungus" },
     ["hyena"]        = { "Fruit", "Meat" },
+    ["nether ray"]   = { "Meat" },
     ["owl"]          = { "Meat" },
     ["raptor"]       = { "Meat" },
+    ["ravager"]      = { "Meat" },
     ["scorpid"]      = { "Meat" },
     ["serpent"]      = { "Fish", "Meat" },
+    ["serpent"]      = { "Fish", "Meat" },
     ["spider"]       = { "Meat" },
+    ["sporebat"]     = { "Bread", "Cheese", "Fruit", "Fungus" },
     ["tallstrider"]  = { "Cheese", "Fruit", "Fungus" },
     ["turtle"]       = { "Fish", "Fruit", "Fungus" },
+    ["warp stalker"] = { "Fish", "Fruit" },
     ["wind serpent"] = { "Bread", "Cheese", "Fish" },
     ["wolf"]         = { "Meat" },
 }
 
+-- TBC's newer families also list "Raw Meat" / "Raw Fish"; those count as
+-- Meat / Fish here, since food is sorted into the six main types.
 local function ToSet(list)
     local set, any = {}, false
     for _, v in ipairs(list) do
+        local lv = tostring(v):lower():gsub("^raw ", "")
         for _, t in ipairs(FOOD_TYPES) do
-            if tostring(v):lower() == t:lower() then set[t] = true; any = true end
+            if lv == t:lower() then set[t] = true; any = true end
         end
     end
     return any and set or nil

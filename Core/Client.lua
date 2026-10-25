@@ -1,13 +1,14 @@
 --------------------------------------------------------------------------
 -- PetSmart: Core/Client.lua
 -- Works out which game client PetSmart is running on, before anything else
--- loads. PetSmart is one addon for two clients:
---   WoW: Forever       (interface 16xxx) - loads Data\Forever\*.lua
---   WoW: Classic Era   (interface 11xxx) - loads Data\Classic\*.lua
--- Every data file in those two folders starts with a check on these flags
--- and stops straight away on the other client, so only one set of data is
--- ever built. Shared code reads ns.IS_FOREVER / ns.IS_CLASSIC where the two
--- clients behave differently.
+-- loads. PetSmart is one addon for three clients:
+--   WoW: Forever                        (interface 16xxx) - Data\Forever\*.lua
+--   WoW: Classic Era                    (interface 11xxx) - Data\Classic\*.lua
+--   WoW: Burning Crusade Anniversary    (interface 2xxxx) - Data\TBC\*.lua
+-- Every data file in those folders starts with a check on these flags and
+-- stops straight away on the other clients, so only one set of data is
+-- ever built. Shared code reads ns.IS_FOREVER / ns.IS_CLASSIC / ns.IS_TBC
+-- where the clients behave differently.
 --------------------------------------------------------------------------
 local addonName, ns = ...
 
@@ -35,9 +36,12 @@ end
 local toc = TocVersion()
 ns.TOC_VERSION = toc
 ns.IS_FOREVER = (toc >= 16000 and toc < 20000) or HasForeverSpell()
-ns.IS_CLASSIC = not ns.IS_FOREVER
-ns.CLIENT = ns.IS_FOREVER and "forever" or "classic"
-ns.CLIENT_NAME = ns.IS_FOREVER and "WoW: Forever" or "WoW: Classic"
+ns.IS_TBC = not ns.IS_FOREVER and toc >= 20000 and toc < 30000
+ns.IS_CLASSIC = not ns.IS_FOREVER and not ns.IS_TBC
+ns.CLIENT = ns.IS_FOREVER and "forever" or ns.IS_TBC and "tbc" or "classic"
+ns.CLIENT_NAME = ns.IS_FOREVER and "WoW: Forever"
+    or ns.IS_TBC and "WoW: Burning Crusade Anniversary"
+    or "WoW: Classic"
 
 -- One version number for both clients, from PetSmart.toc.
 local function Metadata(field)

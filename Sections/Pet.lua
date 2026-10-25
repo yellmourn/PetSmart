@@ -53,11 +53,12 @@ end
 
 -- Pet critical strike chance, WoW: Forever rules: the pet has 100% of the
 -- hunter's own critical strike chance, plus 2% per rank of the Ferocity
--- talent (2/4/6/8/10%). On Classic Era Ferocity adds 3% per rank, but
--- there's no confirmed source for the pet's base crit chance there, so
--- the stat is hidden (SHOW_CRIT) rather than shown with a guessed number.
+-- talent (2/4/6/8/10%). On Classic Era Ferocity adds 3% per rank and on
+-- TBC Anniversary 2% per rank, but there's no confirmed source for the
+-- pet's base crit chance on either, so the stat is hidden there
+-- (SHOW_CRIT) rather than shown with a guessed number.
 PetPage.FEROCITY_PER_RANK = ns.IS_CLASSIC and 3 or 2
-PetPage.SHOW_CRIT = not ns.IS_CLASSIC
+PetPage.SHOW_CRIT = ns.IS_FOREVER
 
 function PetPage.FerocityRanks()
     local ranks = 0
