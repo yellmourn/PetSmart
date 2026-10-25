@@ -163,6 +163,9 @@ local FAMILY_ART = {
     [7] = "CarrionBird", [8] = "Crab", [9] = "Gorilla", [11] = "Raptor",
     [12] = "Tallstrider", [20] = "Scorpid", [21] = "Turtle", [24] = "Bat",
     [25] = "Hyena", [26] = "BirdofPrey", [27] = "WindSerpent", [40] = "Fox",
+    -- WoW: Burning Crusade Anniversary families
+    [30] = "Dragonhawk", [31] = "Ravager", [32] = "WarpStalker", [33] = "Sporebat",
+    [34] = "NetherRay", [35] = "Serpent",
 }
 function PetPage.FamilyArt()
     local family = UnitExists("pet") and UnitCreatureFamily and UnitCreatureFamily("pet")
