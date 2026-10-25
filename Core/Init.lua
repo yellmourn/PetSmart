@@ -76,6 +76,8 @@ local DEFAULT_PROFILE_NAME = "Default"
 
 -- WoW: Forever characters have a two-part name ("First Last") and there
 -- are no realms; the full name is unique, so it's the character's key.
+-- On Classic Era characters are keyed "Name - Realm" instead (see
+-- GetCharKey).
 -- Depending on the client build the surname may come back as part of
 -- UnitName's string or as the second return of UnitFullName/UnitName
 -- (which on realm clients is the realm instead - that's ignored).
@@ -107,6 +109,11 @@ local function GetCharName()
 end
 
 local function GetCharKey()
+    if ns.IS_CLASSIC then
+        local realm = Plain(GetRealmName and GetRealmName())
+        local name = GetCharName()
+        return realm and (name .. " - " .. realm) or name
+    end
     return GetCharName()
 end
 
@@ -115,6 +122,7 @@ end
 -- personal profile from the first name to the full name when nothing else
 -- uses it, so the profile manager shows "First Last".
 local function MigrateCharKey()
+    if ns.IS_CLASSIC then return end -- Classic keys are already "Name - Realm"
     local key = GetCharKey()
     local first = Plain((UnitName("player"))) or key
     first = first:match("^(%S+)") or first
@@ -199,8 +207,8 @@ local function EnsureProfiles()
         -- This character has never used PetSmart before (no assignment at
         -- all, not even a stale one) - give it its own profile named after
         -- the character instead of dropping it into the shared Default
-        -- profile. The key is the full first-and-second name, unique in
-        -- Forever, so it doubles as a human-readable profile name.
+        -- profile. The key ("First Last" on Forever, "Name - Realm" on
+        -- Classic Era) doubles as a human-readable profile name.
         local personalName = charKey ~= "Unknown" and charKey or DEFAULT_PROFILE_NAME
         if PetSmartDB.profiles[personalName] then
             -- Extremely unlikely collision (e.g. a profile already made by

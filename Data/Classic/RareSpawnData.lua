@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Classic data: only loads on the WoW Classic Era client (see Core/Client.lua).
+if not ns.IS_CLASSIC then return end
 
 --------------------------------------------------------------------------
 -- Rare/unique tameable pet spawns.
@@ -21,18 +23,10 @@ local ADDON_NAME, ns = ...
 --
 -- ns.RARE_SPAWNS[i] = { name, familyId, level, zone, mapID, x, y, description }
 --
--- 8 Forever-specific rares added 2026-10-03 (Coldrasp, Fernfeather,
--- Ghostfang, Matriarch Bristlefur, Mystmane, Nightscreech, Shal'ma,
--- Slydris), sourced from a user-supplied spreadsheet of Forever tameable-
--- pet data, cross-referenced against this server's own NpcInfoTables.lua
--- (same source RARE_LOCATION_OVERRIDES already draws on) for their
--- RARE_LOCATION_OVERRIDES centroid coordinates - that data confirmed every
--- spreadsheet zone/coordinate pairing. Public wowhead.com/forever pages for
--- these specific named rares aren't indexed/renderable yet (Forever is too
--- new), so their `description` lines are original flavor text written from
--- the spreadsheet's own data plus general Zephras Isle zone lore (a
--- floating, Skywall-inspired Skyborne starting zone), not transcribed from
--- an existing wiki entry.
+-- WoW Classic Era version: the 66 rares on Petopia Classic's rare-pet
+-- list. Map positions come from logged sightings (see
+-- RARE_LOCATION_OVERRIDES below); the map IDs there are Classic's own
+-- UiMapIDs.
 --------------------------------------------------------------------------
 
 ns.ZONE_MAP_IDS = {
@@ -76,20 +70,11 @@ ns.ZONE_MAP_IDS = {
     ["Western Plaguelands"]    = 28,
     ["Wetlands"]               = 56,
     ["Winterspring"]           = 83,
-    -- Zephras Isle is Forever-original content (the Skyborne starting
-    -- zone) with no Classic-era equivalent, so there's no legacy id to
-    -- fall back on here - this value is this server's own in-client
-    -- mapID, straight from the user-supplied spreadsheet, not independently
-    -- re-confirmed. Every Zephras Isle rare below also has a
-    -- RARE_LOCATION_OVERRIDES entry (that server's own zoneID, 2521),
-    -- which takes precedence over this anyway.
-    ["Zephras Isle"]           = 16593,
 }
 
--- Petopia's rare-pet family names don't all match Forever's current
--- family names 1:1 (e.g. Forever renamed "Owl" to "Bird of Prey").
+-- Petopia's rare-pet family names match Classic's family names 1:1;
+-- kept so a renamed family can be mapped here if that ever changes.
 local FAMILY_NAME_FIXUPS = {
-    ["Owl"] = "Bird of Prey",
 }
 
 local raw = {
@@ -120,17 +105,6 @@ local raw = {
     { name = "Bjarn", family = "Bear", level = "12", zone = "Dun Morogh",
       x = 69.8, y = 56.8,
       description = "The only white bear in Dun Morogh, found in the Tundrid Hills south of Amberstill Ranch." },
-    { name = "Matriarch Bristlefur", family = "Bear", level = "10", zone = "Elwynn Forest",
-      x = 64.4, y = 77.0,
-      points = { -- several named sightings across a wide northern Elwynn range; RARE_LOCATION_OVERRIDES below supersedes with a sourced centroid
-          { x = 64.4, y = 77.0 },
-          { x = 59.0, y = 80.6 },
-          { x = 51.8, y = 79.2 },
-      },
-      description = "A rare bear that watches over her territory across a wide stretch of northern Elwynn Forest." },
-    { name = "Mystmane", family = "Bear", level = "13", zone = "Zephras Isle",
-      x = 60.2, y = 34.6,
-      description = "A rare bear drifting through the fog-wreathed terraces of Zephras Isle, who has picked up a Savage Rend bite more typical of the island's raptors than its own kind." },
 
     -- Boars
     { name = "Grunter", family = "Boar", level = "50", zone = "Blasted Lands",
@@ -193,23 +167,6 @@ local raw = {
     { name = "The Rake", family = "Cat", level = "10", zone = "Mulgore",
       x = 60.0, y = 45.0, -- approximate (Golden Plains, east of Thunder Bluff)
       description = "A rare lion found in the Golden Plains east of Thunder Bluff, historically valued for its fast attack speed." },
-    { name = "Shal'ma", family = "Cat", level = "9", zone = "Durotar",
-      x = 61.0, y = 90.0,
-      points = { -- several named sightings across a wide Durotar range; RARE_LOCATION_OVERRIDES below supersedes with a sourced centroid
-          { x = 61.0, y = 90.0 },
-          { x = 68.6, y = 71.4 },
-          { x = 63.0, y = 95.0 },
-      },
-      description = "A rare cat that roams widely across Durotar, from the coast up into the northern hills." },
-    { name = "Ghostfang", family = "Cat", level = "10", zone = "Dun Morogh",
-      x = 74.0, y = 64.0,
-      points = { -- several named sightings across Dun Morogh's foothills; RARE_LOCATION_OVERRIDES below supersedes with a sourced centroid
-          { x = 74.0, y = 64.0 },
-          { x = 80.0, y = 46.0 },
-          { x = 79.0, y = 43.0 },
-          { x = 82.0, y = 55.0 },
-      },
-      description = "A pale rare cat that ranges widely across Dun Morogh's foothills, rarely seen twice in the same place." },
 
     -- Crocolisks
     { name = "Ripscale", family = "Crocolisk", level = "39", zone = "Dustwallow Marsh",
@@ -221,11 +178,6 @@ local raw = {
     { name = "Large Loch Crocolisk", family = "Crocolisk", level = "22", zone = "Loch Modan",
       x = 45.0, y = 45.0, -- approximate (the Loch)
       description = "A rare crocolisk found in the waters of the Loch in Loch Modan." },
-
-    -- Foxes
-    { name = "Slydris", family = "Fox", level = "6", zone = "Zephras Isle",
-      x = 51.0, y = 51.0,
-      description = "A rare fox skulking the floating terraces of Zephras Isle, rarely seen for long before it slips away again." },
 
     -- Gorillas
     { name = "Kurmokk", family = "Gorilla", level = "42", zone = "Stranglethorn Vale",
@@ -257,9 +209,6 @@ local raw = {
     { name = "Olm the Wise", family = "Owl", level = "52", zone = "Felwood",
       x = 55.0, y = 45.0, -- approximate (between Irontree Woods and Talonbranch Glade)
       description = "A spectral-looking rare owl that flies between Irontree Woods and Talonbranch Glade in Felwood; taming it briefly angers the Cenarion Circle but costs no reputation." },
-    { name = "Nightscreech", family = "Owl", level = "11", zone = "Teldrassil",
-      x = 46.8, y = 32.0,
-      description = "A rare owl haunting the moonlit boughs of Teldrassil, whose piercing shriek carries long after it's gone quiet again." },
 
     -- Raptors
     { name = "Takk the Leaper", family = "Raptor", level = "19 Elite", zone = "The Barrens",
@@ -328,13 +277,6 @@ local raw = {
     { name = "Strider Clutchmother", family = "Tallstrider", level = "20", zone = "Darkshore",
       x = 45.0, y = 75.0, -- approximate (southern Darkshore)
       description = "A teal-skinned rare tallstrider roaming southern Darkshore, usually accompanied by two Foreststrider Fledglings." },
-    { name = "Fernfeather", family = "Tallstrider", level = "10", zone = "Zephras Isle",
-      x = 48.0, y = 85.4,
-      points = { -- two named sightings; RARE_LOCATION_OVERRIDES below supersedes with a sourced centroid
-          { x = 48.0, y = 85.4 },
-          { x = 53.8, y = 78.8 },
-      },
-      description = "A rare tallstrider striding the open plateaus of Zephras Isle, its fern-green plumage blending into the isle's hanging gardens." },
 
     -- Turtles
     { name = "Ironback", family = "Turtle", level = "51", zone = "The Hinterlands",
@@ -360,9 +302,6 @@ local raw = {
       description = "A rare wind serpent that circles a path southwest of the Ruins of Ravenwind and west of Camp Ataya in Feralas." },
 
     -- Wolves
-    { name = "Coldrasp", family = "Wolf", level = "12", zone = "Tirisfal Glades",
-      x = 19.5, y = 64.5,
-      description = "A rare frost-pale wolf prowling Tirisfal Glades, whose rasping, broken howl gives it its name." },
     { name = "Snarler", family = "Wolf", level = "42", zone = "Feralas",
       x = 70.0, y = 30.0, -- approximate (northeastern Feralas)
       description = "A rare timber wolf found in northeastern Feralas." },
@@ -417,7 +356,6 @@ local RARE_LOCATION_OVERRIDES = {
     ["Broken Tooth"] = { mapID = 1418, x = 52.05, y = 29.87 }, -- 60 pts
     ["Chatter"] = { mapID = 1433, x = 53.97, y = 42.26 }, -- 49 pts
     ["Clack the Reaver"] = { mapID = 1419, x = 53.61, y = 35.15 }, -- 44 pts
-    ["Coldrasp"] = { mapID = 1420, x = 19.8, y = 65.0 }, -- 1 pts
     ["Cranky Benj"] = { mapID = 1416, x = 27.26, y = 37.39 }, -- 32 pts
     ["Creepthess"] = { mapID = 1424, x = 32.5, y = 56.22 }, -- 32 pts
     ["Darkmist Widow"] = { mapID = 1445, x = 30.4, y = 20.8 }, -- 1 pts
@@ -427,8 +365,6 @@ local RARE_LOCATION_OVERRIDES = {
     ["Deathmaw"] = { mapID = 1428, x = 80.7, y = 43.71 }, -- 29 pts
     ["Dishu"] = { mapID = 1413, x = 50.3, y = 22.25 }, -- 4 pts
     ["Duskstalker"] = { mapID = 1438, x = 56.56, y = 75.45 }, -- 17 pts
-    ["Fernfeather"] = { mapID = 2521, x = 51.55, y = 81.5 }, -- 4 pts
-    ["Ghostfang"] = { mapID = 1426, x = 78.16, y = 53.92 }, -- 5 pts
     ["Giggler"] = { mapID = 1443, x = 60.72, y = 21.45 }, -- 36 pts
     ["Gorefang"] = { mapID = 1421, x = 50.71, y = 18.63 }, -- 27 pts
     ["Greater Firebird"] = { mapID = 1446, x = 47.28, y = 36.97 }, -- 20 pts
@@ -444,15 +380,12 @@ local RARE_LOCATION_OVERRIDES = {
     ["Leech Widow"] = { mapID = 1437, x = 46.27, y = 63.2 }, -- 3 pts
     ["Lord Condar"] = { mapID = 1432, x = 71.03, y = 72.44 }, -- 22 pts
     ["Lupos"] = { mapID = 1431, x = 41.69, y = 27.12 }, -- 68 pts
-    ["Matriarch Bristlefur"] = { mapID = 1429, x = 58.62, y = 78.55 }, -- 11 pts
     ["Mazzranache"] = { mapID = 1412, x = 43.42, y = 43.84 }, -- 62 pts
     ["Mist Howler"] = { mapID = 1440, x = 22.96, y = 27.44 }, -- 16 pts
     ["Mongress"] = { mapID = 1448, x = 44.49, y = 80.63 }, -- 7 pts
     ["Mother Fang"] = { mapID = 1429, x = 60.9, y = 47.5 }, -- 2 pts
-    ["Mystmane"] = { mapID = 2521, x = 58.95, y = 36.65 }, -- 4 pts
     ["Murderous Blisterpaw"] = { mapID = 1446, x = 51.33, y = 31.96 }, -- 14 pts
     ["Naraxis"] = { mapID = 1431, x = 86.33, y = 49.0 }, -- 3 pts
-    ["Nightscreech"] = { mapID = 1438, x = 42.85, y = 37.35 }, -- 4 pts
     ["Old Cliff Jumper"] = { mapID = 1425, x = 19.66, y = 52.32 }, -- 17 pts
     ["Old Grizzlegut"] = { mapID = 1444, x = 63.88, y = 52.38 }, -- 12 pts
     ["Old Vicejaw"] = { mapID = 1421, x = 53.44, y = 58.95 }, -- 22 pts
@@ -465,9 +398,7 @@ local RARE_LOCATION_OVERRIDES = {
     ["Ripscale"] = { mapID = 1445, x = 44.58, y = 54.08 }, -- 21 pts
     ["Sewer Beast"] = { mapID = 1453, x = 48.09, y = 51.55 }, -- 120 pts
     ["Shadowclaw"] = { mapID = 1439, x = 39.62, y = 38.69 }, -- 22 pts
-    ["Shal'ma"] = { mapID = 1411, x = 63.98, y = 85.38 }, -- 9 pts
     ["Shanda the Spinner"] = { mapID = 1432, x = 78.1, y = 52.1 }, -- 2 pts
-    ["Slydris"] = { mapID = 2521, x = 50.2, y = 51.0 }, -- 1 pts
     ["Snarler"] = { mapID = 1444, x = 79.1, y = 39.04 }, -- 18 pts
     ["Snort the Heckler"] = { mapID = 1413, x = 41.15, y = 24.25 }, -- 8 pts
     ["Spiteflayer"] = { mapID = 1419, x = 59.26, y = 40.1 }, -- 29 pts
@@ -609,7 +540,7 @@ for _, r in ipairs(raw) do
         mapIDFixed = override ~= nil or nil,
         points = points,
         description = r.description,
-        -- Dungeon/raid rares have no world map on Forever at all (no
+        -- Dungeon/raid rares have no world map in Classic Era at all (no
         -- continent map for the instance), so their mapID is unusable:
         -- handing it to WorldMapFrame:SetMapID crashes deep inside
         -- Blizzard's own WorldQuestDataProvider. These are flagged so the

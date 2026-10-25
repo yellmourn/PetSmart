@@ -1,5 +1,17 @@
 # PetSmart Changelog
 
+## v1.60.1h
+
+### New: WoW: Classic support
+- PetSmart now works on WoW: Classic (1.15.9) as well as WoW: Forever, with the right pets, abilities, rares and tame locations for each.
+- Pet critical strike isn't shown on WoW: Classic yet.
+
+### Fixed
+- **Map pins:** tracking pins and highlighted spawn areas could be hidden behind the world map when using a map addon such as Mapster. They now always draw on top of the map.
+
+### Other changes
+- **Options:** the version line at the bottom now also shows which game PetSmart detected.
+
 ## v1.60.1g
 
 ### New: Pet Index (formerly Pet Types)

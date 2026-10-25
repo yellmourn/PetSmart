@@ -15,7 +15,8 @@ local SlotInfo = ns.SlotInfo
 ----------------------------------------------------------------------
 local FOOD_TYPES = { "Meat", "Fish", "Bread", "Cheese", "Fruit", "Fungus" }
 
--- Fallback diets (classic-era) used if the client has no GetPetFoodTypes().
+-- Fallback diets used if the client has no GetPetFoodTypes(). Fox is a
+-- Forever-only family; it simply never comes up on Classic Era.
 local FAMILY_DIET = {
     ["bat"]          = { "Fruit", "Fungus" },
     ["bear"]         = { "Bread", "Cheese", "Fish", "Fruit", "Fungus", "Meat" },

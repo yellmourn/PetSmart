@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 -- Hand-transcribed rank-1 tooltip text for each family's "specialty"
 -- ability (see GetFamilySpecialty in PetSmart.lua). Sourced from

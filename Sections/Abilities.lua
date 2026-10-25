@@ -14,8 +14,8 @@ local rareTrackBtn = ns.rareTrackBtn
 ----------------------------------------------------------------------
 -- Pet Abilities data (right-click panel)
 ----------------------------------------------------------------------
--- Backed by Data\PetAbilitiesData.lua, Data\FamilyData.lua and
--- Data\PetopiaTameData.lua (ns.PET_ABILITIES / ns.PET_ABILITY_ORDER /
+-- Backed by Data\<client>\PetAbilitiesData.lua, FamilyData.lua and
+-- PetopiaTameData.lua (ns.PET_ABILITIES / ns.PET_ABILITY_ORDER /
 -- ns.PET_FAMILIES / ns.PETOPIA_TAME_MOBS - see PetSmart.toc for load
 -- order). "Learned" is read live from
 -- what the hunter's own character actually knows (IsSpellKnown on each
@@ -71,7 +71,8 @@ end
 -- A family's "specialty" is the one ability restricted to that family
 -- alone (as opposed to shared abilities like Bite/Claw/Dash that many
 -- families learn) - e.g. Prowl for Cat, Dismember for Crocolisk,
--- Furious Howl for Wolf. Every Forever pet family has exactly one.
+-- Furious Howl for Wolf. Every Forever pet family has exactly one; on
+-- Classic Era only some families do.
 local function GetFamilySpecialty(familyId)
     if not ns.PET_ABILITY_ORDER then return nil end
     for _, key in ipairs(ns.PET_ABILITY_ORDER) do
@@ -195,7 +196,7 @@ local function BuildDetailLines(data)
     local lines = {}
 
     -- Tooltip/effect text for this specific rank - the hand-transcribed
-    -- wowhead.com/forever table first (covers every rank, not just each
+    -- per-client rank tooltip table first (covers every rank, not just each
     -- family's rank-1 specialty move), falling back to the live spell
     -- API for anything not in that table (e.g. a couple of resistance
     -- aura top ranks Wowhead hasn't published a page for yet).
@@ -243,7 +244,7 @@ local function BuildDetailLines(data)
     return lines
 end
 
--- Maps FamilyInfoData.lua's "spec" field (the Forever-verified "Tree"
+-- Maps FamilyInfoData.lua's "spec" field (Forever's "Tree" / Petopia Classic's "Family Role"
 -- column from the user's pet-family spreadsheet) to the label shown in
 -- the Pet Types panel.
 local SPEC_LABEL = { offense = "Offensive", defense = "Defensive", general = "General" }

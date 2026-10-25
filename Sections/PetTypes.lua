@@ -64,7 +64,7 @@ local function TeacherFor(c, familyName)
     local t = teacherByName[c.name]
     if not t or t.mob.family ~= familyName then return nil end
     -- Same name, very different level = a different creature (e.g. the
-    -- Riverglades Shore Crawler, level 39-40, isn't the Westfall teacher).
+    -- same-named creature at a very different level isn't the teacher).
     local a, b = LowLevel(c.level), LowLevel(t.mob.levels)
     if a and b and math.abs(a - b) > 5 then return nil end
     return t
@@ -119,7 +119,9 @@ ns.Pages.typedetail = function(ctx)
         local roleText = (info and SPEC_LABEL[info.spec]) or "Unknown"
         ctx.AddLine("Combat Role: " .. roleText, 0.8, 0.8, 0.8)
 
-        ctx.AddLine("Basic Attack: " .. ((info and info.basicSkill) or "Unknown"), 0.8, 0.8, 0.8)
+        if info and info.basicSkill then
+            ctx.AddLine("Basic Attack: " .. info.basicSkill, 0.8, 0.8, 0.8)
+        end
 
         if info and info.healthQualifier and info.armorQualifier and info.dpsQualifier then
             ctx.AddLine(string.format("Health: %s   Armor: %s   DPS: %s", info.healthQualifier, info.armorQualifier, info.dpsQualifier), 0.8, 0.8, 0.8)

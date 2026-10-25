@@ -12,20 +12,37 @@
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 <Script file="Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
 
-<!-- Static data (pets, abilities, rares, tame areas). -->
+<!-- Which client is this? Must load first: the data files below check it. -->
+<Script file="Core\Client.lua"/>
+
+<!-- Static data (pets, abilities, rares, tame areas). Data\Forever runs only on
+     WoW: Forever, Data\Classic only on WoW Classic Era (each file checks the client). -->
 <Script file="Data\Core.lua"/>
-<Script file="Data\FamilyData.lua"/>
-<Script file="Data\RareSpawnData.lua"/>
-<Script file="Data\TameTeacherAreaData.lua"/>
-<Script file="Data\TameTeacherSpawnData.lua"/>
-<Script file="Data\FamilyInfoData.lua"/>
-<Script file="Data\PetTypeDescriptions.lua"/>
-<Script file="Data\PetAbilityDescriptions.lua"/>
-<Script file="Data\GeneralTrainingInfo.lua"/>
-<Script file="Data\PetAbilitiesData.lua"/>
-<Script file="Data\PetopiaTameData.lua"/>
-<Script file="Data\CreatureModelData.lua"/>
-<Script file="Data\TameableCreatureData.lua"/>
+<Script file="Data\Forever\FamilyData.lua"/>
+<Script file="Data\Forever\RareSpawnData.lua"/>
+<Script file="Data\Forever\TameTeacherAreaData.lua"/>
+<Script file="Data\Forever\TameTeacherSpawnData.lua"/>
+<Script file="Data\Forever\FamilyInfoData.lua"/>
+<Script file="Data\Forever\PetTypeDescriptions.lua"/>
+<Script file="Data\Forever\PetAbilityDescriptions.lua"/>
+<Script file="Data\Forever\GeneralTrainingInfo.lua"/>
+<Script file="Data\Forever\PetAbilitiesData.lua"/>
+<Script file="Data\Forever\PetopiaTameData.lua"/>
+<Script file="Data\Forever\CreatureModelData.lua"/>
+<Script file="Data\Forever\TameableCreatureData.lua"/>
+
+<Script file="Data\Classic\FamilyData.lua"/>
+<Script file="Data\Classic\RareSpawnData.lua"/>
+<Script file="Data\Classic\TameTeacherAreaData.lua"/>
+<Script file="Data\Classic\TameTeacherSpawnData.lua"/>
+<Script file="Data\Classic\FamilyInfoData.lua"/>
+<Script file="Data\Classic\PetTypeDescriptions.lua"/>
+<Script file="Data\Classic\PetAbilityDescriptions.lua"/>
+<Script file="Data\Classic\GeneralTrainingInfo.lua"/>
+<Script file="Data\Classic\PetAbilitiesData.lua"/>
+<Script file="Data\Classic\PetopiaTameData.lua"/>
+<Script file="Data\Classic\CreatureModelData.lua"/>
+<Script file="Data\Classic\TameableCreatureData.lua"/>
 
 <!-- Shared setup -->
 <Script file="Core\Init.lua"/>

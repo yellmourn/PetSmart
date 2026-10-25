@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 --------------------------------------------------------------------------
 -- Spawn data for tameable "teacher" pets - the creatures listed under an

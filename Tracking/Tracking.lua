@@ -39,7 +39,7 @@ local function SetTrackedRare(rare)
         if r == rare then trackedIndex = i; break end
     end
     local wasTracking = trackedIndex ~= nil
-    -- Dungeon/raid rares have no world map on Forever at all, so their
+    -- Dungeon/raid rares have no world map on Forever or Classic Era, so their
     -- mapID is unusable (handing it to WorldMapFrame:SetMapID crashes
     -- Blizzard's own world-quest code). Refuse to track these outright
     -- rather than letting that happen - untracking is unaffected since
@@ -192,7 +192,7 @@ function Tame.Set(name, spawnInfo)
         ns.trackedTameTeacher = nil
     elseif spawnInfo and spawnInfo.isDungeon then
         -- Same refusal SetTrackedRare applies to dungeon rares: no usable
-        -- world map for a dungeon's mapID on Forever, so this never
+        -- world map for a dungeon's mapID on these clients, so this never
         -- becomes tracked in the first place (untracking is unaffected).
         Print(name .. " spawns inside a dungeon and cannot be tracked on the map.")
         return

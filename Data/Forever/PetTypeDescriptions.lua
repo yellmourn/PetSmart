@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 -- General flavor descriptions for the Pet Types panel. HAND-WRITTEN
 -- short summaries (not scraped verbatim from any single source) informed

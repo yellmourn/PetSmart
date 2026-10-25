@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 --------------------------------------------------------------------------
 -- Creature (NPC) IDs for every rare and tame-teacher creature, used by the

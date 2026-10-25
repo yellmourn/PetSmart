@@ -128,14 +128,40 @@ local function GetMapCanvas()
     return WorldMapFrame
 end
 
+-- Layering on the world map: PetSmart's pins and spawn-area overlays go in
+-- whatever strata the map itself is in, just above everything the map draws
+-- on its canvas. A fixed strata breaks with map addons that move the map
+-- (Mapster puts it on "HIGH" on Classic clients) or paint extra layers over
+-- it (Mapster's FogClear covers undiscovered areas with zone artwork).
+local ownMapFrames = {}
+local function MapTopLevel()
+    local canvas = GetMapCanvas()
+    local top = canvas:GetFrameLevel() or 0
+    local kids = { canvas:GetChildren() }
+    for i = 1, #kids do
+        local f = kids[i]
+        if not ownMapFrames[f] then
+            local level = f:GetFrameLevel()
+            if level and level > top then top = level end
+        end
+    end
+    return top
+end
+-- above: how far over the map's own top layer (overlays 1, pins 3).
+local function PlaceOnMap(frame, top, above)
+    ownMapFrames[frame] = true
+    frame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
+    frame:SetFrameLevel(math.min(top + above, 9900))
+end
+
 local worldPinPool = {}
 local function GetWorldPin(i)
     local p = worldPinPool[i]
     if p then return p end
     local canvas = GetMapCanvas()
     p = CreateFrame("Frame", "PetSmartRareWorldPin" .. i, canvas)
+    ownMapFrames[p] = true
     p:SetSize(WORLD_PIN_WIDTH, WORLD_PIN_HEIGHT)
-    p:SetFrameStrata("TOOLTIP")
     p.tex = p:CreateTexture(nil, "OVERLAY")
     p.tex:SetAllPoints()
     p.tex:SetTexture(WORLD_PIN_TEXTURE)
@@ -202,6 +228,7 @@ local function RefreshWorldMapPins()
         return
     end
     local uiMapID = WorldMapFrame:GetMapID()
+    local top = MapTopLevel()
 
     -- Every tracked rare that has points on the zone currently being
     -- viewed contributes pins here, up to the shared MAX_OVERLAY_POINTS
@@ -218,6 +245,7 @@ local function RefreshWorldMapPins()
                 pin.rare = rare
                 local ok, err = pcall(PositionWorldPin, pin, point.x / 100, point.y / 100)
                 if ok then
+                    PlaceOnMap(pin, top, 3)
                     pin:Show()
                     Trace(("RefreshWorldMapPins: placed pin #%d for '%s' at %.2f, %.2f"):format(pinIndex, rare.name, point.x, point.y))
                 else
@@ -472,8 +500,8 @@ local function GetTameWorldPin(i)
     if p then return p end
     local canvas = GetMapCanvas()
     p = CreateFrame("Frame", "PetSmartTameWorldPin" .. i, canvas)
+    ownMapFrames[p] = true
     p:SetSize(WORLD_PIN_WIDTH, WORLD_PIN_HEIGHT)
-    p:SetFrameStrata("TOOLTIP")
     p.tex = p:CreateTexture(nil, "OVERLAY")
     p.tex:SetAllPoints()
     p.tex:SetTexture(TAME_WORLD_PIN_TEXTURE)
@@ -495,15 +523,15 @@ end
 
 -- The soft "spawn area" highlight behind each pin above (see
 -- TAME_AREA_TEXTURE's own comment) - a plain, mouse-transparent frame so
--- it never steals the pin's own tooltip, drawn at a lower frame strata
--- than the "TOOLTIP"-strata pins so it always sits visually behind them.
+-- it never steals the pin's own tooltip, drawn just under the pins (see
+-- PlaceOnMap) so it always sits visually behind them.
 local tameAreaOverlayPool = {}
 local function GetTameAreaOverlay(i)
     local p = tameAreaOverlayPool[i]
     if p then return p end
     local canvas = GetMapCanvas()
     p = CreateFrame("Frame", "PetSmartTameAreaOverlay" .. i, canvas)
-    p:SetFrameStrata("HIGH")
+    ownMapFrames[p] = true
     p.tex = p:CreateTexture(nil, "OVERLAY")
     p.tex:SetAllPoints()
     p.tex:SetTexture(TAME_AREA_TEXTURE)
@@ -530,6 +558,7 @@ local function RefreshTameWorldMapPins()
     local uiMapID = WorldMapFrame:GetMapID()
     local info = ns.trackedTameTeacher.spawnInfo
     if not (info and info.mapID and info.points and uiMapID == info.mapID) then return end
+    local top = MapTopLevel()
 
     local pinIndex = 0
     for _, point in ipairs(info.points) do
@@ -542,6 +571,7 @@ local function RefreshTameWorldMapPins()
         pin.tex:SetTexture(IsRareSpawnName(ns.trackedTameTeacher.name) and WORLD_PIN_TEXTURE or TAME_WORLD_PIN_TEXTURE)
         local ok, err = pcall(PositionWorldPin, pin, point.x / 100, point.y / 100)
         if ok then
+            PlaceOnMap(pin, top, 3)
             pin:Show()
         else
             LogOnce("loggedTameWorldMapError", "PositionWorldPin (tame teacher)", err)
@@ -556,6 +586,7 @@ local function RefreshTameWorldMapPins()
             overlay.tex:SetTexture(area.tex)
             local okArea, errArea = pcall(PositionAreaBox, overlay, area.x1 / 100, area.y1 / 100, area.x2 / 100, area.y2 / 100)
             if okArea then
+                PlaceOnMap(overlay, top, 1)
                 overlay:Show()
             else
                 LogOnce("loggedTameAreaError", "PositionAreaBox (tame teacher)", errArea)

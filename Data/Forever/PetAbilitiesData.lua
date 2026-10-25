@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 -- Pet ability ranks for WoW: Forever. Family IDs match FamilyData.lua
 -- (26 = Bird of Prey, 40 = Fox). Real spell IDs / training point costs /

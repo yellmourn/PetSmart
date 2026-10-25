@@ -93,7 +93,7 @@ end
 
 -- Which rank a Beast Training entry is, when its text doesn't say: by its
 -- spell ID, its description (matched against the wowhead.com/forever rank
--- tooltips in Data\PetAbilityDescriptions.lua), or its required pet level.
+-- tooltips in Data\<client>\PetAbilityDescriptions.lua), or its required pet level.
 local function ResolveRank(e)
     if e.rank then return e.rank end
     local entry = AbilityByName(e.name:lower()) or AbilityByName(Norm(e.name))
@@ -435,8 +435,8 @@ end
 
 -- The hunter's own (player) spellbook - not the pet's.
 -- Does the hunter permanently know this pet-ability rank (i.e. it's in their
--- Beast Training)? Spell IDs are WoW: Forever's own pet-ability IDs from
--- wowhead.com/forever (Data\PetAbilitiesData.lua). C_SpellBook.IsSpellKnown is
+-- Beast Training)? Spell IDs are the client's own pet-ability IDs
+-- (Data\Forever or Data\Classic \PetAbilitiesData.lua). C_SpellBook.IsSpellKnown is
 -- the modern-client check; the older globals are fallbacks. Only the player's
 -- (hunter's) spellbook is asked - never the pet's - so a pet that knows an
 -- ability doesn't make it count as trainable.

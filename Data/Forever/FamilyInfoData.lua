@@ -1,4 +1,6 @@
 local ADDON_NAME, ns = ...
+-- Forever data: only loads on the WoW: Forever client (see Core/Client.lua).
+if not ns.IS_FOREVER then return end
 
 -- Per-family combat classification, diet and basic-skill data.
 -- HAND-MAINTAINED - this file is NOT generator output. Source: the
