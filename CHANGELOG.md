@@ -1,11 +1,21 @@
 # PetSmart Changelog
 
-## v1.60.1i-1
+## v1.60.1i
 
 ### New: WoW: Burning Crusade Anniversary support
 - PetSmart now works on WoW: Burning Crusade Anniversary (2.5.6) as well as WoW: Forever and WoW: Classic, with the right pets, abilities, rares and tame locations for each.
 - Includes the six new pet families and six new pet abilities from The Burning Crusade.
 - Pet critical strike isn't shown on WoW: Burning Crusade Anniversary yet.
+
+### New: Lock the feeding icon
+- **Options > Icon > Lock Icon (Move):** stops the feeding icon from being moved with shift-drag. It's off by default, and clicking the icon still works as normal while it's locked.
+
+### WoW: Forever pet updates
+- **Teacher pets:** added 75 new teacher pets from Petopia Forever, including the first known teachers for Dismember, Mine!, Pinch, Swipe and Tendon Rip, and many more for Savage Rend, Web and Dust Cloud.
+- **New tameable creatures:** 20 new creatures, including those in Excavation Site: Wetlands, at Gloomrise in Mulgore and in Ruins of Lordaeron, plus Daggerfang, Sandstrider, Elder Snow Leopard and Chakuyak.
+- **Ability ranks:** Tendon Rip is now learned at pet levels 12, 24, 36, 48 and 60. Great Stamina 1 and Natural Armor 1 are learned at pet level 1, Shadow Resistance 4 at pet level 40, and Natural Armor 10 is trainer-only.
+- **Fixed:** Shadowgale Ursera is now listed under Claw 2 and Moss Stalker under Web 1.
+- **Renamed:** Vulgren Alpha is now Vuldren Alpha.
 
 ## v1.60.1h
 

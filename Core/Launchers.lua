@@ -77,10 +77,19 @@ toggle:SetScript("OnClick", function(self, button)
     end
 end)
 
+-- Options > Icon > Lock Icon stops the icon from being shift-dragged.
+local function IconLocked()
+    return PetSmartDB.locked or (ns.profile and ns.profile.iconLocked)
+end
 toggle:SetScript("OnDragStart", function(self)
-    if not PetSmartDB.locked and IsShiftKeyDown() then self:StartMoving() end
+    if not IconLocked() and IsShiftKeyDown() then
+        self:StartMoving()
+        self.isMoving = true
+    end
 end)
 toggle:SetScript("OnDragStop", function(self)
+    if not self.isMoving then return end
+    self.isMoving = nil
     self:StopMovingOrSizing()
     local point, _, relPoint, x, y = self:GetPoint()
     PetSmartDB.pos = { point, relPoint, x, y }

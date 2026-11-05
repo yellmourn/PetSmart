@@ -32,6 +32,7 @@ local PROFILE_DEFAULTS = {
     tooltipShowLoyalty = true,
     tooltipShowHappiness = true,
     iconSize = 40,
+    iconLocked = false, -- feed icon can't be shift-dragged while on
     -- Pet experience bar (separate movable/resizable element).
     xpBarEnabled = true,
     xpBarShowText = true,

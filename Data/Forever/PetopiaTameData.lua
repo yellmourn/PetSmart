@@ -5,7 +5,8 @@ if not ns.IS_FOREVER then return end
 --------------------------------------------------------------------------
 -- Vanilla-only tameable-creature data, transcribed directly from
 -- Petopia Classic (https://www.wow-petopia.com/classic/abilities.php),
--- fetched 2026-09-29. This is the sole source of tameable-creature/
+-- fetched 2026-09-29, with the teacher pets Petopia Forever
+-- (wow-petopia.com/forever/abilities.php) listed on 2026-11-03 added. This is the sole source of tameable-creature/
 -- zone/level data for the addon (no generated/TBC-sourced mob file is
 -- used), keyed directly by ability key and rank number so it needs no
 -- separate DB-builder function.
@@ -40,6 +41,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Winter Wolf","Wolf","7-8","Dun Morogh"},
             {"Ukorsbane","Spider","8 Elite","Durotar"},
             {"Dreadmaw Crocolisk","Crocolisk","9-11","Durotar"},
+            {"Mother Fang","Spider","10","Elwynn Forest"},
         },
         [2] = {
             {"Vulgara the Insatiable","Wolf","8","Zephras Isle"},
@@ -48,16 +50,20 @@ ns.PETOPIA_TAME_MOBS = {
             {"Prowler","Wolf","9-10","Elwynn Forest"},
             {"Vicious Night Web Spider","Spider","9-10","Tirisfal Glades"},
             {"Prairie Wolf Alpha","Wolf","9-10","Mulgore"},
+            {"Bloodtalon Matriarch","Raptor","9","Durotar"},
             {"Forest Lurker","Spider","10-11","Loch Modan"},
             {"Coyote","Wolf","10-11","Westfall"},
             {"Giant Webwood Spider","Spider","10-11","Teldrassil"},
             {"Worg","Wolf","10-11","Silverpine Forest"},
             {"Timber","Wolf","10","Dun Morogh"},
+            {"Vuldren Alpha","Fox","10","Zephras Isle"},
             {"Coyote Packleader","Wolf","11-12","Westfall"},
             {"Lady Sathrah","Spider","12","Teldrassil"},
+            {"Sri'skulk","Spider","13","Tirisfal Glades"},
             {"Loch Crocolisk","Crocolisk","14-15","Loch Modan"},
             {"Tarantula","Spider","15-16","Redridge Mountains"},
             {"Oasis Snapjaw","Turtle","15-16","The Barrens"},
+            {"Daggerfang","Crocolisk","15","Loch Modan"},
         },
         [3] = {
             {"Bloodsnout Worg","Wolf","16-17","Silverpine Forest"},
@@ -70,6 +76,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Shanda the Spinner","Spider","19","Loch Modan"},
             {"Kresh","Turtle","20","Wailing Caverns (Dungeon)"},
             {"Forest Moss Creeper","Spider","20-21","Hillsbrad Foothills"},
+            {"Strider Clutchmother","Tallstrider","20","Darkshore"},
             {"Besseleth","Spider","21","Stonetalon Mountains"},
             {"Green Recluse","Spider","21-22","Duskwood"},
             {"Large Loch Crocolisk","Crocolisk","22","Loch Modan"},
@@ -90,6 +97,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Aku'mai Snapjaw","Turtle","26-27","Blackfathom Deeps (Dungeon)"},
             {"Naraxis","Spider","27","Duskwood"},
             {"Ghostpaw Alpha","Wolf","27-28","Ashenvale"},
+            {"Highland Spider","Spider","27-28","Wetlands"},
             {"Wildthorn Lurker","Spider","28-29","Ashenvale"},
             {"Snapjaw","Turtle","30-31","Hillsbrad Foothills"},
             {"Cranky Benj","Turtle","32","Alterac Mountains"},
@@ -194,6 +202,8 @@ ns.PETOPIA_TAME_MOBS = {
             {"Strigid Owl","Bird of Prey","5-6","Teldrassil"},
             {"Ice Claw Bear","Bear","7-8","Dun Morogh"},
             {"Highlands Ursera","Bear","7-8","Zephras Isle"},
+            {"Black Bear","Bear","7","Dun Morogh"},
+            {"Swoop","Carrion Bird","7-9","Mulgore"},
         },
         [2] = {
             {"Windsong Crawler","Crab","8-9","Zephras Isle"},
@@ -202,6 +212,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Encrusted Surf Crawler","Crab","9-10","Durotar"},
             {"Venomtail Scorpid","Scorpid","9-10","Durotar"},
             {"Matriarch Bristlefur","Bear","10","Elwynn Forest"},
+            {"Shadowgale Ursera","Bear","10","Zephras Isle"},
             {"Mangeclaw","Bear","11","Dun Morogh"},
             {"Death Flayer","Scorpid","11","Durotar"},
             {"Ferocious Grizzled Bear","Bear","11-12","Silverpine Forest"},
@@ -211,7 +222,6 @@ ns.PETOPIA_TAME_MOBS = {
             {"Tide Crawler","Crab","12-14","Darkshore"},
         },
         [3] = {
-            {"Shadowgale Ursera","Bear","10","Zephras Isle"},
             {"Black Bear Patriarch","Bear","16-17","Loch Modan"},
             {"Shore Crawler","Crab","17-18","Westfall"},
             {"Den Mother","Bear","18-19","Darkshore"},
@@ -313,6 +323,7 @@ ns.PETOPIA_TAME_MOBS = {
 
     dash = {
         [1] = {
+            {"Sandstrider","Tallstrider","30-31","Desolace"},
             {"Kurzen War Tiger","Cat","32-33","Stranglethorn Vale"},
             {"Stranglethorn Tiger","Cat","32-33","Stranglethorn Vale"},
             {"Bonepaw Hyena","Hyena","33-35","Desolace"},
@@ -394,6 +405,12 @@ ns.PETOPIA_TAME_MOBS = {
         [1] = {
             {"Galestrider","Tallstrider","5-6","Zephras Isle"},
             {"Ornery Galestrider","Tallstrider","8","Zephras Isle"},
+            {"Fleeting Plainstrider","Tallstrider","12-13","The Barrens"},
+            {"Foreststrider","Tallstrider","14-16","Darkshore"},
+            {"Strider Clutchmother","Tallstrider","20","Darkshore"},
+        },
+        [2] = {
+            {"Sandstrider","Tallstrider","30-31","Desolace"},
         },
     },
 
@@ -486,6 +503,19 @@ ns.PETOPIA_TAME_MOBS = {
             {"Shriekling Matriarch","Raptor","9","Zephras Isle"},
             {"Shadowgale Shriekling","Bird of Prey","10-11","Zephras Isle"},
             {"Mystmane","Bear","13","Zephras Isle"},
+            {"Sunscale Screecher","Raptor","13-15","The Barrens"},
+        },
+        [2] = {
+            {"Highland Raptor","Raptor","23-24","Wetlands"},
+            {"Highland Lashtail","Raptor","24-25","Wetlands"},
+            {"Mottled Screecher","Raptor","24-25","Wetlands"},
+            {"Mottled Scytheclaw","Raptor","25-26","Wetlands"},
+            {"Highland Scytheclaw","Raptor","25-26","Wetlands"},
+            {"Mottled Razormaw","Raptor","26-27","Wetlands"},
+            {"Thicket Lurker","Raptor","27","Excavation Site: Wetlands (Dungeon)"},
+            {"Highland Razormaw","Raptor","27-28","Wetlands"},
+            {"Elder Razormaw","Raptor","29","Wetlands"},
+            {"Young Stranglethorn Raptor","Raptor","30-31","Stranglethorn Vale"},
         },
     },
 
@@ -539,6 +569,8 @@ ns.PETOPIA_TAME_MOBS = {
     -- page removed. No Carrion Bird source is recorded for rank 4.
     screech = {
         [1] = {
+            {"Taloned Swoop","Carrion Bird","8-10","Mulgore"},
+            {"Young Fleshripper","Carrion Bird","10-11","Westfall"},
             {"Greater Fleshripper","Carrion Bird","16-17","Westfall"},
         },
         [2] = {
@@ -583,9 +615,90 @@ ns.PETOPIA_TAME_MOBS = {
         },
     },
 
-    web = {
+    dismember = {
+        [1] = {
+            {"Loch Crocolisk","Crocolisk","14-15","Loch Modan"},
+            {"Daggerfang","Crocolisk","15","Loch Modan"},
+            {"Young Wetlands Crocolisk","Crocolisk","21-22","Wetlands"},
+            {"Wetlands Crocolisk","Crocolisk","23-24","Wetlands"},
+        },
         [2] = {
-            {"Moss Stalker","Spider","12","Silverpine Forest"},
+            {"Marsh Crocolisk","Crocolisk","26","Excavation Site: Wetlands (Dungeon)"},
+            {"Elder Crocolisk","Crocolisk","27","Excavation Site: Wetlands (Dungeon)"},
+            {"River Crocolisk","Crocolisk","30-31","Stranglethorn Vale"},
+        },
+    },
+
+    mine = {
+        [1] = {
+            {"Nightscreech","Bird of Prey","10","Teldrassil"},
+            {"Child of Jai'vhanel","Bird of Prey","11-12","Darkshore"},
+            {"Jai'vhanel","Bird of Prey","12","Darkshore"},
+        },
+    },
+
+    pinch = {
+        [1] = {
+            {"Tide Crawler","Crab","12-14","Darkshore"},
+            {"Sand Crawler","Crab","13-14","Westfall"},
+            {"Reef Crawler","Crab","15-17","Darkshore"},
+            {"Shore Crawler","Crab","17-18","Westfall"},
+            {"Raging Reef Crawler","Crab","20-21","Darkshore; Ashenvale"},
+        },
+        [2] = {
+            {"Barbed Crustacean","Crab","25-26","Blackfathom Deeps (Dungeon)"},
+            {"Enraged Reef Crawler","Crab","30-32","Desolace"},
+        },
+    },
+
+    swipe = {
+        [1] = {
+            {"Giant Grizzled Bear","Bear","12-13","Silverpine Forest"},
+            {"Grizzled Black Bear","Bear","13-14","Loch Modan"},
+            {"Mystmane","Bear","13","Zephras Isle"},
+        },
+        [2] = {
+            {"Elder Gray Bear","Bear","25-26","Hillsbrad Foothills"},
+            {"Maddened Rotclaw","Bear","25-26","Wetlands"},
+        },
+    },
+
+    tendonrip = {
+        [1] = {
+            {"Kolkar Packhound","Hyena","13","The Barrens"},
+            {"Hecklefang Hyena","Hyena","15-16","The Barrens"},
+            {"Hecklefang Snarler","Hyena","18-19","The Barrens"},
+            {"Hecklefang Stalker","Hyena","22-23","The Barrens"},
+        },
+        [2] = {
+            {"Pesterhide Hyena","Hyena","26-27","Thousand Needles"},
+            {"Pesterhide Snarler","Hyena","28-29","Thousand Needles"},
+            {"Steelsnap","Hyena","30","Thousand Needles"},
+        },
+    },
+
+    web = {
+        [1] = {
+            {"Moss Stalker","Spider","12-13","Silverpine Forest"},
+            {"Sri'skulk","Spider","13","Tirisfal Glades"},
+            {"Cliff Lurker","Spider","13-14","Loch Modan"},
+            {"Mist Creeper","Spider","13-14","Silverpine Forest"},
+            {"Deepmoss Hatchling","Spider","14","Stonetalon Mountains"},
+            {"Deep Widow","Spider","15-16","Ruins of Lordaeron (Dungeon)"},
+            {"Spider","Spider","15-16","Ruins of Lordaeron (Dungeon)"},
+            {"Deepmoss Venomspitter","Spider","17-18","Stonetalon Mountains"},
+            {"Pygmy Venom Web Spider","Spider","18-19","Duskwood"},
+            {"Venom Web Spider","Spider","19-20","Duskwood"},
+            {"Wildthorn Stalker","Spider","20-21","Ashenvale"},
+            {"Cave Stalker","Spider","21-22","Wetlands"},
+            {"Leech Stalker","Spider","21-22","Wetlands"},
+            {"Deepmoss Matriarch","Spider","22","Stonetalon Mountains"},
+        },
+        [2] = {
+            {"Carrion Recluse","Spider","21-22","Duskwood"},
+            {"Giant Moss Creeper","Spider","24-25","Hillsbrad Foothills"},
+            {"Wildthorn Venomspitter","Spider","24-25","Ashenvale"},
+            {"Black Widow Hatchling","Spider","24-25","Duskwood"},
         },
     },
 }

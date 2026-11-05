@@ -58,11 +58,11 @@ ability("shadowresistance", nil) -- Shadow Resistance: all families
 rank(24488, 1, 20, 5, "t", 4400) -- Shadow Resistance 1
 rank(24505, 2, 30, 15, "t", 16000) -- Shadow Resistance 2
 rank(24506, 3, 40, 45, "t", 36000) -- Shadow Resistance 3
-rank(24507, 4, 50, 90, "t", 72000) -- Shadow Resistance 4
+rank(24507, 4, 40, 90, "t", 72000) -- Shadow Resistance 4 (pet level 40 on Petopia Forever and wowhead.com/forever)
 -- Rank 5 removed: added in TBC, does not exist in Forever.
 
 ability("greatstamina", nil) -- Great Stamina: all families
-rank(4187, 1, 10, 5, "t", 100) -- Great Stamina 1
+rank(4187, 1, 1, 5, "t", 100) -- Great Stamina 1
 rank(4188, 2, 12, 10, "t", 1200) -- Great Stamina 2
 rank(4189, 3, 18, 15, "t", 4000) -- Great Stamina 3
 rank(4190, 4, 24, 25, "t", 14000) -- Great Stamina 4
@@ -75,7 +75,7 @@ rank(5042, 10, 60, 185, "t", 100000) -- Great Stamina 10
 -- Rank 11 removed: added in TBC, does not exist in Forever.
 
 ability("naturalarmor", nil) -- Natural Armor: all families
-rank(24545, 1, 10, 1, "t", 100) -- Natural Armor 1
+rank(24545, 1, 1, 1, "t", 100) -- Natural Armor 1
 rank(24549, 2, 12, 5, "t", 1200) -- Natural Armor 2
 rank(24550, 3, 18, 10, "t", 4000) -- Natural Armor 3
 rank(24551, 4, 24, 15, "t", 14000) -- Natural Armor 4
@@ -84,7 +84,7 @@ rank(24553, 6, 36, 50, "t", 28000) -- Natural Armor 6
 rank(24554, 7, 42, 75, "t", 48000) -- Natural Armor 7
 rank(24555, 8, 48, 100, "t", 64000) -- Natural Armor 8
 rank(24629, 9, 54, 125, "t", 84000) -- Natural Armor 9
-rank(24630, 10, 60, 150, "tw", 100000) -- Natural Armor 10
+rank(24630, 10, 60, 150, "t", 100000) -- Natural Armor 10
 -- Rank 11 removed: added in TBC, does not exist in Forever.
 
 ability("growl", nil) -- Growl: all families
@@ -229,11 +229,11 @@ rank(1265062, 4, 40, 20, "w", 0) -- Mine! 4
 rank(1265064, 5, 50, 25, "w", 0) -- Mine! 5
 
 ability("tendonrip", { 25 }, "Tendon Rip") -- Tendon Rip: Hyena
-rank(1265043, 1, 1, 1, "w", 0) -- Tendon Rip 1
-rank(1265045, 2, 12, 6, "w", 0) -- Tendon Rip 2
-rank(1265046, 3, 24, 12, "w", 0) -- Tendon Rip 3
-rank(1265047, 4, 36, 18, "w", 0) -- Tendon Rip 4
-rank(1265048, 5, 48, 24, "w", 0) -- Tendon Rip 5
+rank(1265043, 1, 12, 6, "w", 0) -- Tendon Rip 1
+rank(1265045, 2, 24, 12, "w", 0) -- Tendon Rip 2
+rank(1265046, 3, 36, 18, "w", 0) -- Tendon Rip 3
+rank(1265047, 4, 48, 24, "w", 0) -- Tendon Rip 4
+rank(1265048, 5, 60, 30, "w", 0) -- Tendon Rip 5
 
 ability("pinch", { 8 }, "Pinch") -- Pinch: Crab
 rank(1264745, 1, 12, 6, "w", 0) -- Pinch 1

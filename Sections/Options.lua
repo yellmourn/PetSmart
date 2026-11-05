@@ -218,6 +218,7 @@ ns.Pages.options = function(ctx)
 
     ctx.AddLine(" ", 1, 1, 1)
     ctx.AddLine("Icon", 1, 0.82, 0)
+    AddToggle("Lock Icon (Move)", "iconLocked", nil, "no shift-drag")
     do
         -- The slider is a persistent widget, not a pooled text row, so
         -- it's positioned by hand at the current scroll position (same

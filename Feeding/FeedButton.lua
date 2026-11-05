@@ -190,7 +190,9 @@ local function ShowToggleTooltip(self)
     elseif untrackCount > 1 then
         GameTooltip:AddLine(("Middle-click: Untrack All (%d)"):format(untrackCount), 1, 1, 1)
     end
-    GameTooltip:AddLine("Shift-drag: move", 0.7, 0.7, 0.7)
+    if not (ns.profile and ns.profile.iconLocked) then
+        GameTooltip:AddLine("Shift-drag: move", 0.7, 0.7, 0.7)
+    end
     GameTooltip:Show()
 end
 toggle:SetScript("OnEnter", ShowToggleTooltip)
