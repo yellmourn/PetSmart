@@ -1,5 +1,15 @@
 # PetSmart Changelog
 
+## v1.60.1j
+
+### New: Translations
+- PetSmart is now available in Português, Español, Français, Deutsch, Italiano, Русский, 简体中文, 繁體中文 and 한국어, as well as English. It uses your game client's language automatically.
+
+> **Note:** These translations may not be fully correct. If you spot a mistake, please let us know on GitHub or CurseForge.
+
+### Fixed
+- **WoW: Forever:** Shriekling Fledgling and Shriekling Matriarch are now listed under Bird of Prey, matching what the game shows.
+
 ## v1.60.1i
 
 ### New: WoW: Burning Crusade Anniversary support
