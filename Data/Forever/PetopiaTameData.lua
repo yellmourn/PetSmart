@@ -279,7 +279,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Greater Duskbat","Bat","6-7","Tirisfal Glades"},
             {"Flatland Cougar","Cat","7-8","Mulgore"},
             {"Durotar Tiger","Cat","7-8","Durotar"},
-            {"Shriekling Fledgling","Raptor","8-9","Zephras Isle"},
+            {"Shriekling Fledgling","Bird of Prey","8-9","Zephras Isle"},
             {"Elder Plainstrider","Tallstrider","8-9","Mulgore"},
             {"Shal'ma","Cat","9","Durotar"},
             {"Mazzranache","Tallstrider","9","Mulgore"},
@@ -493,14 +493,14 @@ ns.PETOPIA_TAME_MOBS = {
     },
 
     -- Savage Rend is otherwise Raptor-only (see PetAbilitiesData.lua), but
-    -- Forever's own data lists a Bear and a Bird of Prey teaching it too -
+    -- Forever's own data lists a Bear and Birds of Prey teaching it too -
     -- transcribed as-is from the source spreadsheet rather than treated as
     -- an error, since this table is informational "where to find a
     -- teacher" data, independent of the ability's own family-eligibility
     -- list.
     savagerend = {
         [1] = {
-            {"Shriekling Matriarch","Raptor","9","Zephras Isle"},
+            {"Shriekling Matriarch","Bird of Prey","9","Zephras Isle"},
             {"Shadowgale Shriekling","Bird of Prey","10-11","Zephras Isle"},
             {"Mystmane","Bear","13","Zephras Isle"},
             {"Sunscale Screecher","Raptor","13-15","The Barrens"},

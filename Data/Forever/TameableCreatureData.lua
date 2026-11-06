@@ -97,10 +97,12 @@ ns.TAMEABLE_CREATURES = {
         { name = "Elder Shardtooth", level = "57-58", zone = "Winterspring", npc = 7445, knows = "Claw 8" },
         { name = "Rabid Shardtooth", level = "59-60", zone = "Winterspring", npc = 7446 },
     },
-    ["Bird of Prey"] = { -- 15 creatures
+    ["Bird of Prey"] = { -- 17 creatures
         { name = "Strigid Owl", level = "5-6", zone = "Teldrassil", npc = 1995, knows = "Claw 1" },
         { name = "Strigid Screecher", level = "7-8", zone = "Teldrassil", npc = 1996 },
         { name = "Strigid Hunter", level = "8-9", zone = "Teldrassil", npc = 1997, knows = "Claw 2" },
+        { name = "Shriekling Fledgling", level = "8-9", zone = "Shriekling Den, Zephras Isle", npc = 253282, knows = "Cower 1" },
+        { name = "Shriekling Matriarch", level = "9", zone = "Shriekling Den, Zephras Isle", npc = 253283 },
         { name = "Child of Jai'vhanel", level = "10", zone = "Darkshore", npc = 270298, knows = "Cower 1, Mine! 1" },
         { name = "Shadowgale Shriekling", level = "10-11", zone = "Shadowgale Forest, Zephras Isle", npc = 256092 },
         { name = "Nightscreech", level = "11", zone = "Teldrassil", npc = 276101, tag = "Rare", knows = "Mine! 1" },
@@ -370,12 +372,10 @@ ns.TAMEABLE_CREATURES = {
         { name = "Snickerfang Hyena", level = "49-50", zone = "Blasted Lands", npc = 5985 },
         { name = "Ravage", level = "51", zone = "Blasted Lands", npc = 8300, tag = "Rare", knows = "Dash 3" },
     },
-    ["Raptor"] = { -- 48 creatures
+    ["Raptor"] = { -- 46 creatures
         { name = "Bloodtalon Taillasher", level = "6-8", zone = "Durotar", npc = 3122 },
         { name = "Bloodtalon Scythemaw", level = "8-10", zone = "Durotar", npc = 3123 },
-        { name = "Shriekling Fledgling", level = "8-9", zone = "Shriekling Den, Zephras Isle", npc = 253282, knows = "Cower 1" },
         { name = "Bloodtalon Matriarch", level = "9", zone = "Echo Isles, Durotar", npc = 268530, knows = "Bite 2" },
-        { name = "Shriekling Matriarch", level = "9", zone = "Shriekling Den, Zephras Isle", npc = 253283 },
         { name = "Corrupted Bloodtalon Scythemaw", level = "10-11", zone = "Durotar", npc = 3227 },
         { name = "Sunscale Lashtail", level = "11-13", zone = "The Barrens", npc = 3254 },
         { name = "Sunscale Screecher", level = "13-15", zone = "The Barrens", npc = 3255, knows = "Savage Rend 1" },
