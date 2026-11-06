@@ -129,7 +129,7 @@ ns.Pages.typedetail = function(ctx)
 
         ctx.AddLine(" ", 1, 1, 1)
         local desc = ns.PET_TYPE_DESCRIPTIONS and ns.PET_TYPE_DESCRIPTIONS[familyId]
-        ctx.AddLine(desc and L[desc] or L["No description available."], 0.9, 1, 0.9)
+        ctx.AddLine(desc and ns.LocText(desc) or L["No description available."], 0.9, 1, 0.9)
 
         ctx.AddLine(" ", 1, 1, 1)
         local specialty = GetFamilySpecialty(familyId)
@@ -166,7 +166,7 @@ ns.Pages.typedetail = function(ctx)
         end
         for _, c in ipairs(creatures) do
             local icons = CreatureIcons(c, familyName)
-            local text = (icons ~= "" and (icons .. " ") or "") .. c.name
+            local text = (icons ~= "" and (icons .. " ") or "") .. ns.LocCreature(c.name)
                 .. "  |cff9d9d9d(" .. c.level .. ")  " .. ns.LocZone(c.zone) .. "|r"
             ctx.AddLine(text, 1, 1, 1, function()
                 SetAbilitiesMode("creaturedetail", { creature = c, familyId = familyId })
@@ -184,7 +184,7 @@ ns.Pages.creaturedetail = function(ctx)
     local familyId = sel and sel.familyId
     local familyName = (familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[familyId]) or "Unknown"
     abilitiesPanel.title:SetText(L["Pet Index"])
-    abilitiesPanel.subtitle:SetText(c and c.name or L["Tameable Creature"])
+    abilitiesPanel.subtitle:SetText(c and ns.LocCreature(c.name) or L["Tameable Creature"])
     abilitiesPanel.subtitle:Show()
     if not c then
         ctx.AddLine(L["No creature selected."], 0.8, 0.8, 0.8)
@@ -240,7 +240,7 @@ ns.Pages.creaturedetail = function(ctx)
     local desc = (rare and rare.description) or (spawnInfo and spawnInfo.description)
     if desc then
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine(L[desc], 0.9, 1, 0.9)
+        ctx.AddLine(ns.LocText(desc), 0.9, 1, 0.9)
     end
     ns.DressingRoom.Show(c.name, c.npc)
 end

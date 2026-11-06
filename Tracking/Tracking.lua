@@ -46,7 +46,7 @@ local function SetTrackedRare(rare)
     -- rather than letting that happen - untracking is unaffected since
     -- a dungeon rare can never become tracked in the first place.
     if not wasTracking and rare.isDungeon then
-        Print(L["%s spawns inside a dungeon and cannot be tracked on the map."]:format(rare.name))
+        Print(L["%s spawns inside a dungeon and cannot be tracked on the map."]:format(ns.LocCreature(rare.name)))
         return
     end
 

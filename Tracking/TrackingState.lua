@@ -51,9 +51,9 @@ function Tame.GetLabel(name, spawnInfo)
     end
     levels = levels or (spawnInfo and spawnInfo.level)
     if levels and tostring(levels) ~= "" then
-        return name .. " " .. L["(Lv %s)"]:format(tostring(levels))
+        return ns.LocCreature(name) .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(levels)))
     end
-    return name
+    return ns.LocCreature(name)
 end
 
 -- How many things a middle-click would untrack (rares + the tracked

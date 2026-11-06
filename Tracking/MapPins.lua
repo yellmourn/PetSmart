@@ -174,7 +174,7 @@ local function GetWorldPin(i)
     p:SetScript("OnEnter", function(self)
         if not self.rare then return end
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-        GameTooltip:SetText(self.rare.level and (self.rare.name .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or self.rare.name, 1, 0.82, 0)
+        GameTooltip:SetText(self.rare.level and (ns.LocCreature(self.rare.name) .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or ns.LocCreature(self.rare.name), 1, 0.82, 0)
         if self.rare.zone then
             GameTooltip:AddLine(ns.LocZone(self.rare.zone), 1, 1, 1)
         end
@@ -332,7 +332,7 @@ local function GetMinimapPin(i)
         p:SetScript("OnEnter", function(self)
             if not self.rare then return end
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(self.rare.level and (self.rare.name .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or self.rare.name, 1, 0.82, 0)
+            GameTooltip:SetText(self.rare.level and (ns.LocCreature(self.rare.name) .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or ns.LocCreature(self.rare.name), 1, 0.82, 0)
             GameTooltip:Show()
         end)
         p:SetScript("OnLeave", function() GameTooltip:Hide() end)

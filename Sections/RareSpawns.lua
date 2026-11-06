@@ -79,7 +79,7 @@ ns.Pages.spawns = function(ctx)
                 end)
             end
             for _, rare in ipairs(inZone) do
-                local label = rare.name .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
+                local label = ns.LocCreature(rare.name) .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
                 if IsTrackedRare(rare) then label = label .. "  " .. LAYOUT.TRACKED_INLINE end
                 ctx.AddLine(label, 1, 1, 1, function() SetAbilitiesMode("raredetail", rare) end)
             end
@@ -101,7 +101,7 @@ ns.Pages.spawns = function(ctx)
                 ctx.AddLine(familyName, 1, 0.82, 0)
                 lastFamily = familyName
             end
-            local label = rare.name .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
+            local label = ns.LocCreature(rare.name) .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
             if IsTrackedRare(rare) then label = label .. "  " .. LAYOUT.TRACKED_INLINE end
             ctx.AddLine(label, 1, 1, 1, function() SetAbilitiesMode("raredetail", rare) end)
         end
@@ -114,7 +114,7 @@ ns.Pages.raredetail = function(ctx)
     -- own name in the subheader instead of replacing it, same as the
     -- Abilities Index/Pet Types detail pages above.
     abilitiesPanel.title:SetText(L["Rare Index"])
-    abilitiesPanel.subtitle:SetText(rare and rare.name or L["Rare Pet"])
+    abilitiesPanel.subtitle:SetText(rare and ns.LocCreature(rare.name) or L["Rare Pet"])
     abilitiesPanel.subtitle:Show()
     do
         local tracked = (rare and IsTrackedRare(rare)) or false
@@ -141,7 +141,7 @@ ns.Pages.raredetail = function(ctx)
         end
         ctx.AddLine(zoneLine, 0.8, 0.8, 0.8)
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine(rare.description and L[rare.description] or L["No description available."], 0.9, 1, 0.9)
+        ctx.AddLine(rare.description and ns.LocText(rare.description) or L["No description available."], 0.9, 1, 0.9)
         if not rare.mapID then
             ctx.AddLine(" ", 1, 1, 1)
             ctx.AddLine(L["(Map tracking unavailable for this zone.)"], 0.6, 0.6, 0.6)

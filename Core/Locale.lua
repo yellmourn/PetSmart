@@ -108,6 +108,36 @@ function ns.LocLevel(level)
     return (level:gsub("Elite", L["Elite"]))
 end
 
+-- A creature's name in the player's language. The Locales\<code>.lua files
+-- fill ns.CREATURE_NAMES (English name -> local name, from Wowhead's NPC
+-- data for that language); any name not in it stays in English.
+function ns.LocCreature(name)
+    if locale == "enUS" or type(name) ~= "string" then return name end
+    local names = ns.CREATURE_NAMES
+    return (names and names[name]) or name
+end
+
+-- Reference text (descriptions, training info) in the player's language.
+-- Translations can carry tokens that are filled in with the game's own
+-- name for something, so they always match what the player sees in game:
+--   {z:Elwynn Forest}      a zone            {n:Princess}   a creature
+--   {s:1515:Tame Beast}    a spell by ID      {a:Tendon Rip} a pet ability
+--   {f:Dragonhawk}         a pet family
+function ns.LocText(text)
+    if type(text) ~= "string" then return text end
+    local s = L[text]
+    if locale == "enUS" or not s:find("{", 1, true) then return s end
+    s = s:gsub("{z:(.-)}", function(z) return ns.LocZone(z) end)
+    s = s:gsub("{n:(.-)}", function(n) return ns.LocCreature(n) end)
+    s = s:gsub("{f:(.-)}", function(f) return ns.LocFamily(f) end)
+    s = s:gsub("{a:(.-)}", function(a) return ns.LocAbilityList(a) end)
+    s = s:gsub("{s:(%d+):(.-)}", function(id, english)
+        local name = GetSpellInfo and GetSpellInfo(tonumber(id))
+        return (name and name ~= "") and name or english
+    end)
+    return s
+end
+
 -- An ability list as written in the data ("Claw 3, Pinch 1") with each
 -- ability under the game's own name for it.
 local abilityByEnglish

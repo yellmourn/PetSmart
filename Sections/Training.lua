@@ -16,13 +16,13 @@ ns.Pages.training = function(ctx)
     else
         for i, section in ipairs(ns.GENERAL_TRAINING_INFO) do
             local expanded = trainingInfoExpanded[i]
-            ctx.AddLine(L[section.title], 1, 0.82, 0, function()
+            ctx.AddLine(ns.LocText(section.title), 1, 0.82, 0, function()
                 trainingInfoExpanded[i] = not trainingInfoExpanded[i]
                 ns.RefreshAbilitiesPanel()
             end)
             if expanded then
                 for _, line in ipairs(section.lines) do
-                    ctx.AddLine(L[line], 0.9, 1, 0.9)
+                    ctx.AddLine(ns.LocText(line), 0.9, 1, 0.9)
                 end
                 ctx.AddLine(" ", 1, 1, 1)
             end

@@ -192,7 +192,7 @@ local function ShowToggleTooltip(self)
     GameTooltip:AddLine(L["Right-click: Open/Close Compendium"], 1, 1, 1)
     local untrackCount, untrackName = Tame.UntrackTarget()
     if untrackCount == 1 then
-        GameTooltip:AddLine(L["Middle-click: Untrack %s"]:format(untrackName), 1, 1, 1)
+        GameTooltip:AddLine(L["Middle-click: Untrack %s"]:format(ns.LocCreature(untrackName)), 1, 1, 1)
     elseif untrackCount > 1 then
         GameTooltip:AddLine(L["Middle-click: Untrack All (%d)"]:format(untrackCount), 1, 1, 1)
     end

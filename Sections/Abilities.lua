@@ -241,7 +241,7 @@ local function BuildDetailLines(data)
                 -- actual click handler from this `mob` field once the line
                 -- reaches the screen, well after SetAbilitiesMode exists.
                 lines[#lines + 1] = {
-                    text = "  " .. L["%s (%s) - %s (Lv %s)"]:format(name, ns.LocFamily(family), ns.LocZone(zone), levels), color = { 0.9, 1, 0.9 },
+                    text = "  " .. L["%s (%s) - %s (Lv %s)"]:format(ns.LocCreature(name), ns.LocFamily(family), ns.LocZone(zone), levels), color = { 0.9, 1, 0.9 },
                     mob = { name = name, family = family, levels = levels, zone = zone },
                 }
             end
@@ -465,7 +465,7 @@ ns.Pages.tamedetail = function(ctx)
     -- pattern as every other detail-of-a-detail page in this panel.
     local abilityText = ns.selectedRankData and L["%s (Rank %d)"]:format(ns.selectedRankData.displayName, ns.selectedRankData.rank) or L["Ability"]
     abilitiesPanel.title:SetText(abilityText)
-    abilitiesPanel.subtitle:SetText(mob and mob.name or L["Tameable Pet"])
+    abilitiesPanel.subtitle:SetText(mob and ns.LocCreature(mob.name) or L["Tameable Pet"])
     abilitiesPanel.subtitle:Show()
 
     local spawnInfo = mob and Tame.GetSpawnInfo(mob.name)
@@ -493,7 +493,7 @@ ns.Pages.tamedetail = function(ctx)
         ctx.AddLine(zoneLine, 0.8, 0.8, 0.8)
         ctx.AddLine(" ", 1, 1, 1)
         if spawnInfo and spawnInfo.description then
-            ctx.AddLine(L[spawnInfo.description], 0.9, 1, 0.9)
+            ctx.AddLine(ns.LocText(spawnInfo.description), 0.9, 1, 0.9)
             ctx.AddLine(" ", 1, 1, 1)
         end
         if not spawnInfo then

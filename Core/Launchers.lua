@@ -151,7 +151,7 @@ local function LauncherOnTooltipShow(tooltip)
     tooltip:AddLine(L["|cffffff00Right-click|r to open/close Options"], 1, 1, 1)
     local untrackCount, untrackName = Tame.UntrackTarget()
     if untrackCount == 1 then
-        tooltip:AddLine(L["|cffffff00Middle-click|r to untrack %s"]:format(untrackName), 1, 1, 1)
+        tooltip:AddLine(L["|cffffff00Middle-click|r to untrack %s"]:format(ns.LocCreature(untrackName)), 1, 1, 1)
     elseif untrackCount > 1 then
         tooltip:AddLine(L["|cffffff00Middle-click|r to untrack all (%d)"]:format(untrackCount), 1, 1, 1)
     end

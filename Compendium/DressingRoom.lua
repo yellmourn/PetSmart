@@ -194,7 +194,7 @@ watcher:SetScript("OnUpdate", function(self, dt)
         self:Hide()
     elseif tries >= RETRIES then
         model:Hide()
-        room.empty:SetText("The model didn't load.\nReopen this page to try again.")
+        room.empty:SetText(L["The model didn't load.\nReopen this page to try again."])
         room.empty:Show()
         self:Hide()
     end
