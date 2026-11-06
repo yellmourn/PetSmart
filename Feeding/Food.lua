@@ -3,6 +3,7 @@
 -- Pet diets and food classification: which bag items the current pet will eat.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local ItemClassIDs = ns.ItemClassIDs
@@ -138,6 +139,16 @@ local function Classify(itemID, name)
     for _, group in ipairs(KEYWORDS) do
         for _, kw in ipairs(group[2]) do
             if lname:find("%f[%a]" .. kw .. "%f[%A]") then return group[1] end
+        end
+    end
+    -- Item names in the player's language (Locales\*.lua): plain
+    -- word-part matches, since %a doesn't cover accented or non-Latin letters.
+    local localKeywords = rawget(L, "FOOD_KEYWORDS")
+    if localKeywords then
+        for _, group in ipairs(localKeywords) do
+            for _, kw in ipairs(group[2]) do
+                if lname:find(kw, 1, true) then return group[1] end
+            end
         end
     end
     return nil

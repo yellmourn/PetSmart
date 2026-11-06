@@ -3,6 +3,7 @@
 -- What is being tracked (rares and the tame-teacher pet), plus the shared tracking lookups.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
             -- but UpdateHappiness() (defined before it) needs to reference it.
 -- Ordered list of every rare currently being tracked - 0 or 1 entries
@@ -50,7 +51,7 @@ function Tame.GetLabel(name, spawnInfo)
     end
     levels = levels or (spawnInfo and spawnInfo.level)
     if levels and tostring(levels) ~= "" then
-        return name .. " (Lv " .. tostring(levels) .. ")"
+        return name .. " " .. L["(Lv %s)"]:format(tostring(levels))
     end
     return name
 end
@@ -128,7 +129,7 @@ function Tame.GetSpawnInfo(name)
                 name = name,
                 zone = instanceZone,
                 isDungeon = true,
-                description = "Found inside " .. instanceZone .. ", so it can't be tracked on the world map.",
+                description = L["Found inside %s, so it can't be tracked on the world map."]:format(ns.LocZone(instanceZone)),
             }
         end
         Tame.dungeonCache[name] = cached

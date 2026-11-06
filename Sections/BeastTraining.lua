@@ -127,7 +127,8 @@ end
 -- The rank from "Rank 3" / "Bite (Rank 3)" / "Bite 3" style text, or nil.
 local function ParseRank(sub, name)
     local r = type(sub) == "string" and tonumber(sub:match("(%d+)") or "")
-    if not r and type(name) == "string" then r = tonumber(name:match("%(%a+ (%d+)%)") or name:match(" (%d+)$") or "") end
+    -- "(Rank 3)", "(Rang 3)", "(Ранг 3)", "(等级3)"...: any word in any language.
+    if not r and type(name) == "string" then r = tonumber(name:match("%(.-(%d+)%)%s*$") or name:match(" (%d+)$") or "") end
     return r or nil
 end
 

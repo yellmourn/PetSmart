@@ -3,6 +3,7 @@
 -- The on-screen Feed Pet icon: happiness border, tooltip, and the food panel.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local BUTTON_SIZE = ns.BUTTON_SIZE
@@ -79,7 +80,12 @@ local HAPPINESS_COLOR = {
     [2] = { 0xbd / 255, 0xad / 255, 0x00 / 255 }, -- Content  - #bdad00
     [3] = { 0x0d / 255, 0x7a / 255, 0x2b / 255 }, -- Happy    - #0d7a2b
 }
-local HAPPINESS_LABEL = { [1] = "Unhappy", [2] = "Content", [3] = "Happy" }
+-- The game's own words when it has them (PET_HAPPINESS1-3), otherwise ours.
+local HAPPINESS_LABEL = {
+    [1] = _G.PET_HAPPINESS1 or L["Unhappy"],
+    [2] = _G.PET_HAPPINESS2 or L["Content"],
+    [3] = _G.PET_HAPPINESS3 or L["Happy"],
+}
 -- Shown instead of a happiness color whenever there's nothing to report
 -- one (no pet out, or the happiness API/data isn't available) - a neutral
 -- grey ring rather than no ring at all, so the border always shows
@@ -135,12 +141,12 @@ end
 -- Kept only as a fallback in case a future client instead returns a
 -- plain numeric rank.
 local LOYALTY_LABEL = {
-    [1] = "Rebellious",
-    [2] = "Unruly",
-    [3] = "Submissive",
-    [4] = "Dependable",
-    [5] = "Faithful",
-    [6] = "Best Friend",
+    [1] = L["Rebellious"],
+    [2] = L["Unruly"],
+    [3] = L["Submissive"],
+    [4] = L["Dependable"],
+    [5] = L["Faithful"],
+    [6] = L["Best Friend"],
 }
 
 local function GetLoyaltyLabel()
@@ -150,7 +156,7 @@ local function GetLoyaltyLabel()
         return result
     end
     if type(result) == "number" then
-        return LOYALTY_LABEL[result] or ("Level " .. tostring(result))
+        return LOYALTY_LABEL[result] or L["Level %s"]:format(tostring(result))
     end
     return nil
 end
@@ -177,21 +183,21 @@ local function ShowToggleTooltip(self)
         end
     end
     if ns.profile.tooltipShowHappiness and border.state then
-        GameTooltip:AddLine("Happiness: " .. (HAPPINESS_LABEL[border.state] or "Unknown"), 1, 1, 1)
+        GameTooltip:AddLine(L["Happiness: %s"]:format(HAPPINESS_LABEL[border.state] or L["Unknown"]), 1, 1, 1)
     end
     if ns.profile.tooltipShowLoyalty and UnitExists("pet") then
-        GameTooltip:AddLine("Loyalty: " .. (GetLoyaltyLabel() or "Unknown"), 1, 1, 1)
+        GameTooltip:AddLine(L["Loyalty: %s"]:format(GetLoyaltyLabel() or L["Unknown"]), 1, 1, 1)
     end
-    GameTooltip:AddLine("Left-click: Feed Pet", 1, 1, 1)
-    GameTooltip:AddLine("Right-click: Open/Close Compendium", 1, 1, 1)
+    GameTooltip:AddLine(L["Left-click: Feed Pet"], 1, 1, 1)
+    GameTooltip:AddLine(L["Right-click: Open/Close Compendium"], 1, 1, 1)
     local untrackCount, untrackName = Tame.UntrackTarget()
     if untrackCount == 1 then
-        GameTooltip:AddLine("Middle-click: Untrack " .. untrackName, 1, 1, 1)
+        GameTooltip:AddLine(L["Middle-click: Untrack %s"]:format(untrackName), 1, 1, 1)
     elseif untrackCount > 1 then
-        GameTooltip:AddLine(("Middle-click: Untrack All (%d)"):format(untrackCount), 1, 1, 1)
+        GameTooltip:AddLine(L["Middle-click: Untrack All (%d)"]:format(untrackCount), 1, 1, 1)
     end
     if not (ns.profile and ns.profile.iconLocked) then
-        GameTooltip:AddLine("Shift-drag: move", 0.7, 0.7, 0.7)
+        GameTooltip:AddLine(L["Shift-drag: move"], 0.7, 0.7, 0.7)
     end
     GameTooltip:Show()
 end
@@ -226,7 +232,7 @@ panel.title:SetPoint("TOPLEFT", 10, -8)
 
 panel.empty = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 panel.empty:SetPoint("TOPLEFT", 10, -30)
-panel.empty:SetText("No suitable pet food in your bags.")
+panel.empty:SetText(L["No suitable pet food in your bags."])
 panel.empty:Hide()
 
 local buttons = {}
@@ -251,8 +257,8 @@ local function CreateFoodButton(index)
         if not self.link then return end
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetHyperlink(self.link)
-        GameTooltip:AddLine("Pet food: " .. (self.ftype or "?"), 0.3, 1, 0.6)
-        GameTooltip:AddLine("Click to feed your pet", 1, 1, 1)
+        GameTooltip:AddLine(L["Pet food: %s"]:format(self.ftype and ns.LocFood(self.ftype) or "?"), 0.3, 1, 0.6)
+        GameTooltip:AddLine(L["Click to feed your pet"], 1, 1, 1)
         GameTooltip:Show()
     end)
     b:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -296,14 +302,14 @@ local function RefreshPanel()
     for i = #list + 1, #buttons do buttons[i]:Hide() end
 
     local petName = UnitExists("pet") and UnitName("pet") or nil
-    panel.title:SetText(petName and ("Feed " .. petName) or "Feed Pet")
+    panel.title:SetText(petName and L["Feed %s"]:format(petName) or L["Feed Pet"])
 
     local cols = math.max(1, math.min(COLUMNS, #list))
     local rows = math.max(1, math.ceil(#list / COLUMNS))
     -- Never narrower than the "Feed <pet name>" title (plus its 10px margins).
     local titleW = math.ceil((panel.title:GetStringWidth() or 0) + 20)
     if #list == 0 then
-        panel.empty:SetText(UnitExists("pet") and "No suitable pet food in your bags." or "You have no pet summoned.")
+        panel.empty:SetText(UnitExists("pet") and L["No suitable pet food in your bags."] or L["You have no pet summoned."])
         panel.empty:Show()
         local emptyW = math.ceil((panel.empty:GetStringWidth() or 0) + 20)
         panel:SetSize(math.max(200, titleW, emptyW), 52)

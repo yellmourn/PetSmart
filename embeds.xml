@@ -15,6 +15,18 @@
 <!-- Which client is this? Must load first: the data files below check it. -->
 <Script file="Core\Client.lua"/>
 
+<!-- Translations: ns.L, then one file per language (each loads only for its own). -->
+<Script file="Core\Locale.lua"/>
+<Script file="Locales\ptBR.lua"/>
+<Script file="Locales\esES.lua"/>
+<Script file="Locales\frFR.lua"/>
+<Script file="Locales\deDE.lua"/>
+<Script file="Locales\itIT.lua"/>
+<Script file="Locales\ruRU.lua"/>
+<Script file="Locales\zhCN.lua"/>
+<Script file="Locales\zhTW.lua"/>
+<Script file="Locales\koKR.lua"/>
+
 <!-- Static data (pets, abilities, rares, tame areas). Data\Forever runs only on
      WoW: Forever, Data\Classic only on WoW Classic Era, Data\TBC only on WoW: Burning
      Crusade Anniversary (each file checks the client). -->

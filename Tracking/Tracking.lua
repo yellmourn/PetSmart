@@ -3,6 +3,7 @@
 -- Track/untrack logic for rares and tame-teacher pets, saved per profile.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local LogOnce = ns.LogOnce
@@ -45,7 +46,7 @@ local function SetTrackedRare(rare)
     -- rather than letting that happen - untracking is unaffected since
     -- a dungeon rare can never become tracked in the first place.
     if not wasTracking and rare.isDungeon then
-        Print(rare.name .. " spawns inside a dungeon and cannot be tracked on the map.")
+        Print(L["%s spawns inside a dungeon and cannot be tracked on the map."]:format(rare.name))
         return
     end
 
@@ -194,7 +195,7 @@ function Tame.Set(name, spawnInfo)
         -- Same refusal SetTrackedRare applies to dungeon rares: no usable
         -- world map for a dungeon's mapID on these clients, so this never
         -- becomes tracked in the first place (untracking is unaffected).
-        Print(name .. " spawns inside a dungeon and cannot be tracked on the map.")
+        Print(L["%s spawns inside a dungeon and cannot be tracked on the map."]:format(name))
         return
     elseif spawnInfo then
         ns.trackedTameTeacher = { name = name, spawnInfo = spawnInfo }

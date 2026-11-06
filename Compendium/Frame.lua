@@ -3,6 +3,7 @@
 -- The Compendium window: banner, icon column, content panel, header widgets, rows, drag/resize, bag dodge.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local ApplyIconSize = ns.ApplyIconSize
@@ -267,6 +268,9 @@ local function MakeTabButton(text, xOff, width, yOff, anchor)
     b.text:SetAllPoints()
     b.text:SetText(text)
     b.text:SetJustifyH(anchor == "TOPLEFT" and "LEFT" or "RIGHT")
+    -- Wide enough for the text in any language.
+    local textW = b.text:GetStringWidth()
+    if type(textW) == "number" and textW + 6 > (width or 90) then b:SetWidth(math.ceil(textW + 6)) end
     b:SetScript("OnEnter", function() b.text:SetTextColor(1, 1, 1) end)
     b:SetScript("OnLeave", function()
         b.text:SetTextColor(b.active and 1 or 0.6, b.active and 0.85 or 0.6, b.active and 0.2 or 0.6)
@@ -276,20 +280,26 @@ end
 
 -- Anchored to the left (under the title) rather than the right, so they
 -- don't compete for space with the fixed Back button above them.
-local tabLearned   = MakeTabButton("Learned", 12, 74, -32, "TOPLEFT")
-local tabUnlearned = MakeTabButton("Unlearned", 92, 90, -32, "TOPLEFT")
+local tabLearned   = MakeTabButton(L["Learned"], 12, 74, -32, "TOPLEFT")
+local tabUnlearned = MakeTabButton(L["Unlearned"], 92, 90, -32, "TOPLEFT")
+tabUnlearned:ClearAllPoints()
+tabUnlearned:SetPoint("TOPLEFT", tabLearned, "TOPRIGHT", 6, 0)
 
 -- Third tab of the Pet Abilities section: the full Abilities Index.
 -- (Pet Abilities and the Index share one section icon, since they share
 -- the same paw-book artwork.)
-local tabIndexLink = MakeTabButton("Abilities Index", 188, 130, -32, "TOPLEFT")
+local tabIndexLink = MakeTabButton(L["Abilities Index"], 188, 130, -32, "TOPLEFT")
+tabIndexLink:ClearAllPoints()
+tabIndexLink:SetPoint("TOPLEFT", tabUnlearned, "TOPRIGHT", 6, 0)
 
 -- Pet page: "Learned" / "Unlearned" links on the right, centred between the
 -- subheader (level/family) and the loyalty line below it, opening the pet's two ability lists. Shown on
 -- the pet page only (see RefreshAbilitiesPanel); OnClick is set in
 -- Sections/Pet.lua.
-local petLinkUnlearned = MakeTabButton("Unlearned", -8, 80, -34)
-local petLinkLearned = MakeTabButton("Learned", -96, 66, -34)
+local petLinkUnlearned = MakeTabButton(L["Unlearned"], -8, 80, -34)
+local petLinkLearned = MakeTabButton(L["Learned"], -96, 66, -34)
+petLinkLearned:ClearAllPoints()
+petLinkLearned:SetPoint("TOPRIGHT", petLinkUnlearned, "TOPLEFT", -8, 0)
 for _, link in ipairs({ petLinkLearned, petLinkUnlearned }) do
     link.active = true
     -- Blue link; gold while its list is the one open (link.selected).
@@ -349,7 +359,7 @@ function ns.PlaceBackButton(onPetRow)
 end
 navBack:SetScript("OnEnter", function(self)
     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-    GameTooltip:SetText("Back", 1, 1, 1)
+    GameTooltip:SetText(BACK or L["Back"], 1, 1, 1)
     GameTooltip:Show()
 end)
 navBack:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -378,7 +388,7 @@ rareTrackBtn:SetScript("OnEnter", function(self)
     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
     -- Names what a click will do: "Track", "Untrack", or "Untrack All"
     -- (the Rare Pet Spawns list with several rares tracked).
-    GameTooltip:SetText(self.tip or (self.tracked and "Untrack" or "Track"), 1, 1, 1)
+    GameTooltip:SetText(self.tip or (self.tracked and L["Untrack"] or L["Track"]), 1, 1, 1)
     GameTooltip:Show()
 end)
 rareTrackBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -557,7 +567,7 @@ iconSizeSlider.high:SetText(tostring(ICON_SIZE_MAX))
 
 iconSizeSlider:SetScript("OnValueChanged", function(self, value)
     value = math.floor(value + 0.5)
-    self.label:SetText(("Icon Size: %dpx"):format(value))
+    self.label:SetText(L["Icon Size: %dpx"]:format(value))
     if not ns.profile or ns.profile.iconSize == value then return end
     ns.profile.iconSize = value
     ApplyIconSize()

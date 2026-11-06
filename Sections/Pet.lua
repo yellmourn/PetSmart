@@ -3,6 +3,7 @@
 -- Section: the current pet (stats, experience, resistances), shown while a pet is out.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local GetLoyaltyLabel = ns.GetLoyaltyLabel
@@ -19,17 +20,17 @@ local tabIndexLink = ns.tabIndexLink
 -- right. Shared by the stats view and the pet's Learned/Unlearned lists,
 -- which only swap out the body below it.
 function PetPage.Header()
-    local name = UnitName("pet") or "Pet"
+    local name = UnitName("pet") or L["Pet"]
     abilitiesPanel.title:SetText(name)
     local level = UnitLevel("pet")
     local family = (UnitCreatureFamily and UnitCreatureFamily("pet")) or ""
     if ns.AnySecret(level) then
-        abilitiesPanel.subtitle:SetFormattedText("Level %s %s", level, family)
+        abilitiesPanel.subtitle:SetFormattedText(L["Level %s %s"], level, ns.LocFamily(family))
     else
-        abilitiesPanel.subtitle:SetText(("Level %s %s"):format(level and level > 0 and level or "?", family))
+        abilitiesPanel.subtitle:SetText(L["Level %s %s"]:format(level and level > 0 and level or "?", ns.LocFamily(family)))
     end
     abilitiesPanel.subtitle:Show()
-    abilitiesPanel.subtitle2:SetText(GetLoyaltyLabel() or "Unknown")
+    abilitiesPanel.subtitle2:SetText(GetLoyaltyLabel() or L["Unknown"])
     abilitiesPanel.subtitle2:Show()
     PetPage.ShowXP()
 end
@@ -62,12 +63,14 @@ PetPage.SHOW_CRIT = ns.IS_FOREVER
 
 function PetPage.FerocityRanks()
     local ranks = 0
+    -- The talent's name in the player's language (Ferocity rank 1 is spell 19598).
+    local ferocityName = GetSpellInfo and GetSpellInfo(19598)
     if GetNumTalentTabs and GetNumTalents and GetTalentInfo then
         pcall(function()
             for tab = 1, GetNumTalentTabs() do
                 for i = 1, GetNumTalents(tab) do
                     local tname, _, _, _, rank = GetTalentInfo(tab, i)
-                    if tname == "Ferocity" then ranks = tonumber(rank) or 0 end
+                    if tname == "Ferocity" or (ferocityName and tname == ferocityName) then ranks = tonumber(rank) or 0 end
                 end
             end
         end)
@@ -96,38 +99,38 @@ function PetPage.GeneralStats()
         -- Maximum health, as a single number like the game's pet panel.
         local hm = UnitHealthMax("pet")
         if AnySecret(hm) then
-            out[#out + 1] = { "Health", "%s", { hm or 0 }, WHITE, "health" }
+            out[#out + 1] = { L["Health"], "%s", { hm or 0 }, WHITE, "health" }
         else
-            out[#out + 1] = { "Health", "%s", { Num(hm) }, WHITE, "health" }
+            out[#out + 1] = { L["Health"], "%s", { Num(hm) }, WHITE, "health" }
         end
     end
     do
         local base, effective, _, posBuff, negBuff = UnitArmor("pet")
         if AnySecret(base, effective, posBuff, negBuff) then
-            out[#out + 1] = { "Armor", "%s", { effective or base or 0 }, WHITE, "armor" }
+            out[#out + 1] = { L["Armor"], "%s", { effective or base or 0 }, WHITE, "armor" }
         else
             local c = ((negBuff or 0) < 0 and PetPage.RED) or (((posBuff or 0) > 0 or (effective or 0) > (base or 0)) and PetPage.GREEN) or WHITE
-            out[#out + 1] = { "Armor", "%s", { Num(effective or base) }, c, "armor" }
+            out[#out + 1] = { L["Armor"], "%s", { Num(effective or base) }, c, "armor" }
         end
     end
     do
         local minD, maxD = UnitDamage("pet")
         if not (minD and maxD) then
-            out[#out + 1] = { "Damage", "%s", { "-" }, WHITE, "damage" }
+            out[#out + 1] = { L["Damage"], "%s", { "-" }, WHITE, "damage" }
         elseif AnySecret(minD, maxD) then
-            out[#out + 1] = { "Damage", "%.0f - %.0f", { minD, maxD }, WHITE, "damage" }
+            out[#out + 1] = { L["Damage"], "%.0f - %.0f", { minD, maxD }, WHITE, "damage" }
         else
-            out[#out + 1] = { "Damage", "%s - %s", { Num(math.floor(minD)), Num(math.ceil(maxD)) }, WHITE, "damage" }
+            out[#out + 1] = { L["Damage"], "%s - %s", { Num(math.floor(minD)), Num(math.ceil(maxD)) }, WHITE, "damage" }
         end
     end
     do
         local base, pos, neg = UnitAttackPower("pet")
         if AnySecret(base, pos, neg) then
             -- can't add the buffs on to a secret base: show the base value
-            out[#out + 1] = { "Attack Power", "%s", { base or 0 }, WHITE, "ap" }
+            out[#out + 1] = { L["Attack Power"], "%s", { base or 0 }, WHITE, "ap" }
         else
             local c = ((neg or 0) < 0 and PetPage.RED) or ((pos or 0) > 0 and PetPage.GREEN) or WHITE
-            out[#out + 1] = { "Attack Power", "%s", { Num((base or 0) + (pos or 0) + (neg or 0)) }, c, "ap" }
+            out[#out + 1] = { L["Attack Power"], "%s", { Num((base or 0) + (pos or 0) + (neg or 0)) }, c, "ap" }
         end
     end
     if PetPage.SHOW_CRIT then
@@ -135,22 +138,22 @@ function PetPage.GeneralStats()
         if AnySecret(playerCrit) then
             -- can't add the Ferocity bonus to a secret value: show it alongside
             if ferocity > 0 then
-                out[#out + 1] = { "Critical Strike", "%.1f%% +%d%%", { playerCrit, ferocity }, WHITE, "crit" }
+                out[#out + 1] = { L["Critical Strike"], "%.1f%% +%d%%", { playerCrit, ferocity }, WHITE, "crit" }
             else
-                out[#out + 1] = { "Critical Strike", "%.1f%%", { playerCrit }, WHITE, "crit" }
+                out[#out + 1] = { L["Critical Strike"], "%.1f%%", { playerCrit }, WHITE, "crit" }
             end
         else
-            out[#out + 1] = { "Critical Strike", "%s", { ("%.1f%%"):format(playerCrit + ferocity) }, WHITE, "crit" }
+            out[#out + 1] = { L["Critical Strike"], "%s", { ("%.1f%%"):format(playerCrit + ferocity) }, WHITE, "crit" }
         end
     end
     do
         local current, run = 0, nil
         if GetUnitSpeed then current, run = GetUnitSpeed("pet") end
         if AnySecret(current, run) then
-            out[#out + 1] = { "Movement Speed", "%s", { "--" }, WHITE, "speed" } -- a percentage needs maths
+            out[#out + 1] = { L["Movement Speed"], "%s", { "--" }, WHITE, "speed" } -- a percentage needs maths
         else
             local speed = (run and run > 0) and run or ((current and current > 0) and current or 7)
-            out[#out + 1] = { "Movement Speed", "%s", { ("%d%%"):format(math.floor(speed / 7 * 100 + 0.5)) }, WHITE, "speed" }
+            out[#out + 1] = { L["Movement Speed"], "%s", { ("%d%%"):format(math.floor(speed / 7 * 100 + 0.5)) }, WHITE, "speed" }
         end
     end
     return out
@@ -159,11 +162,11 @@ end
 -- Resistance schools: UnitResistance index, and the row in Blizzard's own
 -- resistance-icon strip (the same icons the character/pet panels use).
 PetPage.RESIST = {
-    { "Arcane", 6, 0.2265625,  0.33984375 },
-    { "Fire",   2, 0,          0.11328125 },
-    { "Frost",  4, 0.33984375, 0.453125 },
-    { "Nature", 3, 0.11328125, 0.2265625 },
-    { "Shadow", 5, 0.453125,   0.56640625 },
+    { L["Arcane"], 6, 0.2265625,  0.33984375, "{g}Improves resistance to arcane-based attacks, spells, and abilities" },
+    { L["Fire"],   2, 0,          0.11328125, "{g}Improves resistance to fire-based attacks, spells, and abilities" },
+    { L["Frost"],  4, 0.33984375, 0.453125, "{g}Improves resistance to frost-based attacks, spells, and abilities" },
+    { L["Nature"], 3, 0.11328125, 0.2265625, "{g}Improves resistance to nature-based attacks, spells, and abilities" },
+    { L["Shadow"], 5, 0.453125,   0.56640625, "{g}Improves resistance to shadow-based attacks, spells, and abilities" },
 }
 
 -- Stat tooltips on the General rows, in the style of the game's own pet
@@ -191,6 +194,12 @@ end
 
 local function Blank() GameTooltip:AddLine(" ") end
 local function Line(text) GameTooltip:AddLine(text, 1, 1, 1, true) end
+-- Translated tooltip lines mark their colours with {g} (gold), {w} (white)
+-- and {x} (grey), so a translation can put the coloured words anywhere.
+local function C(text)
+    text = text:gsub("{g}", GOLD):gsub("{w}", WHT):gsub("{x}", GREY)
+    return text
+end
 
 function PetPage.StatTooltip(row)
     local key = row.statKey
@@ -199,110 +208,108 @@ function PetPage.StatTooltip(row)
     GameTooltip:SetOwner(row, "ANCHOR_RIGHT")
     if key == "health" then
         local hm = UnitHealthMax("pet")
-        GameTooltip:SetText(AnySecret(hm) and "Health" or ("Health " .. Num(hm)), 1, 1, 1)
-        Line(GOLD .. "Used for " .. WHT .. "Taking Damage")
-        Line(GOLD .. "Results in death when reduced to 0")
+        GameTooltip:SetText(AnySecret(hm) and L["Health"] or (L["Health"] .. " " .. Num(hm)), 1, 1, 1)
+        Line(C(L["{g}Used for {w}Taking Damage"]))
+        Line(C(L["{g}Results in death when reduced to 0"]))
         Blank()
-        Line(GOLD .. "Increased by " .. WHT .. "Master's Stamina")
+        Line(C(L["{g}Increased by {w}Master's Stamina"]))
         Blank()
-        Line(GREY .. "Every 1 Stamina adds 2 Health")
+        Line(C(L["{x}Every 1 Stamina adds 2 Health"]))
     elseif key == "armor" then
         local base, effective = UnitArmor("pet")
         local armor = effective or base
         local level = UnitLevel("pet") or 0
         if AnySecret(armor, level) then
-            GameTooltip:SetText("Armor", 1, 1, 1)
-            Line(GOLD .. "Reduces " .. WHT .. "Physical Damage" .. GOLD .. " taken")
+            GameTooltip:SetText(L["Armor"], 1, 1, 1)
+            Line(C(L["{g}Reduces {w}Physical Damage{g} taken"]))
         else
-            GameTooltip:SetText("Armor " .. Num(armor), 1, 1, 1)
-            Line(GOLD .. "Reduces " .. WHT .. "Physical Damage" .. GOLD .. " taken by "
-                .. ("%.2f%%"):format(PetPage.ArmorReduction(armor or 0, level)))
+            GameTooltip:SetText(L["Armor"] .. " " .. Num(armor), 1, 1, 1)
+            Line(C(L["{g}Reduces {w}Physical Damage{g} taken by %s"]:format(("%.2f%%"):format(PetPage.ArmorReduction(armor or 0, level)))))
         end
         Blank()
-        Line(GOLD .. "Increased by 30% of " .. WHT .. "Master's Armor")
+        Line(C(L["{g}Increased by 30% of {w}Master's Armor"]))
         Blank()
-        Line(GREY .. "Damage reduction from Armor cannot exceed 75.00%")
+        Line(C(L["{x}Damage reduction from Armor cannot exceed 75.00%"]))
     elseif key == "damage" then
-        GameTooltip:SetText("Main Attack", 1, 1, 1)
+        GameTooltip:SetText(L["Main Attack"], 1, 1, 1)
         local minD, maxD = UnitDamage("pet")
         local speed = UnitAttackSpeed and UnitAttackSpeed("pet")
         if minD and maxD and not AnySecret(minD, maxD, speed) then
             if speed and speed > 0 then
-                GameTooltip:AddDoubleLine("Attack Speed (seconds):", ("%.2f"):format(speed), 1, 0.82, 0, 1, 1, 1)
+                GameTooltip:AddDoubleLine(L["Attack Speed (seconds):"], ("%.2f"):format(speed), 1, 0.82, 0, 1, 1, 1)
             end
-            GameTooltip:AddDoubleLine("Damage:", ("%s - %s"):format(Num(math.floor(minD)), Num(math.ceil(maxD))), 1, 0.82, 0, 1, 1, 1)
+            GameTooltip:AddDoubleLine(L["Damage:"], ("%s - %s"):format(Num(math.floor(minD)), Num(math.ceil(maxD))), 1, 0.82, 0, 1, 1, 1)
             if speed and speed > 0 then
-                GameTooltip:AddDoubleLine("DPS:", ("%.1f"):format((minD + maxD) / 2 / speed), 1, 0.82, 0, 1, 1, 1)
+                GameTooltip:AddDoubleLine(L["DPS:"], ("%.1f"):format((minD + maxD) / 2 / speed), 1, 0.82, 0, 1, 1, 1)
             end
         end
     elseif key == "ap" then
         local base, pos, neg = UnitAttackPower("pet")
         if AnySecret(base, pos, neg) then
-            GameTooltip:SetText("Attack Power", 1, 1, 1)
-            Line(GOLD .. "Increases " .. WHT .. "Melee Attack " .. GOLD .. "damage per second")
+            GameTooltip:SetText(L["Attack Power"], 1, 1, 1)
+            Line(C(L["{g}Increases {w}Melee Attack{g} damage per second"]))
         else
             local buff = (pos or 0) + (neg or 0)
             local total = (base or 0) + buff
-            local titleText = "Attack Power " .. Num(total)
+            local titleText = L["Attack Power"] .. " " .. Num(total)
             if buff > 0 then
                 titleText = titleText .. " (" .. Num(base) .. "|cff20ff20+" .. Num(buff) .. "|r)"
             elseif buff < 0 then
                 titleText = titleText .. " (" .. Num(base) .. "|cffff2020" .. Num(buff) .. "|r)"
             end
             GameTooltip:SetText(titleText, 1, 1, 1)
-            Line(GOLD .. "Increases " .. WHT .. "Melee Attack " .. GOLD .. "damage per second by " .. WHT .. ("%.1f"):format(total / 14))
+            Line(C(L["{g}Increases {w}Melee Attack{g} damage per second by {w}%s"]:format(("%.1f"):format(total / 14))))
         end
         Blank()
-        Line(GOLD .. "Increased by 10% of " .. WHT .. "Master's Attack Power" .. GOLD .. " from whichever is higher: "
-            .. WHT .. "Melee" .. GOLD .. " or " .. WHT .. "Ranged")
+        Line(C(L["{g}Increased by 10% of {w}Master's Attack Power{g} from whichever is higher: {w}Melee{g} or {w}Ranged"]))
         Blank()
-        Line(GREY .. "Every 14 Attack Power adds 1 damage per second")
+        Line(C(L["{x}Every 14 Attack Power adds 1 damage per second"]))
     elseif key == "crit" then
         local master = PetPage.MasterCrit()
         local melee = (GetCritChance and GetCritChance()) or 0
         local spell = (GetSpellCritChance and GetSpellCritChance(2)) or 0
         local ferocity = PetPage.FEROCITY_PER_RANK * PetPage.FerocityRanks()
         if AnySecret(master) then
-            GameTooltip:SetText("Critical Strike", 1, 1, 1)
+            GameTooltip:SetText(L["Critical Strike"], 1, 1, 1)
         else
-            GameTooltip:SetText(("Critical Strike %.1f%%"):format(master + ferocity), 1, 1, 1)
+            GameTooltip:SetText(L["Critical Strike"] .. (" %.1f%%"):format(master + ferocity), 1, 1, 1)
         end
         if not AnySecret(melee) then
-            Line(GOLD .. "Increases " .. WHT .. "Melee" .. GOLD .. " critical chance by " .. ("%.2f%%"):format(melee + ferocity))
+            Line(C(L["{g}Increases {w}Melee{g} critical chance by %s"]:format(("%.2f%%"):format(melee + ferocity))))
         end
         if not AnySecret(spell) then
-            Line(GOLD .. "Increases " .. WHT .. "Spell" .. GOLD .. " critical chance by " .. ("%.2f%%"):format(spell))
+            Line(C(L["{g}Increases {w}Spell{g} critical chance by %s"]:format(("%.2f%%"):format(spell))))
         end
         Blank()
-        Line(GOLD .. "Increased by 100% of " .. WHT .. "Master's Critical Strike Chance")
+        Line(C(L["{g}Increased by 100% of {w}Master's Critical Strike Chance"]))
         if ferocity > 0 then
-            Line(GOLD .. "Increased by " .. WHT .. ferocity .. "%" .. GOLD .. " from " .. WHT .. "Ferocity")
+            Line(C(L["{g}Increased by {w}%s{g} from {w}Ferocity"]:format(ferocity .. "%")))
         end
         Blank()
-        Line(GREY .. "Melee critical strikes deal 100% increased damage")
+        Line(C(L["{x}Melee critical strikes deal 100% increased damage"]))
         Blank()
-        Line(GREY .. "Spell and Healing critical strikes are 50% more effective")
+        Line(C(L["{x}Spell and Healing critical strikes are 50% more effective"]))
         Blank()
-        Line(GREY .. "Most periodic effects can critically strike")
+        Line(C(L["{x}Most periodic effects can critically strike"]))
     elseif key == "speed" then
         local current, run, _, swim = 0, nil, nil, nil
         if GetUnitSpeed then current, run, _, swim = GetUnitSpeed("pet") end
         if AnySecret(current, run, swim) then
-            GameTooltip:SetText("Movement Speed", 1, 1, 1)
+            GameTooltip:SetText(L["Movement Speed"], 1, 1, 1)
         else
             local runSpeed = (run and run > 0) and run or ((current and current > 0) and current or 7)
             local runPct = math.floor(runSpeed / 7 * 100 + 0.5)
             local swimPct = (swim and swim > 0) and math.floor(swim / 4.722 * 100 + 0.5) or runPct
-            GameTooltip:SetText(("Movement Speed %d%%"):format(runPct), 1, 1, 1)
-            Line(GOLD .. ("Run Speed: %d%%"):format(runPct))
-            Line(GOLD .. ("Swim Speed: %d%%"):format(swimPct))
+            GameTooltip:SetText(L["Movement Speed"] .. (" %d%%"):format(runPct), 1, 1, 1)
+            Line(GOLD .. L["Run Speed: %d%%"]:format(runPct))
+            Line(GOLD .. L["Swim Speed: %d%%"]:format(swimPct))
         end
         Blank()
-        Line(GREY .. "Base Speeds (In Yards Per Second):")
-        Line(GREY .. "7.0 yd/s Running")
-        Line(GREY .. "4.7 yd/s Swimming")
-        Line(GREY .. "4.5 yd/s Backpedaling")
-        Line(GREY .. "2.5 yd/s Walking")
+        Line(GREY .. L["Base Speeds (In Yards Per Second):"])
+        Line(GREY .. L["7.0 yd/s Running"])
+        Line(GREY .. L["4.7 yd/s Swimming"])
+        Line(GREY .. L["4.5 yd/s Backpedaling"])
+        Line(GREY .. L["2.5 yd/s Walking"])
     end
     GameTooltip:Show()
 end
@@ -321,11 +328,11 @@ function PetPage.ResistTooltip(row)
     else
         GameTooltip:SetText(t[1] .. " " .. Num(total or 0), 1, 1, 1)
     end
-    Line(GOLD .. "Improves resistance to " .. t[1]:lower() .. "-based attacks, spells, and abilities")
+    Line(C(L[t[5]]))
     if not ns.AnySecret(total, level) and level > 0 then
         local avg = math.min(75, (total or 0) / (5 * level) * 75)
         Blank()
-        Line(GOLD .. ("Average resistance versus a level %d enemy: "):format(level) .. WHT .. ("%d%%"):format(math.floor(avg)))
+        Line(C(L["{g}Average resistance versus a level %d enemy: {w}%s"]:format(level, ("%d%%"):format(math.floor(avg)))))
     end
     GameTooltip:Show()
 end
@@ -450,10 +457,10 @@ function PetPage.Widgets()
     xp.text:SetParent(xp.edge)
     xp.text:SetFontObject("GameFontHighlightSmall")
     w.xp = xp
-    w.general = Header("General")
-    w.abilities = Header("Abilities")
+    w.general = Header(L["General"])
+    w.abilities = Header(L["Abilities"])
     w.ab = {}
-    w.resist = Header("Resistances")
+    w.resist = Header(L["Resistances"])
     for i = 1, 6 do w.rows[i] = Row(false) end
     for i = 1, #PetPage.RESIST do
         local r = Row(true)
@@ -487,17 +494,17 @@ function PetPage.ShowXP()
         w.xp.bar:SetMinMaxValues(0, nextXP)
         w.xp.bar:SetValue(cur)
         PetPage.Gradient(w.xp.bar, unpack(ns.BAR_COLORS.xp))
-        w.xp.text:SetFormattedText("XP: %s / %s", cur, nextXP)
+        w.xp.text:SetFormattedText(L["XP: %s / %s"], cur, nextXP)
     elseif nextXP > 0 then
         w.xp.bar:SetMinMaxValues(0, nextXP)
         w.xp.bar:SetValue(cur)
         PetPage.Gradient(w.xp.bar, unpack(ns.BAR_COLORS.xp))  -- deep to bright blue
-        w.xp.text:SetText(("XP: %s / %s  (%d%%)"):format(Num(cur), Num(nextXP), math.floor(cur / nextXP * 100)))
+        w.xp.text:SetText(L["XP: %s / %s  (%d%%)"]:format(Num(cur), Num(nextXP), math.floor(cur / nextXP * 100)))
     else
         w.xp.bar:SetMinMaxValues(0, 1)
         w.xp.bar:SetValue(1)
         PetPage.Gradient(w.xp.bar, unpack(ns.BAR_COLORS.max)) -- gold at max level
-        w.xp.text:SetText("XP: Max Level")
+        w.xp.text:SetText(L["XP: Max Level"])
     end
     w.xp:ClearAllPoints()
     w.xp:SetPoint("TOPRIGHT", contentPanel, "TOPRIGHT", -8, -7)
@@ -524,7 +531,7 @@ function PetPage.Render(width, y)
     Place(w.general, 22 + 4)
     for i, st in ipairs(PetPage.GeneralStats()) do
         local r = w.rows[i]
-        r.label:SetText(st[1] .. ":")
+        r.label:SetText(L["%s:"]:format(st[1]))
         r.value:SetFormattedText(st[2], unpack(st[3]))
         r.statKey = st[5]
         r.value:SetTextColor(st[4][1], st[4][2], st[4][3])
@@ -551,7 +558,7 @@ function PetPage.Render(width, y)
     -- Abilities: three names per row, below Resistances.
     Place(w.abilities, 22 + 4)
     local names = PetPage.LearnableAbilities()
-    if #names == 0 then names = { "None on record" } end
+    if #names == 0 then names = { L["None on record"] } end
     local nCols = PetPage.ABILITY_COLUMNS
     for i = 1, math.ceil(#names / nCols) do
         w.ab[i] = w.ab[i] or PetPage.AbilityRow()

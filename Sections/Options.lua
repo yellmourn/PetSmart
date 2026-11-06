@@ -3,6 +3,7 @@
 -- Section: Options and Manage Profiles (profile switching/creating/deleting).
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local ABILITIES_PANEL_HEIGHT = ns.ABILITIES_PANEL_HEIGHT
@@ -81,16 +82,23 @@ local function CopyProfileTable(source)
     return copy
 end
 
+-- How a profile's name is shown: the built-in "Default" profile in the
+-- player's language, every other profile exactly as it was named.
+local function ProfileLabel(name)
+    if name == DEFAULT_PROFILE_NAME then return L["Default"] end
+    return name
+end
+
 -- Creates a new profile (blank/default, or copied from `copyFrom` if
 -- given and it exists) and immediately switches this character to it.
 -- Returns true, or false plus a reason a popup can show.
 local function CreateProfile(name, copyFrom)
     name = name and name:match("^%s*(.-)%s*$") -- trim
     if not name or name == "" then
-        return false, "Profile name can't be empty."
+        return false, L["Profile name can't be empty."]
     end
     if PetSmartDB.profiles[name] then
-        return false, "A profile named '" .. name .. "' already exists."
+        return false, L["A profile named '%s' already exists."]:format(name)
     end
     if copyFrom and PetSmartDB.profiles[copyFrom] then
         PetSmartDB.profiles[name] = CopyProfileTable(PetSmartDB.profiles[copyFrom])
@@ -135,11 +143,11 @@ local function ResetProfile(name)
 end
 
 StaticPopupDialogs["PETSMART_NEW_PROFILE"] = {
-    text = "Enter a name for the new profile:",
+    text = L["Enter a name for the new profile:"],
     hasEditBox = true,
     maxLetters = 32,
-    button1 = "Create",
-    button2 = "Cancel",
+    button1 = L["Create"],
+    button2 = CANCEL or L["Cancel"],
     OnShow = function(self)
         -- Newer clients expose these as self.EditBox / self.Text instead of
         -- the classic self.editBox / self.text - support either.
@@ -148,8 +156,8 @@ StaticPopupDialogs["PETSMART_NEW_PROFILE"] = {
         local copyFrom = self.data and self.data.copyFrom
         if textFS then
             textFS:SetText(copyFrom
-                and ("Copy '" .. copyFrom .. "' as a new profile named:")
-                or "Enter a name for the new profile:")
+                and L["Copy '%s' as a new profile named:"]:format(ProfileLabel(copyFrom))
+                or L["Enter a name for the new profile:"])
         end
         if editBox then
             editBox:SetText("")
@@ -175,29 +183,29 @@ StaticPopupDialogs["PETSMART_NEW_PROFILE"] = {
 }
 
 StaticPopupDialogs["PETSMART_DELETE_PROFILE"] = {
-    text = "Delete profile '%s'? This can't be undone.",
-    button1 = "Delete",
-    button2 = "Cancel",
+    text = L["Delete profile '%s'? This can't be undone."],
+    button1 = DELETE or L["Delete"],
+    button2 = CANCEL or L["Cancel"],
     OnAccept = function(self, data) DeleteProfile(data) end,
     timeout = 0, whileDead = true, hideOnEscape = true,
 }
 
 StaticPopupDialogs["PETSMART_RESET_PROFILE"] = {
-    text = "Reset profile '%s' to its default settings? This can't be undone.",
-    button1 = "Reset",
-    button2 = "Cancel",
+    text = L["Reset profile '%s' to its default settings? This can't be undone."],
+    button1 = RESET or L["Reset"],
+    button2 = CANCEL or L["Cancel"],
     OnAccept = function(self, data) ResetProfile(data) end,
     timeout = 0, whileDead = true, hideOnEscape = true,
 }
 ns.Pages.options = function(ctx)
-    abilitiesPanel.title:SetText("Options")
+    abilitiesPanel.title:SetText(L["Options"])
 
     -- `note` (optional) is shown in grey brackets after the ON/OFF state.
     local function AddToggle(label, dbKey, onToggle, note)
         local on = (ns.profile[dbKey] ~= false)
         local r, g, b = on and 0.2 or 0.6, on and 1 or 0.6, on and 0.2 or 0.6
-        local text = label .. ": " .. (on and "ON" or "OFF")
-        if note then text = text .. "  |cff999999(" .. note .. ")|r" end
+        local text = L["%s: %s"]:format(L[label], on and L["ON"] or L["OFF"])
+        if note then text = text .. "  |cff999999(" .. L[note] .. ")|r" end
         ctx.AddLine(text, r, g, b, function()
             ns.profile[dbKey] = not on
             if onToggle then onToggle(not on) end
@@ -205,19 +213,19 @@ ns.Pages.options = function(ctx)
         end)
     end
 
-    ctx.AddLine("Profile: " .. PetSmartDB.profileKeys[GetCharKey()] .. "  (manage...)", 0.6, 0.8, 1, function()
+    ctx.AddLine(L["Profile: %s  (manage...)"]:format(ProfileLabel(PetSmartDB.profileKeys[GetCharKey()])), 0.6, 0.8, 1, function()
         SetAbilitiesMode("profiles")
     end)
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Tooltip", 1, 0.82, 0)
+    ctx.AddLine(L["Tooltip"], 1, 0.82, 0)
     AddToggle("Show Tooltip", "tooltipEnabled", nil, "main icon")
     AddToggle("Show Pet Name", "tooltipShowName")
     AddToggle("Show Pet Loyalty", "tooltipShowLoyalty")
     AddToggle("Show Pet Happiness", "tooltipShowHappiness")
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Icon", 1, 0.82, 0)
+    ctx.AddLine(L["Icon"], 1, 0.82, 0)
     AddToggle("Lock Icon (Move)", "iconLocked", nil, "no shift-drag")
     do
         -- The slider is a persistent widget, not a pooled text row, so
@@ -229,13 +237,13 @@ ns.Pages.options = function(ctx)
         iconSizeSlider:SetPoint("TOPLEFT", scrollChild, "TOPLEFT", 6, -(ctx.y + 14))
         iconSizeSlider:SetWidth(math.max(120, ctx.rowWidth - 70))
         iconSizeSlider:SetValue(ns.profile.iconSize or 40)
-        iconSizeSlider.label:SetText(("Icon Size: %dpx"):format(ns.profile.iconSize or 40))
+        iconSizeSlider.label:SetText(L["Icon Size: %dpx"]:format(ns.profile.iconSize or 40))
         iconSizeSlider:Show()
         ctx.y = ctx.y + sliderHeight + ROW_PADDING
     end
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Pet Experience Bar", 1, 0.82, 0)
+    ctx.AddLine(L["Pet Experience Bar"], 1, 0.82, 0)
     AddToggle("Show Experience Bar", "xpBarEnabled", function() XP.Update() end)
     AddToggle("Show Bar Text", "xpBarShowText", function() XP.Update() end)
     AddToggle("Lock Bar (Move/Resize)", "xpBarLocked", function() XP.Update() end)
@@ -261,14 +269,14 @@ ns.Pages.options = function(ctx)
             ctx.y = ctx.y + sliderHeight + ROW_PADDING
         end
     end
-    ctx.AddLine("The bar can also be moved by dragging it and resized by dragging its corner.", 0.7, 0.7, 0.7)
+    ctx.AddLine(L["The bar can also be moved by dragging it and resized by dragging its corner."], 0.7, 0.7, 0.7)
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Minimap", 1, 0.82, 0)
+    ctx.AddLine(L["Minimap"], 1, 0.82, 0)
     AddToggle("Show Minimap Icon", "showMinimapIcon", function() ns.UpdateMinimapIconShown() end)
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Rare Spawn Tracking", 1, 0.82, 0)
+    ctx.AddLine(L["Rare Spawn Tracking"], 1, 0.82, 0)
     AddToggle("Show World Map Icon While Tracking", "showWorldMapRarePin", function() ns.UpdateRarePin() end)
     AddToggle("Show Minimap Icon While Tracking", "showMinimapRarePin", function() ns.UpdateRarePin() end)
     AddToggle("Multi-Tracking", "multiTrackingEnabled", function(enabled)
@@ -284,33 +292,33 @@ ns.Pages.options = function(ctx)
     end, "can break immersion")
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Compendium Panel", 1, 0.82, 0)
+    ctx.AddLine(L["Compendium Panel"], 1, 0.82, 0)
     AddToggle("Lock Panel (Move/Resize)", "abilitiesPanelLocked", function() UpdateAbilitiesPanelLockState() end)
 
     ctx.AddLine(" ", 1, 1, 1)
     ctx.AddLine(" ", 1, 1, 1)
     ctx.AddLine("PetSmart v" .. ns.VERSION .. " (" .. ns.CLIENT_NAME .. ")", 0.6, 0.6, 0.6)
-    ctx.AddLine("Author: Yellmourn", 0.6, 0.6, 0.6)
-    ctx.AddLine("Credit: wowhead.com, wow-petopia.com", 0.6, 0.6, 0.6)
-    ctx.AddLine("Special thanks to Nosferatu.", 0.6, 0.6, 0.6)
+    ctx.AddLine(L["Author: %s"]:format("Yellmourn"), 0.6, 0.6, 0.6)
+    ctx.AddLine(L["Credit: %s"]:format("wowhead.com, wow-petopia.com"), 0.6, 0.6, 0.6)
+    ctx.AddLine(L["Special thanks to Nosferatu."], 0.6, 0.6, 0.6)
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Dedicated to my first WoW pets, Muddles and Puddles, and to Full Murloc of Zul'jin.", 1, 0.82, 0)
+    ctx.AddLine(L["Dedicated to my first WoW pets, Muddles and Puddles, and to Full Murloc of Zul'jin."], 1, 0.82, 0)
 end
 
 ns.Pages.profiles = function(ctx)
-    abilitiesPanel.title:SetText("Options")
-    abilitiesPanel.subtitle:SetText("Manage Profiles")
+    abilitiesPanel.title:SetText(L["Options"])
+    abilitiesPanel.subtitle:SetText(L["Manage Profiles"])
     abilitiesPanel.subtitle:Show()
 
     local charKey = GetCharKey()
     local activeName = PetSmartDB.profileKeys[charKey]
-    ctx.AddLine(ns.GetCharName() .. " is using:", 0.8, 0.8, 0.8)
-    ctx.AddLine(activeName, 1, 0.82, 0)
-    ctx.AddLine("    Reset this profile to defaults", 1, 0.6, 0.2, function()
-        StaticPopup_Show("PETSMART_RESET_PROFILE", activeName, nil, activeName)
+    ctx.AddLine(L["%s is using:"]:format(ns.GetCharName()), 0.8, 0.8, 0.8)
+    ctx.AddLine(ProfileLabel(activeName), 1, 0.82, 0)
+    ctx.AddLine("    " .. L["Reset this profile to defaults"], 1, 0.6, 0.2, function()
+        StaticPopup_Show("PETSMART_RESET_PROFILE", ProfileLabel(activeName), nil, activeName)
     end)
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("Click a profile to switch this character to it.", 0.7, 0.7, 0.7)
+    ctx.AddLine(L["Click a profile to switch this character to it."], 0.7, 0.7, 0.7)
     ctx.AddLine(" ", 1, 1, 1)
 
     local names = {}
@@ -324,24 +332,24 @@ ns.Pages.profiles = function(ctx)
     for _, name in ipairs(names) do
         local isActive = (name == activeName)
         if isActive then
-            ctx.AddLine(name .. "  [Active]", 1, 0.82, 0)
+            ctx.AddLine(ProfileLabel(name) .. "  " .. L["[Active]"], 1, 0.82, 0)
         else
-            ctx.AddLine(name, 1, 1, 1, function()
+            ctx.AddLine(ProfileLabel(name), 1, 1, 1, function()
                 SwitchToProfile(name)
             end)
         end
-        ctx.AddLine("    Copy to a new profile...", 0.6, 0.8, 1, function()
+        ctx.AddLine("    " .. L["Copy to a new profile..."], 0.6, 0.8, 1, function()
             StaticPopup_Show("PETSMART_NEW_PROFILE", nil, nil, { copyFrom = name })
         end)
         if name ~= DEFAULT_PROFILE_NAME then
-            ctx.AddLine("    Delete this profile", 1, 0.4, 0.4, function()
+            ctx.AddLine("    " .. L["Delete this profile"], 1, 0.4, 0.4, function()
                 StaticPopup_Show("PETSMART_DELETE_PROFILE", name, nil, name)
             end)
         end
     end
 
     ctx.AddLine(" ", 1, 1, 1)
-    ctx.AddLine("+ Create New Profile", 0.2, 1, 0.2, function()
+    ctx.AddLine(L["+ Create New Profile"], 0.2, 1, 0.2, function()
         StaticPopup_Show("PETSMART_NEW_PROFILE")
     end)
 end

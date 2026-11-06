@@ -3,6 +3,7 @@
 -- Section list, page switching, and the left-hand section icons.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local LAYOUT = ns.LAYOUT
@@ -138,7 +139,7 @@ do
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             -- Just the section's name, same plain style as the Back and
             -- Track/Untrack tooltips.
-            GameTooltip:SetText(sec.needsPet and (UnitName("pet") or sec.label) or sec.label, 1, 1, 1)
+            GameTooltip:SetText(sec.needsPet and (UnitName("pet") or L[sec.label]) or L[sec.label], 1, 1, 1)
             GameTooltip:Show()
         end)
         b:SetScript("OnLeave", function(self)

@@ -3,6 +3,7 @@
 -- Icon/launcher behaviour: Feed Pet icon clicks, click-off, LibDataBroker, LibDBIcon minimap button.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local Print = ns.Print
@@ -53,11 +54,11 @@ toggle:SetScript("OnClick", function(self, button)
     end
 
     if InCombatLockdown() then
-        Print("Can't feed your pet while in combat.")
+        Print(L["Can't feed your pet while in combat."])
         return
     end
     if not UnitExists("pet") then
-        Print("You have no active pet out.")
+        Print(L["You have no active pet out."])
         return
     end
     if panel:IsShown() then
@@ -65,8 +66,8 @@ toggle:SetScript("OnClick", function(self, button)
     elseif #ns.BuildFoodList() == 0 then
         -- Nothing in the bags this pet will eat: say so instead of opening an empty panel.
         local petName = UnitName("pet")
-        if not petName or (issecretvalue and issecretvalue(petName)) then petName = "your pet" end
-        local msg = ("You have no food that %s will eat."):format(petName)
+        if not petName or (issecretvalue and issecretvalue(petName)) then petName = L["your pet"] end
+        local msg = L["You have no food that %s will eat."]:format(petName)
         Print(msg)
         if UIErrorsFrame and UIErrorsFrame.AddMessage then UIErrorsFrame:AddMessage(msg, 1, 0.1, 0.1) end
     else
@@ -146,13 +147,13 @@ end
 
 local function LauncherOnTooltipShow(tooltip)
     tooltip:AddLine("|cff33ff99PetSmart|r")
-    tooltip:AddLine("|cffffff00Left-click|r to show/hide the Compendium", 1, 1, 1)
-    tooltip:AddLine("|cffffff00Right-click|r to open/close Options", 1, 1, 1)
+    tooltip:AddLine(L["|cffffff00Left-click|r to show/hide the Compendium"], 1, 1, 1)
+    tooltip:AddLine(L["|cffffff00Right-click|r to open/close Options"], 1, 1, 1)
     local untrackCount, untrackName = Tame.UntrackTarget()
     if untrackCount == 1 then
-        tooltip:AddLine("|cffffff00Middle-click|r to untrack " .. untrackName, 1, 1, 1)
+        tooltip:AddLine(L["|cffffff00Middle-click|r to untrack %s"]:format(untrackName), 1, 1, 1)
     elseif untrackCount > 1 then
-        tooltip:AddLine(("|cffffff00Middle-click|r to untrack all (%d)"):format(untrackCount), 1, 1, 1)
+        tooltip:AddLine(L["|cffffff00Middle-click|r to untrack all (%d)"]:format(untrackCount), 1, 1, 1)
     end
 end
 

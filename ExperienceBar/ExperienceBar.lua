@@ -4,6 +4,7 @@
 -- plus the Width/Height sliders its Options block uses.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local panelTemplate = ns.panelTemplate
@@ -131,11 +132,11 @@ function XP.UpdateSecret(f, cur, max)
     if XP.fontPath then
         f.text:SetFont(XP.fontPath, XP.Clamp(math.floor(h - 12), XP.fontSize, 16), XP.fontFlags)
     end
-    local name, level = UnitName("pet") or "Pet", UnitLevel("pet") or 0
+    local name, level = UnitName("pet") or L["Pet"], UnitLevel("pet") or 0
     if ns.profile.xpBarShowText == false then
         f.text:SetText("")
     elseif w >= 240 then
-        f.text:SetFormattedText("%s - %s - XP: %s/%s", name, level, cur, max)
+        f.text:SetFormattedText(L["%s - %s - XP: %s/%s"], name, level, cur, max)
     elseif w >= 130 then
         f.text:SetFormattedText("%s - %s", name, level)
     else
@@ -177,23 +178,23 @@ function XP.Update()
     else
         -- Pet name, level and XP; on a bar too narrow for all of it, drop
         -- the numbers first, then the name, keeping the percentage.
-        local name = UnitName("pet") or "Pet"
+        local name = UnitName("pet") or L["Pet"]
         local pct = atMax and 100 or math.floor(cur / max * 100)
         local options
         -- "<name> - <level> - XP: <current>/<max> (<pct>%)"
         if atMax then
             options = {
-                ("%s - %d - XP: Max Level"):format(name, level),
-                ("%s - %d - Max"):format(name, level),
-                ("%d - Max"):format(level),
-                "Max",
+                L["%s - %d - XP: Max Level"]:format(name, level),
+                L["%s - %d - Max"]:format(name, level),
+                L["%d - Max"]:format(level),
+                L["Max"],
             }
         else
             options = {
-                ("%s - %d - XP: %s/%s (%d%%)"):format(name, level, XP.Num(cur), XP.Num(max), pct),
-                ("%s - %d - XP: %d%%"):format(name, level, pct),
-                ("%d - XP: %d%%"):format(level, pct),
-                ("XP: %d%%"):format(pct),
+                L["%s - %d - XP: %s/%s (%d%%)"]:format(name, level, XP.Num(cur), XP.Num(max), pct),
+                L["%s - %d - XP: %d%%"]:format(name, level, pct),
+                L["%d - XP: %d%%"]:format(level, pct),
+                L["XP: %d%%"]:format(pct),
                 ("%d%%"):format(pct),
             }
         end
@@ -260,34 +261,34 @@ do
     end)
     f:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_TOP")
-        local name = UnitName("pet") or "Pet"
+        local name = UnitName("pet") or L["Pet"]
         local level = UnitLevel("pet") or 0
         if ns.AnySecret(level) then
             GameTooltip:SetText(name, 1, 0.82, 0)
         else
-            GameTooltip:SetText(("%s  (Level %d)"):format(name, level), 1, 0.82, 0)
+            GameTooltip:SetText(L["%s  (Level %d)"]:format(name, level), 1, 0.82, 0)
         end
         local cur, max = 0, 0
         if GetPetExperience then cur, max = GetPetExperience() end
         if ns.AnySecret(cur, max, level) then
             -- Secret values: no maths; show them as-is if the client allows
             -- formatting them into tooltip text, otherwise just the name.
-            pcall(function() GameTooltip:AddLine(("XP: %s / %s"):format(cur, max), 1, 1, 1) end)
+            pcall(function() GameTooltip:AddLine(L["XP: %s / %s"]:format(cur, max), 1, 1, 1) end)
             if ns.profile and not ns.profile.xpBarLocked then
-                GameTooltip:AddLine("Drag to move. Drag the corner to resize.", 0.6, 0.8, 1)
+                GameTooltip:AddLine(L["Drag to move. Drag the corner to resize."], 0.6, 0.8, 1)
             end
             GameTooltip:Show()
             return
         end
         cur, max = tonumber(cur) or 0, tonumber(max) or 0
         if max > 0 then
-            GameTooltip:AddLine(("XP: %s / %s  (%d%%)"):format(XP.Num(cur), XP.Num(max), math.floor(cur / max * 100)), 1, 1, 1)
-            GameTooltip:AddLine(("%s XP to level %d"):format(XP.Num(max - cur), level + 1), 0.7, 0.7, 0.7)
+            GameTooltip:AddLine(L["XP: %s / %s  (%d%%)"]:format(XP.Num(cur), XP.Num(max), math.floor(cur / max * 100)), 1, 1, 1)
+            GameTooltip:AddLine(L["%s XP to level %d"]:format(XP.Num(max - cur), level + 1), 0.7, 0.7, 0.7)
         else
-            GameTooltip:AddLine("XP: Max Level (the highest your pet can be at your level)", 1, 1, 1)
+            GameTooltip:AddLine(L["XP: Max Level (the highest your pet can be at your level)"], 1, 1, 1)
         end
         if ns.profile and not ns.profile.xpBarLocked then
-            GameTooltip:AddLine("Drag to move. Drag the corner to resize.", 0.6, 0.8, 1)
+            GameTooltip:AddLine(L["Drag to move. Drag the corner to resize."], 0.6, 0.8, 1)
         end
         GameTooltip:Show()
     end)
@@ -349,7 +350,7 @@ do
         row.swatch:SetPoint("CENTER", row.border, "CENTER", 0, 0)
         row.label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
         row.label:SetPoint("LEFT", row.border, "RIGHT", 8, 0)
-        row.label:SetText("Bar Color  |cff999999(click to change)|r")
+        row.label:SetText(L["Bar Color"] .. "  |cff999999(" .. L["click to change"] .. ")|r")
         row:SetHighlightTexture("Interface\\Buttons\\UI-Listbox-Highlight", "ADD")
         row:SetScript("OnClick", function() XP.OpenColorPicker() end)
         row.reset = CreateFrame("Button", "PetSmartXPColorReset", row)
@@ -358,7 +359,7 @@ do
         row.reset.text = row.reset:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
         row.reset.text:SetAllPoints()
         row.reset.text:SetJustifyH("RIGHT")
-        row.reset.text:SetText("Reset")
+        row.reset.text:SetText(RESET or L["Reset"])
         row.reset.text:SetTextColor(0.6, 0.8, 1)
         row.reset:SetScript("OnEnter", function(self) self.text:SetTextColor(1, 1, 1) end)
         row.reset:SetScript("OnLeave", function(self) self.text:SetTextColor(0.6, 0.8, 1) end)
@@ -367,8 +368,8 @@ do
         XP.colorRow = row
     end
 
-    XP.widthSlider = MakeSlider("PetSmartXPWidthSlider", XP.MIN_W, XP.MAX_W, "Bar Width: %dpx", "xpBarWidth")
-    XP.heightSlider = MakeSlider("PetSmartXPHeightSlider", XP.MIN_H, XP.MAX_H, "Bar Height: %dpx", "xpBarHeight")
+    XP.widthSlider = MakeSlider("PetSmartXPWidthSlider", XP.MIN_W, XP.MAX_W, L["Bar Width: %dpx"], "xpBarWidth")
+    XP.heightSlider = MakeSlider("PetSmartXPHeightSlider", XP.MIN_H, XP.MAX_H, L["Bar Height: %dpx"], "xpBarHeight")
 end
 
 -- Sets the bar's colour (nil = back to the default blue), repaints the

@@ -3,6 +3,7 @@
 -- World map and minimap pins for tracked rares and the tracked tame-teacher pet.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local Print = ns.Print
@@ -173,9 +174,9 @@ local function GetWorldPin(i)
     p:SetScript("OnEnter", function(self)
         if not self.rare then return end
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-        GameTooltip:SetText(self.rare.level and (self.rare.name .. " (Lv " .. tostring(self.rare.level) .. ")") or self.rare.name, 1, 0.82, 0)
+        GameTooltip:SetText(self.rare.level and (self.rare.name .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or self.rare.name, 1, 0.82, 0)
         if self.rare.zone then
-            GameTooltip:AddLine(self.rare.zone, 1, 1, 1)
+            GameTooltip:AddLine(ns.LocZone(self.rare.zone), 1, 1, 1)
         end
         GameTooltip:Show()
     end)
@@ -331,7 +332,7 @@ local function GetMinimapPin(i)
         p:SetScript("OnEnter", function(self)
             if not self.rare then return end
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(self.rare.level and (self.rare.name .. " (Lv " .. tostring(self.rare.level) .. ")") or self.rare.name, 1, 0.82, 0)
+            GameTooltip:SetText(self.rare.level and (self.rare.name .. " " .. L["(Lv %s)"]:format(ns.LocLevel(tostring(self.rare.level)))) or self.rare.name, 1, 0.82, 0)
             GameTooltip:Show()
         end)
         p:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -511,7 +512,7 @@ local function GetTameWorldPin(i)
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetText(self.teacherLabel or self.teacherName, 1, 0.82, 0)
         if self.teacherZone then
-            GameTooltip:AddLine(self.teacherZone, 1, 1, 1)
+            GameTooltip:AddLine(ns.LocZone(self.teacherZone), 1, 1, 1)
         end
         GameTooltip:Show()
     end)

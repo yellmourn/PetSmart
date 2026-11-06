@@ -5,6 +5,7 @@
 -- right-drag moves it, the mouse wheel zooms, and double-click resets.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 local LAYOUT = ns.LAYOUT
 local contentPanel = ns.contentPanel
@@ -51,7 +52,7 @@ room.empty:SetWidth(260)
 
 room.hint = overlay:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
 room.hint:SetPoint("BOTTOMRIGHT", -8, 6)
-room.hint:SetText("Drag: turn   Right-drag: move   Wheel: zoom")
+room.hint:SetText(L["Drag: turn   Right-drag: move   Wheel: zoom"])
 room.hint:SetAlpha(0.8)
 
 local state = { facing = 0, zoom = 0, x = 0, y = 0, dragging = nil, lastX = 0, lastY = 0 }
@@ -244,7 +245,7 @@ function DressingRoom.Show(name, id)
     if not npcID then
         model:ClearModel()
         model:Hide()
-        room.empty:SetText("No model on record for this creature.")
+        room.empty:SetText(L["No model on record for this creature."])
         room.empty:Show()
         room.hint:Hide()
         return

@@ -140,6 +140,20 @@ ev:SetScript("OnEvent", function(self, event, arg1)
         if ns.ResolveRareMapIDs then
             ns.ResolveRareMapIDs()
         end
+        -- The map scan above matches zones by name, and the game names
+        -- them in the player's language - on a non-English client, place
+        -- anything it couldn't match by its known map ID instead.
+        if ns.LOCALE ~= "enUS" and ns.ZONE_UIMAP then
+            local log = ns.RareZoneResolveLog
+            for _, list in ipairs({ ns.RARE_SPAWNS or {}, ns.TAME_TEACHER_SPAWNS or {} }) do
+                for _, r in ipairs(list) do
+                    local id = ns.ZONE_UIMAP[r.zone]
+                    if id and not r.mapIDFixed and not r.isDungeon and not (log and log.dynamic[r.zone]) then
+                        r.mapID = id
+                    end
+                end
+            end
+        end
         if ns.RareZoneResolveLog then
             Trace(("Scanned %d map ids on this client"):format(ns.RareZoneResolveLog.scanned or 0))
             local unresolvedCount = 0

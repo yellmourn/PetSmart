@@ -3,6 +3,7 @@
 -- Section: Pet Types and each family's detail page.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local BuildFamilyAbilityNames = ns.BuildFamilyAbilityNames
@@ -75,8 +76,8 @@ local function CreatureIcons(c, familyName)
 end
 
 ns.Pages.types = function(ctx)
-    abilitiesPanel.title:SetText("Pet Index")
-    abilitiesPanel.subtitle:SetText("Select a pet type to view family information and tamable pets.")
+    abilitiesPanel.title:SetText(L["Pet Index"])
+    abilitiesPanel.subtitle:SetText(L["Select a pet type to view family information and tamable pets."])
     abilitiesPanel.subtitle:SetTextColor(0.6, 0.6, 0.6)
     abilitiesPanel.subtitle:Show()
     local familyIds = {}
@@ -84,73 +85,74 @@ ns.Pages.types = function(ctx)
         for familyId in pairs(ns.PET_FAMILIES) do
             familyIds[#familyIds + 1] = familyId
         end
-        table.sort(familyIds, function(a, b) return ns.PET_FAMILIES[a] < ns.PET_FAMILIES[b] end)
+        table.sort(familyIds, function(a, b) return ns.LocFamily(ns.PET_FAMILIES[a]) < ns.LocFamily(ns.PET_FAMILIES[b]) end)
     end
     local items = {}
     for _, familyId in ipairs(familyIds) do
         items[#items + 1] = {
-            text = ns.PET_FAMILIES[familyId], color = { 1, 1, 1 },
+            text = ns.LocFamily(ns.PET_FAMILIES[familyId]), color = { 1, 1, 1 },
             onClick = function() SetAbilitiesMode("typedetail", familyId) end,
         }
     end
-    ctx.AddList(items, "No pet family data loaded.")
+    ctx.AddList(items, L["No pet family data loaded."])
 end
 
 ns.Pages.typedetail = function(ctx)
     local familyId = ns.selectedFamilyId
-    local familyName = (familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[familyId]) or "Pet Type"
+    local familyName = (familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[familyId]) or L["Pet Type"]
     -- Keep the main header on "Pet Index" and put the family itself
     -- in the subheader instead of replacing it, same as how an
     -- ability's detail page behaves when reached from the Abilities
     -- Index.
-    abilitiesPanel.title:SetText("Pet Index")
-    abilitiesPanel.subtitle:SetText(familyName)
+    abilitiesPanel.title:SetText(L["Pet Index"])
+    abilitiesPanel.subtitle:SetText(ns.LocFamily(familyName))
     abilitiesPanel.subtitle:Show()
     -- Key for the icons in this family's creature list, under the family name.
-    abilitiesPanel.subtitle2:SetText(ICON_RARE .. " Rare    " .. ICON_TEACHER .. " Ability Teaching")
+    abilitiesPanel.subtitle2:SetText(ICON_RARE .. " " .. L["Rare"] .. "    " .. ICON_TEACHER .. " " .. L["Ability Teaching"])
     abilitiesPanel.subtitle2:Show()
     if not familyId then
-        ctx.AddLine("No pet type selected.", 0.8, 0.8, 0.8)
+        ctx.AddLine(L["No pet type selected."], 0.8, 0.8, 0.8)
     else
         local info = ns.FAMILY_INFO and ns.FAMILY_INFO[familyId]
-        local dietText = (info and info.diet and #info.diet > 0) and table.concat(info.diet, ", ") or "Unknown"
-        ctx.AddLine("Diet: " .. dietText, 0.8, 0.8, 0.8)
+        ctx.AddLine(ns.FamilyDietText(familyId), 0.8, 0.8, 0.8)
 
-        local roleText = (info and SPEC_LABEL[info.spec]) or "Unknown"
-        ctx.AddLine("Combat Role: " .. roleText, 0.8, 0.8, 0.8)
+        local roleText = (info and SPEC_LABEL[info.spec]) or L["Unknown"]
+        ctx.AddLine(L["Combat Role: %s"]:format(roleText), 0.8, 0.8, 0.8)
 
         if info and info.basicSkill then
-            ctx.AddLine("Basic Attack: " .. info.basicSkill, 0.8, 0.8, 0.8)
+            ctx.AddLine(L["Basic Attack: %s"]:format(ns.LocAbilityList(info.basicSkill)), 0.8, 0.8, 0.8)
         end
 
         if info and info.healthQualifier and info.armorQualifier and info.dpsQualifier then
-            ctx.AddLine(string.format("Health: %s   Armor: %s   DPS: %s", info.healthQualifier, info.armorQualifier, info.dpsQualifier), 0.8, 0.8, 0.8)
+            ctx.AddLine(L["Health: %s   Armor: %s   DPS: %s"]:format(L[info.healthQualifier], L[info.armorQualifier], L[info.dpsQualifier]), 0.8, 0.8, 0.8)
         end
 
         ctx.AddLine(" ", 1, 1, 1)
         local desc = ns.PET_TYPE_DESCRIPTIONS and ns.PET_TYPE_DESCRIPTIONS[familyId]
-        ctx.AddLine(desc or "No description available.", 0.9, 1, 0.9)
+        ctx.AddLine(desc and L[desc] or L["No description available."], 0.9, 1, 0.9)
 
         ctx.AddLine(" ", 1, 1, 1)
         local specialty = GetFamilySpecialty(familyId)
         if specialty then
-            ctx.AddLine("Family Specialty: " .. specialty.displayName, 1, 0.82, 0)
+            ctx.AddLine(L["Family Specialty: %s"]:format(specialty.displayName), 1, 0.82, 0)
             local firstRank = specialty.entry.ranks[1]
-            local specialtyDesc = (ns.PET_ABILITY_DESCRIPTIONS and ns.PET_ABILITY_DESCRIPTIONS[specialty.key])
+            -- In another language the game's own (translated) description comes first.
+            local specialtyDesc = (ns.LOCALE ~= "enUS" and firstRank and GetAbilitySpellDescription(firstRank.spellId))
+                or (ns.PET_ABILITY_DESCRIPTIONS and ns.PET_ABILITY_DESCRIPTIONS[specialty.key])
                 or (firstRank and GetAbilitySpellDescription(firstRank.spellId))
-            ctx.AddLine(specialtyDesc or "No description available.", 0.9, 1, 0.9)
+            ctx.AddLine(specialtyDesc and L[specialtyDesc] or L["No description available."], 0.9, 1, 0.9)
         else
-            ctx.AddLine("Family Specialty:", 1, 0.82, 0)
-            ctx.AddLine("None on record.", 0.8, 0.8, 0.8)
+            ctx.AddLine(L["Family Specialty:"], 1, 0.82, 0)
+            ctx.AddLine(L["None on record."], 0.8, 0.8, 0.8)
         end
 
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine("Family Abilities:", 1, 0.82, 0)
+        ctx.AddLine(L["Family Abilities:"], 1, 0.82, 0)
         local abilityNames = BuildFamilyAbilityNames(familyId)
         if #abilityNames > 0 then
             ctx.AddLine(table.concat(abilityNames, ", "), 1, 1, 1)
         else
-            ctx.AddLine("None on record.", 0.8, 0.8, 0.8)
+            ctx.AddLine(L["None on record."], 0.8, 0.8, 0.8)
         end
 
         -- Every tameable creature of this family (TameableCreatureData.lua),
@@ -158,14 +160,14 @@ ns.Pages.typedetail = function(ctx)
         local creatures = ns.TAMEABLE_CREATURES and ns.TAMEABLE_CREATURES[familyName] or {}
         BuildLookups()
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine("Tameable Creatures (" .. #creatures .. "):", 1, 0.82, 0)
+        ctx.AddLine(L["Tameable Creatures (%d):"]:format(#creatures), 1, 0.82, 0)
         if #creatures == 0 then
-            ctx.AddLine("None on record.", 0.8, 0.8, 0.8)
+            ctx.AddLine(L["None on record."], 0.8, 0.8, 0.8)
         end
         for _, c in ipairs(creatures) do
             local icons = CreatureIcons(c, familyName)
             local text = (icons ~= "" and (icons .. " ") or "") .. c.name
-                .. "  |cff9d9d9d(" .. c.level .. ")  " .. c.zone .. "|r"
+                .. "  |cff9d9d9d(" .. c.level .. ")  " .. ns.LocZone(c.zone) .. "|r"
             ctx.AddLine(text, 1, 1, 1, function()
                 SetAbilitiesMode("creaturedetail", { creature = c, familyId = familyId })
             end)
@@ -181,11 +183,11 @@ ns.Pages.creaturedetail = function(ctx)
     local c = sel and sel.creature
     local familyId = sel and sel.familyId
     local familyName = (familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[familyId]) or "Unknown"
-    abilitiesPanel.title:SetText("Pet Index")
-    abilitiesPanel.subtitle:SetText(c and c.name or "Tameable Creature")
+    abilitiesPanel.title:SetText(L["Pet Index"])
+    abilitiesPanel.subtitle:SetText(c and c.name or L["Tameable Creature"])
     abilitiesPanel.subtitle:Show()
     if not c then
-        ctx.AddLine("No creature selected.", 0.8, 0.8, 0.8)
+        ctx.AddLine(L["No creature selected."], 0.8, 0.8, 0.8)
         return
     end
     BuildLookups()
@@ -210,35 +212,35 @@ ns.Pages.creaturedetail = function(ctx)
 
     local icons = CreatureIcons(c, familyName)
     if rare and teacher then
-        ctx.AddLine(icons .. " Rare spawn and teacher pet", 0.8, 0.8, 0.8)
+        ctx.AddLine(icons .. " " .. L["Rare spawn and teacher pet"], 0.8, 0.8, 0.8)
     elseif rare then
-        ctx.AddLine(icons .. " Rare spawn", 0.8, 0.8, 0.8)
+        ctx.AddLine(icons .. " " .. L["Rare spawn"], 0.8, 0.8, 0.8)
     elseif teacher then
-        ctx.AddLine(icons .. " Teacher pet", 0.8, 0.8, 0.8)
+        ctx.AddLine(icons .. " " .. L["Teacher pet"], 0.8, 0.8, 0.8)
     end
-    ctx.AddLine("Family: " .. familyName, 0.8, 0.8, 0.8)
-    local level = "Level: " .. tostring(c.level)
-    if c.tag and c.tag:find("Elite") then level = level .. " (Elite)" end
+    ctx.AddLine(L["Family: %s"]:format(ns.LocFamily(familyName)), 0.8, 0.8, 0.8)
+    local level = L["Level: %s"]:format(tostring(c.level))
+    if c.tag and c.tag:find("Elite") then level = level .. " " .. L["(Elite)"] end
     ctx.AddLine(level, 0.8, 0.8, 0.8)
     ctx.AddLine(ns.FamilyDietText(familyId), 0.8, 0.8, 0.8)
-    local zoneLine = "Zone: " .. tostring(c.zone)
+    local zoneLine = L["Zone: %s"]:format(ns.LocZone(tostring(c.zone)))
     local points = (rare and rare.points) or (spawnInfo and spawnInfo.points)
     if points and #points > 1 then
-        zoneLine = zoneLine .. "  (" .. #points .. " known locations)"
+        zoneLine = zoneLine .. "  " .. L["(%d known locations)"]:format(#points)
     end
     ctx.AddLine(zoneLine, 0.8, 0.8, 0.8)
     if teacher then
-        ctx.AddLine("Teaches when tamed: " .. table.concat(teacher.teaches, ", "), 1, 0.82, 0.2)
+        ctx.AddLine(L["Teaches when tamed: %s"]:format(table.concat(teacher.teaches, ", ")), 1, 0.82, 0.2)
     elseif c.knows then
-        ctx.AddLine("Knows when tamed: " .. c.knows, 1, 0.82, 0.2)
+        ctx.AddLine(L["Knows when tamed: %s"]:format(ns.LocAbilityList(c.knows)), 1, 0.82, 0.2)
     end
     if c.horde then
-        ctx.AddLine("Only Horde hunters can tame this creature.", 1, 0.5, 0.5)
+        ctx.AddLine(L["Only Horde hunters can tame this creature."], 1, 0.5, 0.5)
     end
     local desc = (rare and rare.description) or (spawnInfo and spawnInfo.description)
     if desc then
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine(desc, 0.9, 1, 0.9)
+        ctx.AddLine(L[desc], 0.9, 1, 0.9)
     end
     ns.DressingRoom.Show(c.name, c.npc)
 end

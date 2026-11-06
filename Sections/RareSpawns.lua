@@ -3,6 +3,7 @@
 -- Section: Rare Pet Spawns and each rare's detail page.
 --------------------------------------------------------------------------
 local addonName, ns = ...
+local L = ns.L
 
 -- Shared from earlier files (see the ns.<name> exports at the end of each).
 local IsTrackedRare = ns.IsTrackedRare
@@ -16,9 +17,9 @@ local abilitiesPanel = ns.abilitiesPanel
 local rareTrackBtn = ns.rareTrackBtn
 
 StaticPopupDialogs["PETSMART_TRACK_ALL_ZONE"] = {
-    text = "Tracking All in this zone will untrack the previous zone.",
-    button1 = "Continue",
-    button2 = "Cancel",
+    text = L["Tracking All in this zone will untrack the previous zone."],
+    button1 = CONTINUE or L["Continue"],
+    button2 = CANCEL or L["Cancel"],
     OnAccept = function(self, data)
         TrackAllInZone(data.zoneRares)
         ns.RefreshAbilitiesPanel()
@@ -36,7 +37,7 @@ ns.Pages.spawns = function(ctx)
             ns.RefreshAbilitiesPanel()
         end)
     elseif #ns.trackedRares > 1 then
-        rareTrackBtn:SetState(true, "Untrack All", function()
+        rareTrackBtn:SetState(true, L["Untrack All"], function()
             UntrackAllRares()
             ns.RefreshAbilitiesPanel()
         end)
@@ -53,21 +54,22 @@ ns.Pages.spawns = function(ctx)
         local inZone = {}
         if currentZone and currentZone ~= "" then
             for _, rare in ipairs(ns.RARE_SPAWNS) do
-                if rare.zone == currentZone then
+                -- The game names the zone in the player's language.
+                if rare.zone == currentZone or ns.LocZone(rare.zone) == currentZone then
                     inZone[#inZone + 1] = rare
                 end
             end
             table.sort(inZone, function(a, b) return a.name < b.name end)
         end
-        ctx.AddLine("Current Zone" .. ((currentZone and currentZone ~= "") and (": " .. currentZone) or ""), 1, 0.82, 0)
+        ctx.AddLine((currentZone and currentZone ~= "") and L["Current Zone: %s"]:format(currentZone) or L["Current Zone"], 1, 0.82, 0)
         if #inZone == 0 then
-            ctx.AddLine("No known rares in this zone.", 0.7, 0.7, 0.7)
+            ctx.AddLine(L["No known rares in this zone."], 0.7, 0.7, 0.7)
         else
             -- Multi-tracking only (tracking several rares at once
             -- doesn't mean anything with it off), and only when
             -- there's actually something here to track.
             if ns.profile and ns.profile.multiTrackingEnabled then
-                ctx.AddLine("Track All", 0.6, 0.8, 1, function()
+                ctx.AddLine(L["Track All"], 0.6, 0.8, 1, function()
                     if TrackedRaresFromOtherZone(currentZone) then
                         StaticPopup_Show("PETSMART_TRACK_ALL_ZONE", nil, nil, { zoneRares = inZone })
                     else
@@ -77,7 +79,7 @@ ns.Pages.spawns = function(ctx)
                 end)
             end
             for _, rare in ipairs(inZone) do
-                local label = rare.name .. "  (Lvl " .. tostring(rare.level) .. ")"
+                local label = rare.name .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
                 if IsTrackedRare(rare) then label = label .. "  " .. LAYOUT.TRACKED_INLINE end
                 ctx.AddLine(label, 1, 1, 1, function() SetAbilitiesMode("raredetail", rare) end)
             end
@@ -87,19 +89,19 @@ ns.Pages.spawns = function(ctx)
         local sorted = {}
         for _, rare in ipairs(ns.RARE_SPAWNS) do sorted[#sorted + 1] = rare end
         table.sort(sorted, function(a, b)
-            local fa = (a.familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[a.familyId]) or "?"
-            local fb = (b.familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[b.familyId]) or "?"
+            local fa = (a.familyId and ns.PET_FAMILIES and ns.LocFamily(ns.PET_FAMILIES[a.familyId])) or "?"
+            local fb = (b.familyId and ns.PET_FAMILIES and ns.LocFamily(ns.PET_FAMILIES[b.familyId])) or "?"
             if fa ~= fb then return fa < fb end
             return a.name < b.name
         end)
         local lastFamily = nil
         for _, rare in ipairs(sorted) do
-            local familyName = (rare.familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[rare.familyId]) or "Unknown Family"
+            local familyName = (rare.familyId and ns.PET_FAMILIES and ns.LocFamily(ns.PET_FAMILIES[rare.familyId])) or L["Unknown Family"]
             if familyName ~= lastFamily then
                 ctx.AddLine(familyName, 1, 0.82, 0)
                 lastFamily = familyName
             end
-            local label = rare.name .. "  (Lvl " .. tostring(rare.level) .. ")"
+            local label = rare.name .. "  " .. L["(Lvl %s)"]:format(ns.LocLevel(tostring(rare.level)))
             if IsTrackedRare(rare) then label = label .. "  " .. LAYOUT.TRACKED_INLINE end
             ctx.AddLine(label, 1, 1, 1, function() SetAbilitiesMode("raredetail", rare) end)
         end
@@ -111,8 +113,8 @@ ns.Pages.raredetail = function(ctx)
     -- Keep the main header on "Rare Index" and put the rare's
     -- own name in the subheader instead of replacing it, same as the
     -- Abilities Index/Pet Types detail pages above.
-    abilitiesPanel.title:SetText("Rare Index")
-    abilitiesPanel.subtitle:SetText(rare and rare.name or "Rare Pet")
+    abilitiesPanel.title:SetText(L["Rare Index"])
+    abilitiesPanel.subtitle:SetText(rare and rare.name or L["Rare Pet"])
     abilitiesPanel.subtitle:Show()
     do
         local tracked = (rare and IsTrackedRare(rare)) or false
@@ -126,23 +128,23 @@ ns.Pages.raredetail = function(ctx)
             end)
     end
     if not rare then
-        ctx.AddLine("No rare selected.", 0.8, 0.8, 0.8)
+        ctx.AddLine(L["No rare selected."], 0.8, 0.8, 0.8)
     else
         local familyName = (rare.familyId and ns.PET_FAMILIES and ns.PET_FAMILIES[rare.familyId]) or "Unknown"
-        ctx.AddLine("Family: " .. familyName, 0.8, 0.8, 0.8)
-        ctx.AddLine("Level: " .. tostring(rare.level), 0.8, 0.8, 0.8)
+        ctx.AddLine(L["Family: %s"]:format(ns.LocFamily(familyName)), 0.8, 0.8, 0.8)
+        ctx.AddLine(L["Level: %s"]:format(ns.LocLevel(tostring(rare.level))), 0.8, 0.8, 0.8)
         ctx.AddLine(ns.FamilyDietText(rare.familyId or familyName), 0.8, 0.8, 0.8)
         local pointCount = rare.points and #rare.points or 0
-        local zoneLine = "Zone: " .. tostring(rare.zone)
+        local zoneLine = L["Zone: %s"]:format(ns.LocZone(tostring(rare.zone)))
         if pointCount > 1 then
-            zoneLine = zoneLine .. "  (" .. pointCount .. " known locations)"
+            zoneLine = zoneLine .. "  " .. L["(%d known locations)"]:format(pointCount)
         end
         ctx.AddLine(zoneLine, 0.8, 0.8, 0.8)
         ctx.AddLine(" ", 1, 1, 1)
-        ctx.AddLine(rare.description or "No description available.", 0.9, 1, 0.9)
+        ctx.AddLine(rare.description and L[rare.description] or L["No description available."], 0.9, 1, 0.9)
         if not rare.mapID then
             ctx.AddLine(" ", 1, 1, 1)
-            ctx.AddLine("(Map tracking unavailable for this zone.)", 0.6, 0.6, 0.6)
+            ctx.AddLine(L["(Map tracking unavailable for this zone.)"], 0.6, 0.6, 0.6)
         end
         ns.DressingRoom.Show(rare.name)
     end
