@@ -259,7 +259,7 @@ local raw = {
     { name = "Olm the Wise", family = "Owl", level = "52", zone = "Felwood",
       x = 55.0, y = 45.0, -- approximate (between Irontree Woods and Talonbranch Glade)
       description = "A spectral-looking rare owl that flies between Irontree Woods and Talonbranch Glade in Felwood; taming it briefly angers the Cenarion Circle but costs no reputation." },
-    { name = "Nightscreech", family = "Owl", level = "11", zone = "Teldrassil",
+    { name = "Nightscreech", family = "Owl", level = "10", zone = "Teldrassil",
       x = 46.8, y = 32.0,
       description = "A rare owl haunting the moonlit boughs of Teldrassil, whose piercing shriek carries long after it's gone quiet again." },
 

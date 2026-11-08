@@ -160,7 +160,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Porcine Entourage","Boar","7","Elwynn Forest"},
             {"Elder Crag Boar","Boar","7-8","Dun Morogh"},
             {"Rockhide Boar","Boar","7-8","Elwynn Forest"},
-            {"Stonetusk Boar","Boar","7-8","Elwynn Forest"},
+            {"Stonetusk Boar","Boar","5-6","Elwynn Forest"},
             {"Elder Mottled Boar","Boar","8-9","Durotar"},
             {"Princess","Boar","9","Elwynn Forest"},
             {"Scarred Crag Boar","Boar","9-10","Dun Morogh"},
@@ -212,7 +212,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Encrusted Surf Crawler","Crab","9-10","Durotar"},
             {"Venomtail Scorpid","Scorpid","9-10","Durotar"},
             {"Matriarch Bristlefur","Bear","10","Elwynn Forest"},
-            {"Shadowgale Ursera","Bear","10","Zephras Isle"},
+            {"Shadowgale Ursera","Bear","10-11","Zephras Isle"},
             {"Mangeclaw","Bear","11","Dun Morogh"},
             {"Death Flayer","Scorpid","11","Durotar"},
             {"Ferocious Grizzled Bear","Bear","11-12","Silverpine Forest"},
@@ -289,7 +289,6 @@ ns.PETOPIA_TAME_MOBS = {
             {"Fleeting Plainstrider","Tallstrider","12-13","The Barrens"},
         },
         [2] = {
-            {"Savannah Patriarch","Cat","15-16","The Barrens"},
             {"Ornery Plainstrider","Tallstrider","16-17","The Barrens"},
             {"Giant Foreststrider","Tallstrider","17-19","Darkshore"},
             {"Moonstalker Sire","Cat","17-18","Darkshore"},
@@ -306,6 +305,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Panther","Cat","32-33","Stranglethorn Vale"},
         },
         [4] = {
+            {"Savannah Patriarch","Cat","15-16","The Barrens"},
             {"Ridge Stalker","Cat","36-37","Badlands"},
             {"Shrike Bat","Bat","38-39","Uldaman (Dungeon)"},
             {"Ridge Huntress","Cat","38-39","Badlands"},
@@ -404,7 +404,7 @@ ns.PETOPIA_TAME_MOBS = {
     dustcloud = {
         [1] = {
             {"Galestrider","Tallstrider","5-6","Zephras Isle"},
-            {"Ornery Galestrider","Tallstrider","8","Zephras Isle"},
+            {"Ornery Galestrider","Tallstrider","8-9","Zephras Isle"},
             {"Fleeting Plainstrider","Tallstrider","12-13","The Barrens"},
             {"Foreststrider","Tallstrider","14-16","Darkshore"},
             {"Strider Clutchmother","Tallstrider","20","Darkshore"},
@@ -500,7 +500,6 @@ ns.PETOPIA_TAME_MOBS = {
     -- list.
     savagerend = {
         [1] = {
-            {"Shriekling Matriarch","Bird of Prey","9","Zephras Isle"},
             {"Shadowgale Shriekling","Bird of Prey","10-11","Zephras Isle"},
             {"Mystmane","Bear","13","Zephras Isle"},
             {"Sunscale Screecher","Raptor","13-15","The Barrens"},
@@ -611,7 +610,7 @@ ns.PETOPIA_TAME_MOBS = {
     -- Vuldren Alpha (Zephras Isle) does NOT teach Trickster's Dance 1.
     tricklersdance = {
         [1] = {
-            {"Gray Fox","Fox","22","Duskwood"},
+            {"Gray Fox","Fox","22-23","Duskwood"},
         },
     },
 
