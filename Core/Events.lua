@@ -242,6 +242,9 @@ SlashCmdList["PETSMART"] = function(msg)
     if DEBUG_COMMANDS and cmd == "bt" then
         -- Troubleshooting: what PetSmart can read from the open Beast Training window.
         if ns.BeastTraining then ns.BeastTraining.Debug() end
+    elseif cmd == "eat" then
+        -- Troubleshooting the eating timer on the feed icon.
+        if ns.EatTimerDebug then ns.EatTimerDebug() end
     elseif cmd == "options" then
         -- Same as the launcher's right-click: straight to the Options page.
         LauncherOnClick("RightButton")

@@ -335,18 +335,42 @@ eatTimer:SetDrawEdge(false)
 if eatTimer.SetHideCountdownNumbers then eatTimer:SetHideCountdownNumbers(false) end
 eatTimer:Hide()
 
-local feedEffectName
 local seenStart -- when the buff was first seen, for clients with no aura durations
+
+-- The game's name for the buff (any client language), plus the English one.
+local function FeedEffectNames()
+    local names = { ["Feed Pet Effect"] = true }
+    local n = (C_Spell and C_Spell.GetSpellName and C_Spell.GetSpellName(FEED_EFFECT_ID))
+        or (GetSpellInfo and GetSpellInfo(FEED_EFFECT_ID))
+    if n then names[n] = true end
+    return names
+end
+local feedEffectNames
+
+-- One of the pet's buffs as name, duration, expirationTime, spellId - using
+-- whichever aura API this client has (C_UnitAuras, UnitBuff or UnitAura).
+local function PetBuff(i)
+    if C_UnitAuras and C_UnitAuras.GetAuraDataByIndex then
+        local a = C_UnitAuras.GetAuraDataByIndex("pet", i, "HELPFUL")
+        if not a then return nil end
+        return a.name, a.duration, a.expirationTime, a.spellId
+    end
+    local fn = UnitBuff or (UnitAura and function(u, n) return UnitAura(u, n, "HELPFUL") end)
+    if not fn then return nil end
+    local name, _, _, _, duration, expires, _, _, _, spellId = fn("pet", i)
+    return name, duration, expires, spellId
+end
 
 -- start, duration of the pet's Feed Pet Effect, or nil if it isn't eating.
 local function FindFeedEffect()
-    if not UnitExists("pet") or not UnitBuff then return nil end
-    feedEffectName = feedEffectName or (GetSpellInfo and GetSpellInfo(FEED_EFFECT_ID)) or "Feed Pet Effect"
+    if not UnitExists("pet") then return nil end
+    feedEffectNames = feedEffectNames or FeedEffectNames()
     for i = 1, 40 do
-        local name, _, _, _, duration, expires, _, _, _, spellId = UnitBuff("pet", i)
+        local name, duration, expires, spellId = PetBuff(i)
         if not name then break end
-        if spellId == FEED_EFFECT_ID or name == feedEffectName then
+        if spellId == FEED_EFFECT_ID or feedEffectNames[name] then
             if duration and duration > 0 and expires and expires > 0 then
+                seenStart = nil
                 return expires - duration, duration
             end
             seenStart = seenStart or GetTime()
@@ -356,27 +380,55 @@ local function FindFeedEffect()
     return nil
 end
 
+local shownStart
 local function UpdateEatTimer()
     local start, duration = FindFeedEffect()
     if start then
-        eatTimer:Show()
-        eatTimer:SetCooldown(start, duration)
-    else
-        seenStart = nil
+        if shownStart ~= start then
+            shownStart = start
+            eatTimer:Show()
+            eatTimer:SetCooldown(start, duration)
+        end
+    elseif shownStart then
+        shownStart, seenStart = nil, nil
         eatTimer:SetCooldown(0, 0)
         eatTimer:Hide()
     end
+end
+
+-- /ps eat: prints what PetSmart can read of the pet's buffs (troubleshooting).
+function ns.EatTimerDebug()
+    local api = (C_UnitAuras and C_UnitAuras.GetAuraDataByIndex and "C_UnitAuras")
+        or (UnitBuff and "UnitBuff") or (UnitAura and "UnitAura") or "none"
+    print(("PetSmart eat timer: pet=%s, aura API=%s"):format(tostring(UnitExists("pet")), api))
+    for i = 1, 40 do
+        local name, duration, expires, spellId = PetBuff(i)
+        if not name then break end
+        print(("  %d: %s (id %s) duration %s, ends %s"):format(i, tostring(name), tostring(spellId),
+            tostring(duration), expires and expires > 0 and ("in %.1fs"):format(expires - GetTime()) or tostring(expires)))
+    end
+    local start, duration = FindFeedEffect()
+    print(start and ("  Feed Pet Effect found: %.1fs left"):format(start + duration - GetTime()) or "  Feed Pet Effect not found")
+    UpdateEatTimer()
 end
 
 local eatEvents = CreateFrame("Frame")
 eatEvents:RegisterEvent("UNIT_AURA")
 eatEvents:RegisterEvent("UNIT_PET")
 eatEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+eatEvents:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 eatEvents:SetScript("OnEvent", function(_, event, unit)
     if event == "UNIT_AURA" and unit ~= "pet" then return end
-    if event == "UNIT_PET" and unit ~= "player" then return end
+    if (event == "UNIT_PET" or event == "UNIT_SPELLCAST_SUCCEEDED") and unit ~= "player" then return end
     UpdateEatTimer()
+    -- The buff can land a moment after the Feed Pet cast; look again shortly.
+    if event == "UNIT_SPELLCAST_SUCCEEDED" and C_Timer then C_Timer.After(0.3, UpdateEatTimer) end
 end)
+-- Safety net for clients that don't send UNIT_AURA for the pet: a cheap
+-- once-a-second look while a pet is out.
+if C_Timer and C_Timer.NewTicker then
+    C_Timer.NewTicker(1, function() if UnitExists("pet") or shownStart then UpdateEatTimer() end end)
+end
 
 -- Exported for the other PetSmart files.
 ns.ApplyIconSize = ApplyIconSize
