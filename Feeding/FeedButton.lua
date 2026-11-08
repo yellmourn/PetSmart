@@ -322,6 +322,62 @@ end
 panel:SetScript("OnShow", RefreshPanel)
 tinsert(UISpecialFrames, "PetSmartPanel") -- ESC closes it
 
+----------------------------------------------------------------------
+-- Eating timer: a cooldown sweep over the icon while the pet has the
+-- "Feed Pet Effect" buff (it's eating), hidden the rest of the time.
+----------------------------------------------------------------------
+local FEED_EFFECT_ID = 1539          -- Feed Pet Effect
+local FEED_EFFECT_FALLBACK = 20      -- seconds, if the game gives no duration
+
+local eatTimer = CreateFrame("Cooldown", "PetSmartEatTimer", toggle, "CooldownFrameTemplate")
+eatTimer:SetAllPoints(toggle.icon)
+eatTimer:SetDrawEdge(false)
+if eatTimer.SetHideCountdownNumbers then eatTimer:SetHideCountdownNumbers(false) end
+eatTimer:Hide()
+
+local feedEffectName
+local seenStart -- when the buff was first seen, for clients with no aura durations
+
+-- start, duration of the pet's Feed Pet Effect, or nil if it isn't eating.
+local function FindFeedEffect()
+    if not UnitExists("pet") or not UnitBuff then return nil end
+    feedEffectName = feedEffectName or (GetSpellInfo and GetSpellInfo(FEED_EFFECT_ID)) or "Feed Pet Effect"
+    for i = 1, 40 do
+        local name, _, _, _, duration, expires, _, _, _, spellId = UnitBuff("pet", i)
+        if not name then break end
+        if spellId == FEED_EFFECT_ID or name == feedEffectName then
+            if duration and duration > 0 and expires and expires > 0 then
+                return expires - duration, duration
+            end
+            seenStart = seenStart or GetTime()
+            return seenStart, FEED_EFFECT_FALLBACK
+        end
+    end
+    return nil
+end
+
+local function UpdateEatTimer()
+    local start, duration = FindFeedEffect()
+    if start then
+        eatTimer:Show()
+        eatTimer:SetCooldown(start, duration)
+    else
+        seenStart = nil
+        eatTimer:SetCooldown(0, 0)
+        eatTimer:Hide()
+    end
+end
+
+local eatEvents = CreateFrame("Frame")
+eatEvents:RegisterEvent("UNIT_AURA")
+eatEvents:RegisterEvent("UNIT_PET")
+eatEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+eatEvents:SetScript("OnEvent", function(_, event, unit)
+    if event == "UNIT_AURA" and unit ~= "pet" then return end
+    if event == "UNIT_PET" and unit ~= "player" then return end
+    UpdateEatTimer()
+end)
+
 -- Exported for the other PetSmart files.
 ns.ApplyIconSize = ApplyIconSize
 ns.GetLoyaltyLabel = GetLoyaltyLabel
