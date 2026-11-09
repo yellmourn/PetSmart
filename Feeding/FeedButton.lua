@@ -349,10 +349,16 @@ local feedEffectNames
 
 -- One of the pet's buffs as name, duration, expirationTime, spellId - using
 -- whichever aura API this client has (C_UnitAuras, UnitBuff or UnitAura).
+-- Some clients hide aura data ("secret" values) during combat and raise an
+-- error if an addon reads it, so the read is guarded and anything secret is
+-- treated as unreadable.
+local function Secret(v)
+    return issecretvalue and v ~= nil and issecretvalue(v)
+end
 local function PetBuff(i)
     if C_UnitAuras and C_UnitAuras.GetAuraDataByIndex then
-        local a = C_UnitAuras.GetAuraDataByIndex("pet", i, "HELPFUL")
-        if not a then return nil end
+        local ok, a = pcall(C_UnitAuras.GetAuraDataByIndex, "pet", i, "HELPFUL")
+        if not ok or not a or Secret(a) or Secret(a.name) then return nil end
         return a.name, a.duration, a.expirationTime, a.spellId
     end
     local fn = UnitBuff or (UnitAura and function(u, n) return UnitAura(u, n, "HELPFUL") end)
@@ -380,8 +386,16 @@ local function FindFeedEffect()
     return nil
 end
 
+-- Aura data can't be read in combat on some clients, and a pet can't be fed
+-- in combat anyway: the timer is left running as it is until combat ends.
+local function InCombat()
+    return (InCombatLockdown and InCombatLockdown())
+        or (UnitAffectingCombat and (UnitAffectingCombat("player") or UnitAffectingCombat("pet")))
+end
+
 local shownStart
 local function UpdateEatTimer()
+    if InCombat() then return end
     local start, duration = FindFeedEffect()
     if start then
         if shownStart ~= start then
@@ -401,6 +415,7 @@ function ns.EatTimerDebug()
     local api = (C_UnitAuras and C_UnitAuras.GetAuraDataByIndex and "C_UnitAuras")
         or (UnitBuff and "UnitBuff") or (UnitAura and "UnitAura") or "none"
     print(("PetSmart eat timer: pet=%s, aura API=%s"):format(tostring(UnitExists("pet")), api))
+    if InCombat() then print("  In combat - pet buffs aren't read until combat ends.") return end
     for i = 1, 40 do
         local name, duration, expires, spellId = PetBuff(i)
         if not name then break end
@@ -417,6 +432,7 @@ eatEvents:RegisterEvent("UNIT_AURA")
 eatEvents:RegisterEvent("UNIT_PET")
 eatEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 eatEvents:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+eatEvents:RegisterEvent("PLAYER_REGEN_ENABLED") -- combat over: look again
 eatEvents:SetScript("OnEvent", function(_, event, unit)
     if event == "UNIT_AURA" and unit ~= "pet" then return end
     if (event == "UNIT_PET" or event == "UNIT_SPELLCAST_SUCCEEDED") and unit ~= "player" then return end
