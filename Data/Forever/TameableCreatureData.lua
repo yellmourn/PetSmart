@@ -323,10 +323,11 @@ ns.TAMEABLE_CREATURES = {
         { name = "Sewer Beast", level = "50", zone = "Stormwind City", npc = 3581, tag = "Rare", knows = "Bite 7" },
         { name = "Zulian Crocolisk", level = "60", zone = "Zul'Gurub (Raid)", npc = 15043, tag = "Elite" },
     },
-    ["Fox"] = { -- 5 creatures
+    ["Fox"] = { -- 6 creatures
         { name = "Juvenile Vuldren", level = "1", zone = "Thendal Grove, Zephras Isle", npc = 250873, knows = "Bite 1" },
         { name = "Slydris", level = "6", zone = "Zephras Isle", npc = 255887, tag = "Rare" },
         { name = "Vuldren", level = "6", zone = "Shen'dar Highlands, Zephras Isle", npc = 250868, knows = "Bite 1" },
+        { name = "Vulgara the Insatiable", level = "8", zone = "Shen'dar Highlands, Zephras Isle", npc = 254589, knows = "Bite 2" },
         { name = "Vuldren Alpha", level = "10", zone = "Gustberry Lowlands, Zephras Isle", npc = 250874, knows = "Bite 2" },
         { name = "Gray Fox", level = "22-23", zone = "The Darkened Bank, Duskwood", npc = 277645, knows = "Trickster's Dance 1" },
     },
@@ -616,7 +617,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Spawn of Hakkar", level = "51", zone = "The Temple of Atal'Hakkar (Dungeon)", npc = 5708, tag = "Elite", knows = "Dive 3, Lightning Breath 5" },
         { name = "Son of Hakkar", level = "60", zone = "Zul'Gurub (Raid)", npc = 11357, tag = "Elite", knows = "Lightning Breath 6" },
     },
-    ["Wolf"] = { -- 72 creatures
+    ["Wolf"] = { -- 71 creatures
         { name = "Ragged Young Wolf", level = "1", zone = "Dun Morogh", npc = 705 },
         { name = "Young Scavenger", level = "1", zone = "Tirisfal Glades", npc = 1508 },
         { name = "Young Wolf", level = "1", zone = "Elwynn Forest", npc = 299 },
@@ -632,7 +633,6 @@ ns.TAMEABLE_CREATURES = {
         { name = "Winter Wolf", level = "7-8", zone = "Dun Morogh", npc = 1131, knows = "Bite 1" },
         { name = "Rabid Forest Wolf", level = "8-9", zone = "Whispering Forest, Tirisfal Glades", npc = 277730 },
         { name = "Starving Winter Wolf", level = "8-9", zone = "Dun Morogh", npc = 1133, knows = "Bite 2" },
-        { name = "Vulgara the Insatiable", level = "8", zone = "Shen'dar Highlands, Zephras Isle", npc = 254589, knows = "Bite 2" },
         { name = "Prairie Wolf Alpha", level = "9-10", zone = "Mulgore", npc = 2960, knows = "Bite 2, Furious Howl 1" },
         { name = "Prowler", level = "9-10", zone = "Elwynn Forest", npc = 118, knows = "Bite 2" },
         { name = "Coyote", level = "10-11", zone = "Westfall", npc = 834, knows = "Bite 2" },

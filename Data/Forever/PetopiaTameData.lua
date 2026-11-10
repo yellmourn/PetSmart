@@ -44,7 +44,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Mother Fang","Spider","10","Elwynn Forest"},
         },
         [2] = {
-            {"Vulgara the Insatiable","Wolf","8","Zephras Isle"},
+            {"Vulgara the Insatiable","Fox","8","Zephras Isle"},
             {"Starving Winter Wolf","Wolf","8-9","Dun Morogh"},
             {"Webwood Silkspinner","Spider","8-9","Teldrassil"},
             {"Prowler","Wolf","9-10","Elwynn Forest"},
