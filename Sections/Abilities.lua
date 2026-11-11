@@ -468,7 +468,8 @@ ns.Pages.tamedetail = function(ctx)
     abilitiesPanel.subtitle:SetText(mob and ns.LocCreature(mob.name) or L["Tameable Pet"])
     abilitiesPanel.subtitle:Show()
 
-    local spawnInfo = mob and Tame.GetSpawnInfo(mob.name)
+    local spawnInfo = mob and ns.SpawnInfoFor(mob.name, mob.zone)
+    local creature = mob and ns.FindTameableCreature and ns.FindTameableCreature(mob.name, mob.family, mob.zone)
     if spawnInfo then
         local tracked = Tame.IsTracking(mob.name)
         rareTrackBtn:SetState(tracked,
@@ -484,6 +485,9 @@ ns.Pages.tamedetail = function(ctx)
     else
         ctx.AddLine(L["Family: %s"]:format(ns.LocFamily(mob.family)), 0.8, 0.8, 0.8)
         ctx.AddLine(L["Pet Level: %s"]:format(tostring(mob.levels)), 0.8, 0.8, 0.8)
+        if creature and creature.speed then
+            ctx.AddLine(L["Attack Speed (seconds):"] .. " " .. creature.speed, 0.8, 0.8, 0.8)
+        end
         ctx.AddLine(ns.FamilyDietText(mob.family), 0.8, 0.8, 0.8)
         local pointCount = spawnInfo and spawnInfo.points and #spawnInfo.points or 0
         local zoneLine = L["Zone: %s"]:format(ns.LocZone(tostring(mob.zone)))
@@ -503,7 +507,7 @@ ns.Pages.tamedetail = function(ctx)
         elseif pointCount > 1 then
             ctx.AddLine(L["Tracking this pet pins every known spawn area at once (one pin per area it's known to appear in, not every individual sighting), regardless of your Multi-Tracking setting."], 0.6, 0.6, 0.6)
         end
-        ns.DressingRoom.Show(mob.name)
+        ns.DressingRoom.Show(mob.name, creature and creature.npc)
     end
 end
 

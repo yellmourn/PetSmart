@@ -83,6 +83,22 @@ end
 -- tracking purposes even when a description exists, since it can never
 -- be tracked - see SetTrackedRare - but BuildDetailLines/tamedetail still
 -- show its zone/description text from whichever source matched.
+-- True when two zone texts name the same place ("Longshore, Westfall" and
+-- "Westfall"), so a spawn entry isn't used for a same-named creature
+-- somewhere else (the Westfall and Riverglades Shore Crawlers).
+function ns.SameZone(a, b)
+    if not a or not b then return true end
+    a, b = tostring(a):lower(), tostring(b):lower()
+    return a:find(b, 1, true) ~= nil or b:find(a, 1, true) ~= nil
+end
+
+-- Spawn info for a creature by name, only if it's for the same zone.
+function ns.SpawnInfoFor(name, zone)
+    local info = Tame.GetSpawnInfo(name)
+    if info and zone and info.zone and not ns.SameZone(info.zone, zone) then return nil end
+    return info
+end
+
 function Tame.GetSpawnInfo(name)
     if not name then return nil end
     if ns.RARE_SPAWNS then

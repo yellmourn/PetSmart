@@ -38,10 +38,17 @@ local function BuildLookups()
             local abilityName = ns.GetAbilityDisplayName(key, entry)
             for rank = 1, 20 do
                 for _, m in ipairs(ranks[rank] or {}) do
-                    local t = teacherByName[m[1]]
+                    -- Same-named creatures in different places (e.g. the two
+                    -- Shore Crawlers) are kept apart by family, zone and level.
+                    local list = teacherByName[m[1]]
+                    if not list then list = {}; teacherByName[m[1]] = list end
+                    local t
+                    for _, e in ipairs(list) do
+                        if e.mob.family == m[2] and e.mob.zone == m[4] and e.mob.levels == m[3] then t = e end
+                    end
                     if not t then
                         t = { mob = { name = m[1], family = m[2], levels = m[3], zone = m[4] }, teaches = {} }
-                        teacherByName[m[1]] = t
+                        list[#list + 1] = t
                     end
                     t.teaches[#t.teaches + 1] = abilityName .. " " .. rank
                 end
@@ -62,13 +69,31 @@ local function LowLevel(text)
     return tonumber(tostring(text or ""):match("%d+"))
 end
 local function TeacherFor(c, familyName)
-    local t = teacherByName[c.name]
-    if not t or t.mob.family ~= familyName then return nil end
-    -- Same name, very different level = a different creature (e.g. the
-    -- same-named creature at a very different level isn't the teacher).
-    local a, b = LowLevel(c.level), LowLevel(t.mob.levels)
-    if a and b and math.abs(a - b) > 5 then return nil end
-    return t
+    local best, bestGap
+    for _, t in ipairs(teacherByName[c.name] or {}) do
+        if t.mob.family == familyName then
+            -- Same name, very different level = a different creature (e.g. the
+            -- same-named creature at a very different level isn't the teacher).
+            local a, b = LowLevel(c.level), LowLevel(t.mob.levels)
+            local gap = (a and b) and math.abs(a - b) or 0
+            if gap <= 5 and (not bestGap or gap < bestGap) then best, bestGap = t, gap end
+        end
+    end
+    return best
+end
+
+-- The tameable-creature entry (TameableCreatureData.lua) for a name in a
+-- zone, for pages that only have a teacher list row (name, family, zone).
+function ns.FindTameableCreature(name, familyName, zone)
+    local list = ns.TAMEABLE_CREATURES and ns.TAMEABLE_CREATURES[familyName]
+    local fallback
+    for _, c in ipairs(list or {}) do
+        if c.name == name then
+            if ns.SameZone(c.zone, zone) then return c end
+            fallback = fallback or c
+        end
+    end
+    return fallback
 end
 
 local function CreatureIcons(c, familyName)
@@ -197,7 +222,7 @@ ns.Pages.creaturedetail = function(ctx)
     -- Track button: a rare tracks like it does on Rare Pet Spawns; a
     -- teacher pet with known spawn areas tracks like it does from the
     -- Abilities Index.
-    local spawnInfo = (not rare) and teacher and Tame.GetSpawnInfo(c.name)
+    local spawnInfo = (not rare) and teacher and ns.SpawnInfoFor(c.name, c.zone)
     if rare then
         rareTrackBtn:SetState(IsTrackedRare(rare) or false, nil, function()
             SetTrackedRare(rare)
@@ -222,6 +247,10 @@ ns.Pages.creaturedetail = function(ctx)
     local level = L["Level: %s"]:format(tostring(c.level))
     if c.tag and c.tag:find("Elite") then level = level .. " " .. L["(Elite)"] end
     ctx.AddLine(level, 0.8, 0.8, 0.8)
+    if c.speed then
+        -- Only set for pets that don't attack at the normal 2.0.
+        ctx.AddLine(L["Attack Speed (seconds):"] .. " " .. c.speed, 0.8, 0.8, 0.8)
+    end
     ctx.AddLine(ns.FamilyDietText(familyId), 0.8, 0.8, 0.8)
     local zoneLine = L["Zone: %s"]:format(ns.LocZone(tostring(c.zone)))
     local points = (rare and rare.points) or (spawnInfo and spawnInfo.points)

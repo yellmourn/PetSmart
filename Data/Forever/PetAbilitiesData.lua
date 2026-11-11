@@ -143,7 +143,7 @@ ability("charge", { 5 }) -- Charge: Boar
 rank(7371, 1, 1, 5, "w", 0) -- Charge 1
 rank(26177, 2, 12, 9, "w", 0) -- Charge 2
 rank(26178, 3, 24, 13, "w", 0) -- Charge 3
-rank(26179, 4, 36, 17, "n", 0) -- Charge 4
+rank(26179, 4, 36, 17, "w", 0) -- Charge 4
 rank(26201, 5, 48, 25, "w", 0) -- Charge 5
 rank(27685, 6, 60, 29, "w", 0) -- Charge 6
 
