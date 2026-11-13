@@ -1,5 +1,21 @@
 # PetSmart Changelog
 
+## v1.60.1k
+
+### New: Eating timer
+- The feed icon now shows a countdown while your pet is eating (the Feed Pet Effect buff), and hides it when your pet is done.
+
+### New: Attack speed
+- Creature pages in the Pet Index now show the attack speed of pets that don't attack at the normal 2.0, such as the faster cats and wolves and the slower bears.
+
+### WoW: Forever pet updates
+- **New tameable creatures:** 31 new creatures from wowhead.com/forever, including those in Mount Hyjal, Riverglades, Moonglade and Shen'dralas, plus Scalebeard, Famished Blackworg, Snickerfang Matriarch and Gargantuan Plaguebat.
+- **Teacher pets:** new teachers from Wowhead, including the first known teachers for Pinch 3 and 4, Dismember 3, Savage Rend 3, Swipe 3, Charge 4, Dust Cloud 3 and Sonic Blast 4.
+- **Vulgara the Insatiable** is now a Fox, after the in-game hotfix.
+- **Savannah Patriarch** teaches Cower 4 (was Cower 2), and Shal'ma knows Cower 1.
+- **Corrected:** Shriekling Matriarch and Mystmane no longer teach Savage Rend 1, Child of Jai'vhanel no longer teaches Cower 1, and Prairie Wolf Alpha no longer shows Furious Howl 1.
+- **Levels:** Stonetusk Boar, Nightscreech, Highlands Ursera, Shadowgale Ursera, Ornery Galestrider, Windsong Crawler and Gray Fox.
+
 ## v1.60.1j
 
 ### New: Translations
