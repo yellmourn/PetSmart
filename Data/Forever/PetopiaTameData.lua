@@ -355,7 +355,6 @@ ns.PETOPIA_TAME_MOBS = {
             {"Old Cliff Jumper","Wolf","42","The Hinterlands"},
             {"Elder Shadowmaw Panther","Cat","42-43","Stranglethorn Vale"},
             {"Murderous Blisterpaw","Hyena","43","Tanaris"},
-            {"King Bangalash","Cat","43","Stranglethorn Vale"},
             {"Blisterpaw Hyena","Hyena","44-45","Tanaris"},
             {"Silvermane Stalker","Wolf","47-48","The Hinterlands"},
             {"Rabid Blisterpaw","Hyena","47-48","Tanaris"},
@@ -497,6 +496,7 @@ ns.PETOPIA_TAME_MOBS = {
         [2] = {
             {"Ridge Stalker Patriarch","Cat","40-41","Badlands"},
             {"Elder Shadowmaw Panther","Cat","42-43","Stranglethorn Vale"},
+            {"King Bangalash","Cat","43","Stranglethorn Vale"},
         },
         [3] = {
             {"Jaguero Stalker","Cat","50","Stranglethorn Vale"},
@@ -597,6 +597,7 @@ ns.PETOPIA_TAME_MOBS = {
         [2] = {
             {"Salt Flats Vulture","Carrion Bird","32-34","Thousand Needles"},
             {"Dread Ripper","Carrion Bird","39-40","Desolace"},
+            {"Gharrik","Carrion Bird","40","Badlands"},
         },
         [3] = {
             {"Carrion Vulture","Carrion Bird","50-52","Western Plaguelands"},

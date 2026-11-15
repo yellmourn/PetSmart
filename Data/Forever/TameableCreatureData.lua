@@ -161,7 +161,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Grunter", level = "50", zone = "Blasted Lands", npc = 8303, tag = "Rare", knows = "Charge 5, Dash 3" },
         { name = "Plagued Swine", level = "60", zone = "Eastern Plaguelands", npc = 16117, knows = "Charge 6" },
     },
-    ["Carrion Bird"] = { -- 33 creatures
+    ["Carrion Bird"] = { -- 34 creatures
         { name = "Wiry Swoop", level = "5-7", zone = "Mulgore", npc = 2969 },
         { name = "Swoop", level = "7-9", zone = "Mulgore", npc = 2970, knows = "Claw 1" },
         { name = "Taloned Swoop", level = "8-10", zone = "Mulgore", npc = 2971, knows = "Demoralizing Screech 1" },
@@ -187,6 +187,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "High Plains Buzzard", level = "38-39", zone = "Riverglades", npc = 259269 },
         { name = "Dread Ripper", level = "39-40", zone = "Desolace", npc = 4694, knows = "Screech 2" },
         { name = "Giant Buzzard", level = "39-41", zone = "Badlands", npc = 2831 },
+        { name = "Gharrik", level = "40", zone = "Badlands", npc = 213795, knows = "Screech 2" },
         { name = "Roc", level = "42-43", zone = "Tanaris", npc = 5428, knows = "Dive 2" },
         { name = "Fire Roc", level = "43-45", zone = "Tanaris", npc = 5429, knows = "Dive 2" },
         { name = "Black Slayer", level = "46-48", zone = "Blasted Lands", npc = 5982 },
@@ -259,7 +260,7 @@ ns.TAMEABLE_CREATURES = {
         { name = "Ridge Stalker Patriarch", level = "40-41", zone = "Badlands", npc = 2734, knows = "Dash 2, Prowl 2", speed = "1.3" },
         { name = "Ombassa", level = "41", zone = "Riverglades", npc = 263315, tag = "Elite", knows = "Dash 2", speed = "1.6" },
         { name = "Elder Shadowmaw Panther", level = "42-43", zone = "Stranglethorn Vale", npc = 1713, knows = "Dash 2, Prowl 2", speed = "1.5" },
-        { name = "King Bangalash", level = "43", zone = "Stranglethorn Vale", npc = 731, tag = "Elite", knows = "Claw 6, Dash 2", speed = "1.4" },
+        { name = "King Bangalash", level = "43", zone = "Stranglethorn Vale", npc = 731, tag = "Elite", knows = "Claw 6, Prowl 2", speed = "1.4" },
         { name = "Jaguero Stalker", level = "50", zone = "Stranglethorn Vale", npc = 2522, knows = "Cower 5, Prowl 3" },
         { name = "Frostsaber Cub", level = "55-56", zone = "Winterspring", npc = 7430, knows = "Cower 6", speed = "1.5" },
         { name = "Frostsaber", level = "56-57", zone = "Winterspring", npc = 7431, speed = "1.5" },
