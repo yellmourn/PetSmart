@@ -404,11 +404,15 @@ local function CreatePopup(i)
     else
         p.modelBg:SetPoint("LEFT", area, "LEFT", 12, 0)
     end
+    -- The game's own portrait of the rare (like the target frame's) when
+    -- PetSmart has a unit for it; otherwise a close-up of its model.
+    p.portrait = p:CreateTexture(nil, "ARTWORK")
+    p.portrait:SetAllPoints(p.modelBg)
     p.model = CreateFrame("PlayerModel", nil, p)
     p.model:SetAllPoints(p.modelBg)
 
     p.heading = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 12, 2)
+    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 22, 2)
     p.heading:SetText(L["Tameable rare nearby!"])
 
     p.name = p:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -425,7 +429,7 @@ local function CreatePopup(i)
     p.detail:SetWordWrap(false)
 
     p.note = p:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 12, -2)
+    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 22, -2)
     p.note:SetPoint("RIGHT", area, "RIGHT", -16, 0)
     p.note:SetJustifyH("LEFT")
 
@@ -517,6 +521,27 @@ local function FreePopup()
     end
 end
 
+-- Shows the rare's in-game portrait when there's a unit for it (seen on a
+-- nameplate, under the mouse or targeted). Found by the background scan
+-- there's no unit yet, so its model's head stands in until it's seen.
+local function SetPicture(p, npc, unit)
+    if unit and UnitExists(unit) and SetPortraitTexture then
+        local ok = pcall(SetPortraitTexture, p.portrait, unit)
+        if ok then
+            p.portrait:Show()
+            p.model:Hide()
+            p.hasPortrait = true
+            return
+        end
+    end
+    p.hasPortrait = false
+    p.portrait:Hide()
+    p.model:Show()
+    p.model:ClearModel()
+    if p.model.SetCreature then pcall(p.model.SetCreature, p.model, npc) end
+    pcall(p.model.SetPortraitZoom, p.model, 1)
+end
+
 local function FillPopup(p, npc, info, unit, unitName)
     p.npc, p.info = npc, info
     p.left = POPUP_SECONDS
@@ -533,13 +558,7 @@ local function FillPopup(p, npc, info, unit, unitName)
     p.detail:SetText(text)
     p.note:SetText("")
 
-    p.model:ClearModel()
-    if unit and UnitExists(unit) then
-        pcall(p.model.SetUnit, p.model, unit)
-    elseif p.model.SetCreature then
-        pcall(p.model.SetCreature, p.model, npc)
-    end
-    pcall(p.model.SetPortraitZoom, p.model, 0.7)
+    SetPicture(p, npc, unit)
 
     UpdateTrackButton(p)
     PlaceAnchor()
@@ -600,6 +619,7 @@ local function Notify(npc, info, unit, unitName)
     for _, p in ipairs(popups) do
         if p:IsShown() and p.npc == npc then
             p.left = POPUP_SECONDS -- still around: keep its popup up
+            if unit and not p.hasPortrait then SetPicture(p, npc, unit) end
             return
         end
     end
