@@ -541,6 +541,35 @@ end
 Alert.BuildZoneList = BuildZoneList
 
 local scanning, forbidden = false, false
+-- Error-catching addons (BugGrabber, shown by BugSack) also record the
+-- game's refusal, as "[ADDON_ACTION_FORBIDDEN] AddOn 'PetSmart' tried to
+-- call the protected function 'TargetUnit()'". That entry is just the scan
+-- working, not a fault, so it's taken back out of their list.
+local function RemoveBugGrabberEntry()
+    local grabber = _G.BugGrabber
+    if not (grabber and grabber.GetDB) then return end
+    local ok, db = pcall(grabber.GetDB, grabber)
+    if not ok or type(db) ~= "table" then return end
+    local removed = false
+    for i = #db, 1, -1 do
+        local e = db[i]
+        local msg = type(e) == "table" and e.message
+        if type(msg) == "string" and msg:find("ADDON_ACTION_FORBIDDEN", 1, true)
+            and msg:find("'" .. addonName .. "'", 1, true) and msg:find("TargetUnit()", 1, true) then
+            table.remove(db, i)
+            removed = true
+        end
+    end
+    -- Let BugSack redraw its count/list without the entry.
+    local sack = _G.BugSack
+    if removed and sack then
+        if sack.UpdateDisplay then pcall(sack.UpdateDisplay, sack) end
+        if _G.BugSackFrame and _G.BugSackFrame:IsShown() and sack.CloseSack then
+            pcall(sack.CloseSack, sack)
+        end
+    end
+end
+
 local function HideBlockedMessage()
     for i = 1, (STATICPOPUP_NUMDIALOGS or 4) do
         local dialog = _G["StaticPopup" .. i]
@@ -549,6 +578,7 @@ local function HideBlockedMessage()
             if not text or text:find(addonName, 1, true) then dialog:Hide() end
         end
     end
+    RemoveBugGrabberEntry()
 end
 
 local function ScanStep()
