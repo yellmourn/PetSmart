@@ -2,8 +2,8 @@
 -- PetSmart: Tracking/RareAlert.lua
 -- Tameable rare alerts: when one of the rare pets in this client's data
 -- turns up nearby, PetSmart plays a sound, flashes the edge of the screen
--- and shows a small popup with the rare's details, a Target button and a
--- Track button.
+-- and shows a popup for it (one per rare, stacked) with the rare's
+-- details, a Target button and a Track button.
 --
 -- How a rare is spotted: enemy nameplates as they appear, the unit under
 -- the mouse, your target, minimap vignettes on clients that have them,
@@ -272,147 +272,252 @@ end
 Alert.Flash = Flash
 
 ----------------------------------------------------------------------
--- Popup
+-- Popups: one per rare, stacked downward from where the first one sits,
+-- so two rares found together each get their own. Drawn on the game's
+-- legendary-toast art turned silver (the look SilverDragon uses by
+-- default); a client without that art gets a plain tooltip-style frame.
 ----------------------------------------------------------------------
-local popup = CreateFrame("Frame", "PetSmartRareAlert", UIParent, BackdropTemplateMixin and "BackdropTemplate" or nil)
-popup:SetSize(290, 112)
-popup:SetFrameStrata("DIALOG")
-popup:SetClampedToScreen(true)
-popup:SetMovable(true)
-popup:EnableMouse(true)
-popup:RegisterForDrag("LeftButton")
-popup:Hide()
-if popup.SetBackdrop then
-    popup:SetBackdrop({
-        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        tile = true, tileSize = 16, edgeSize = 16,
-        insets = { left = 4, right = 4, top = 4, bottom = 4 },
-    })
-    popup:SetBackdropColor(0.05, 0.05, 0.05, 0.92)
-    popup:SetBackdropBorderColor(0.34, 0.6, 0.4, 1)
-end
+local MAX_POPUPS = 4
+local TOAST_ATLAS = "LegendaryToast-background"
+local GLOW_ATLAS = "loottoast-glow"
 
-local function PlacePopup()
-    popup:ClearAllPoints()
+local function HasAtlas(name)
+    return C_Texture and C_Texture.GetAtlasInfo and C_Texture.GetAtlasInfo(name) ~= nil
+end
+local useToast = HasAtlas(TOAST_ATLAS)
+local POPUP_W, POPUP_H = useToast and 302 or 290, useToast and 119 or 96
+local GAP = useToast and -14 or 4 -- toast art has see-through edges, so they overlap a bit
+
+-- Invisible frame the stack hangs from; dragging any popup moves it.
+local stackAnchor = CreateFrame("Frame", "PetSmartRareAlertAnchor", UIParent)
+stackAnchor:SetSize(POPUP_W, POPUP_H)
+stackAnchor:SetMovable(true)
+stackAnchor:SetClampedToScreen(true)
+
+local function PlaceAnchor()
+    stackAnchor:ClearAllPoints()
     local pos = ns.profile and ns.profile.rareAlertPos
     if pos then
-        popup:SetPoint(pos[1], UIParent, pos[2], pos[3], pos[4])
+        stackAnchor:SetPoint(pos[1], UIParent, pos[2], pos[3], pos[4])
     else
-        popup:SetPoint("TOP", UIParent, "TOP", 0, -150)
+        stackAnchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
     end
 end
 
--- Dragging is out of combat only: the Target button below is a secure
--- frame anchored to the popup, and it can't be moved during combat.
-popup:SetScript("OnDragStart", function(self)
-    if not InCombatLockdown() then self:StartMoving() end
-end)
-popup:SetScript("OnDragStop", function(self)
-    self:StopMovingOrSizing()
-    local point, _, relPoint, x, y = self:GetPoint()
-    if ns.profile then ns.profile.rareAlertPos = { point, relPoint, x, y } end
-end)
-
-popup.model = CreateFrame("PlayerModel", nil, popup)
-popup.model:SetSize(76, 92)
-popup.model:SetPoint("LEFT", popup, "LEFT", 10, 0)
-
-popup.heading = popup:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-popup.heading:SetPoint("TOPLEFT", popup.model, "TOPRIGHT", 8, 2)
-popup.heading:SetText(L["Tameable rare nearby!"])
-
-popup.name = popup:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-popup.name:SetPoint("TOPLEFT", popup.heading, "BOTTOMLEFT", 0, -3)
-popup.name:SetPoint("RIGHT", popup, "RIGHT", -26, 0)
-popup.name:SetJustifyH("LEFT")
-popup.name:SetWordWrap(false)
-
-popup.info = popup:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-popup.info:SetPoint("TOPLEFT", popup.name, "BOTTOMLEFT", 0, -3)
-popup.info:SetPoint("RIGHT", popup, "RIGHT", -12, 0)
-popup.info:SetJustifyH("LEFT")
-
-popup.zone = popup:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-popup.zone:SetPoint("TOPLEFT", popup.info, "BOTTOMLEFT", 0, -2)
-popup.zone:SetPoint("RIGHT", popup, "RIGHT", -12, 0)
-popup.zone:SetJustifyH("LEFT")
-
-popup.note = popup:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-popup.note:SetPoint("BOTTOMLEFT", popup.model, "BOTTOMRIGHT", 8, 4)
-popup.note:SetPoint("RIGHT", popup, "RIGHT", -12, 0)
-popup.note:SetJustifyH("LEFT")
-
-popup.close = CreateFrame("Button", nil, popup, "UIPanelCloseButton")
-popup.close:SetPoint("TOPRIGHT", popup, "TOPRIGHT", 0, 0)
-
-popup.track = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
-popup.track:SetSize(80, 22)
-popup.track:SetPoint("BOTTOMRIGHT", popup, "BOTTOMRIGHT", -10, 10)
+local popups = {}
+local queue = {} -- rares waiting for a free popup: { npc, info, unitName }
 
 -- The Target button runs "/targetexact <name>", which only a secure button
--- may do. It's its own top-level frame laid over the popup rather than a
--- child of it, so the popup itself can still be shown and hidden in
--- combat; the button only appears, changes or hides out of combat.
-local target = CreateFrame("Button", "PetSmartRareAlertTarget", UIParent, "SecureActionButtonTemplate, UIPanelButtonTemplate")
-target:SetSize(80, 22)
-target:SetFrameStrata("DIALOG")
-target:SetFrameLevel(popup:GetFrameLevel() + 10)
-target:SetText(_G.TARGET or L["Target"])
-target:RegisterForClicks("AnyUp", "AnyDown")
-target:SetAttribute("type", "macro")
-target:Hide()
+-- may do. Each popup's button is its own top-level frame placed over the
+-- popup by screen position (not attached to it), so popups can still
+-- appear and close during combat; the buttons only appear, change or hide
+-- out of combat.
+local function PlaceTargetButton(p)
+    local left, bottom = p.track:GetLeft(), p.track:GetBottom()
+    if not (left and bottom) then return false end
+    local t = p.target
+    t:ClearAllPoints()
+    if p.track:IsShown() then
+        t:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMLEFT", left - 4, bottom)
+    else
+        t:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMLEFT", p.track:GetRight() or left, bottom)
+    end
+    return true
+end
 
-local pendingTarget -- name to set up on the Target button once combat ends
-local function ShowTargetButton(name)
+local function ShowTargetButton(p)
     if InCombatLockdown() then
-        pendingTarget = name
-        popup.note:SetText(L["Targeting is available after combat."])
+        p.pendingTarget = true
+        p.note:SetText(L["Targeting is available after combat."])
         return
     end
-    pendingTarget = nil
-    popup.note:SetText("")
-    target:SetAttribute("macrotext", "/cleartarget\n/targetexact " .. name)
-    target:ClearAllPoints()
-    target:SetPoint("RIGHT", popup.track, "LEFT", -6, 0)
-    target:Show()
-end
-
-local function HideTargetButton()
-    pendingTarget = nil
-    if not InCombatLockdown() then target:Hide() end
-end
-
-popup:SetScript("OnHide", function(self)
-    self.npc = nil
-    HideTargetButton()
-end)
-popup:SetScript("OnUpdate", function(self, dt)
-    self.left = (self.left or POPUP_SECONDS) - dt
-    if self.left <= 0 then self:Hide() end
-end)
-
-local function UpdateTrackButton(info)
-    local rare = info.rare
-    if rare and rare.mapID and not rare.isDungeon and ns.SetTrackedRare then
-        local tracked = ns.IsTrackedRare and ns.IsTrackedRare(rare)
-        popup.track:SetText(tracked and L["Untrack"] or L["Track"])
-        popup.track:SetScript("OnClick", function()
-            ns.SetTrackedRare(rare)
-            UpdateTrackButton(info)
-            if ns.RefreshAbilitiesPanel then ns.RefreshAbilitiesPanel() end
+    p.pendingTarget = nil
+    p.note:SetText("")
+    p.target:SetAttribute("macrotext", "/cleartarget\n/targetexact " .. p.unitName)
+    if PlaceTargetButton(p) then
+        p.target:Show()
+    elseif C_Timer and C_Timer.After then
+        C_Timer.After(0, function()
+            if p:IsShown() and not InCombatLockdown() and PlaceTargetButton(p) then p.target:Show() end
         end)
-        popup.track:Show()
-    else
-        popup.track:Hide()
     end
 end
 
-local function ShowPopup(npc, info, unit, unitName)
-    popup.npc = npc
-    popup.left = POPUP_SECONDS
-    local name = unitName or ns.LocCreature(info.name)
-    popup.name:SetText(name)
+local function UpdateTrackButton(p)
+    local rare = p.info and p.info.rare
+    if rare and rare.mapID and not rare.isDungeon and ns.SetTrackedRare then
+        local tracked = ns.IsTrackedRare and ns.IsTrackedRare(rare)
+        p.track:SetText(tracked and L["Untrack"] or L["Track"])
+        p.track:Show()
+    else
+        p.track:Hide()
+    end
+end
+
+local ShowNextQueued -- defined below
+
+local function CreatePopup(i)
+    local p = CreateFrame("Frame", "PetSmartRareAlert" .. i, UIParent, (not useToast and BackdropTemplateMixin) and "BackdropTemplate" or nil)
+    p:SetSize(POPUP_W, POPUP_H)
+    p:SetFrameStrata("DIALOG")
+    p:SetFrameLevel(10 + i * 10)
+    p:EnableMouse(true)
+    p:RegisterForDrag("LeftButton")
+    p:Hide()
+    p.slot = i
+
+    -- Background, and the area the contents sit in.
+    local area
+    if useToast then
+        p.bg = p:CreateTexture(nil, "BORDER")
+        p.bg:SetAtlas(TOAST_ATLAS, true)
+        p.bg:SetPoint("CENTER")
+        p.bg:SetDesaturated(true)
+        area = p.bg
+        if HasAtlas(GLOW_ATLAS) then
+            p.glow = p:CreateTexture(nil, "OVERLAY")
+            p.glow:SetAtlas(GLOW_ATLAS)
+            p.glow:SetDesaturated(true)
+            p.glow:SetPoint("TOPLEFT", p.bg, "TOPLEFT", -10, 8)
+            p.glow:SetPoint("BOTTOMRIGHT", p.bg, "BOTTOMRIGHT", 10, -8)
+            p.glow:SetBlendMode("ADD")
+            p.glow:SetAlpha(0)
+        end
+    else
+        p:SetBackdrop({
+            bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+            edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+            tile = true, tileSize = 16, edgeSize = 16,
+            insets = { left = 4, right = 4, top = 4, bottom = 4 },
+        })
+        p:SetBackdropColor(0.05, 0.05, 0.05, 0.92)
+        p:SetBackdropBorderColor(0.75, 0.75, 0.8, 1)
+        area = p
+    end
+
+    -- Creature portrait on the left, in the art's round frame.
+    p.modelBg = p:CreateTexture(nil, "BACKGROUND")
+    p.modelBg:SetColorTexture(0, 0, 0, 0.6)
+    p.modelBg:SetSize(54, 54)
+    if useToast then
+        p.modelBg:SetPoint("LEFT", area, "LEFT", 34, 0)
+    else
+        p.modelBg:SetPoint("LEFT", area, "LEFT", 12, 0)
+    end
+    p.model = CreateFrame("PlayerModel", nil, p)
+    p.model:SetAllPoints(p.modelBg)
+
+    p.heading = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 12, 2)
+    p.heading:SetText(L["Tameable rare nearby!"])
+
+    p.name = p:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    if _G.GameFontHighlightMedium then p.name:SetFontObject(_G.GameFontHighlightMedium) end
+    p.name:SetPoint("TOPLEFT", p.heading, "BOTTOMLEFT", 0, -2)
+    p.name:SetPoint("RIGHT", area, "RIGHT", -24, 0)
+    p.name:SetJustifyH("LEFT")
+    p.name:SetWordWrap(false)
+
+    p.detail = p:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    p.detail:SetPoint("TOPLEFT", p.name, "BOTTOMLEFT", 0, -2)
+    p.detail:SetPoint("RIGHT", area, "RIGHT", -16, 0)
+    p.detail:SetJustifyH("LEFT")
+    p.detail:SetWordWrap(false)
+
+    p.note = p:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 12, -2)
+    p.note:SetPoint("RIGHT", area, "RIGHT", -16, 0)
+    p.note:SetJustifyH("LEFT")
+
+    p.close = CreateFrame("Button", nil, p, "UIPanelCloseButton")
+    p.close:SetScale(0.75)
+    p.close:SetPoint("TOPRIGHT", area, "TOPRIGHT", useToast and -6 or 2, useToast and -6 or 2)
+    p.close:SetScript("OnClick", function() p:Hide() end)
+
+    p.track = CreateFrame("Button", nil, p, "UIPanelButtonTemplate")
+    p.track:SetSize(64, 20)
+    p.track:SetPoint("BOTTOMRIGHT", area, "BOTTOMRIGHT", useToast and -18 or -10, useToast and 12 or 8)
+    p.track:SetScript("OnClick", function()
+        local rare = p.info and p.info.rare
+        if not rare then return end
+        ns.SetTrackedRare(rare)
+        for _, other in ipairs(popups) do
+            if other:IsShown() then UpdateTrackButton(other) end
+        end
+        if ns.RefreshAbilitiesPanel then ns.RefreshAbilitiesPanel() end
+    end)
+
+    local t = CreateFrame("Button", "PetSmartRareAlertTarget" .. i, UIParent, "SecureActionButtonTemplate, UIPanelButtonTemplate")
+    t:SetSize(64, 20)
+    t:SetFrameStrata("DIALOG")
+    t:SetFrameLevel(p:GetFrameLevel() + 8)
+    t:SetText(_G.TARGET or L["Target"])
+    t:RegisterForClicks("AnyUp", "AnyDown")
+    t:SetAttribute("type", "macro")
+    t:Hide()
+    p.target = t
+
+    -- Dragging any popup moves the whole stack (out of combat only, since
+    -- the Target buttons have to move with it).
+    p:SetScript("OnDragStart", function()
+        if InCombatLockdown() then return end
+        for _, other in ipairs(popups) do other.target:Hide() end
+        p.dragging = true
+        stackAnchor:StartMoving()
+    end)
+    p:SetScript("OnDragStop", function()
+        if not p.dragging then return end
+        p.dragging = false
+        stackAnchor:StopMovingOrSizing()
+        local point, _, relPoint, x, y = stackAnchor:GetPoint()
+        if ns.profile then ns.profile.rareAlertPos = { point, relPoint, x, y } end
+        for _, other in ipairs(popups) do
+            if other:IsShown() and not other.pendingTarget then ShowTargetButton(other) end
+        end
+    end)
+
+    p:SetScript("OnUpdate", function(self, dt)
+        -- The fade-in glow when it appears.
+        if self.glow and self.glowT then
+            self.glowT = self.glowT + dt
+            local a = self.glowT < 0.3 and self.glowT / 0.3 or math.max(0, 1 - (self.glowT - 0.3) / 1.2)
+            self.glow:SetAlpha(a)
+            if self.glowT > 1.5 then self.glowT = nil end
+        end
+        -- Doesn't count down while the mouse is over it.
+        if not self:IsMouseOver() then
+            self.left = (self.left or POPUP_SECONDS) - dt
+            if self.left <= 0 then self:Hide() end
+        end
+    end)
+
+    p:SetScript("OnHide", function(self)
+        self.npc, self.info, self.pendingTarget = nil, nil, nil
+        if not InCombatLockdown() then self.target:Hide() end
+        if ShowNextQueued then ShowNextQueued() end
+    end)
+
+    -- Each popup sits below the one before it.
+    p:ClearAllPoints()
+    p:SetPoint("TOP", stackAnchor, "TOP", 0, -(i - 1) * (POPUP_H + GAP))
+    return p
+end
+
+for i = 1, MAX_POPUPS do popups[i] = CreatePopup(i) end
+
+-- A popup that can take a new rare: closed, and (in combat) without a
+-- Target button still showing for its last rare.
+local function FreePopup()
+    for _, p in ipairs(popups) do
+        if not p:IsShown() and not (InCombatLockdown() and p.target:IsShown()) then return p end
+    end
+end
+
+local function FillPopup(p, npc, info, unit, unitName)
+    p.npc, p.info = npc, info
+    p.left = POPUP_SECONDS
+    p.unitName = unitName or ns.LocCreature(info.name)
+    p.name:SetText(p.unitName)
     local level = info.level and ns.LocLevel(tostring(info.level)) or "?"
     local family = info.family and ns.LocFamily(info.family) or ""
     local text = L["Level %s %s"]:format(level, family)
@@ -421,22 +526,64 @@ local function ShowPopup(npc, info, unit, unitName)
     if low and low > UnitLevel("player") then
         text = text .. "  |cffff5050" .. L["Tameable at level %d"]:format(low) .. "|r"
     end
-    popup.info:SetText(text)
-    popup.zone:SetText(info.zone and L["Zone: %s"]:format(ns.LocZone(tostring(info.zone))) or "")
-    popup.note:SetText("")
+    p.detail:SetText(text)
+    p.note:SetText("")
 
-    popup.model:ClearModel()
+    p.model:ClearModel()
     if unit and UnitExists(unit) then
-        pcall(popup.model.SetUnit, popup.model, unit)
-    elseif popup.model.SetCreature then
-        pcall(popup.model.SetCreature, popup.model, npc)
+        pcall(p.model.SetUnit, p.model, unit)
+    elseif p.model.SetCreature then
+        pcall(p.model.SetCreature, p.model, npc)
     end
-    pcall(popup.model.SetPortraitZoom, popup.model, 0.6)
+    pcall(p.model.SetPortraitZoom, p.model, 0.7)
 
-    UpdateTrackButton(info)
-    PlacePopup()
-    popup:Show()
-    ShowTargetButton(name)
+    UpdateTrackButton(p)
+    PlaceAnchor()
+    p.glowT = 0
+    p:Show()
+    ShowTargetButton(p)
+end
+
+local function ShowPopup(npc, info, unit, unitName)
+    -- Already up for this rare: just keep it up longer.
+    for _, p in ipairs(popups) do
+        if p:IsShown() and p.npc == npc then
+            p.left = POPUP_SECONDS
+            return
+        end
+    end
+    local p = FreePopup()
+    if p then
+        FillPopup(p, npc, info, unit, unitName)
+        return
+    end
+    -- Every popup is in use: wait for one to close.
+    for _, q in ipairs(queue) do
+        if q.npc == npc then return end
+    end
+    queue[#queue + 1] = { npc = npc, info = info, unitName = unitName }
+end
+
+ShowNextQueued = function()
+    while #queue > 0 do
+        local p = FreePopup()
+        if not p then return end
+        local q = table.remove(queue, 1)
+        FillPopup(p, q.npc, q.info, nil, q.unitName)
+    end
+end
+
+-- After combat: finish the Target buttons combat held back, clear away
+-- ones whose popup closed, and show anything that was waiting.
+local function AfterCombat()
+    for _, p in ipairs(popups) do
+        if p:IsShown() then
+            if p.pendingTarget then ShowTargetButton(p) end
+        else
+            p.target:Hide()
+        end
+    end
+    ShowNextQueued()
 end
 
 ----------------------------------------------------------------------
@@ -446,17 +593,19 @@ local lastAlert = {}
 
 local function Notify(npc, info, unit, unitName)
     local now = GetTime()
-    if popup:IsShown() and popup.npc == npc then
-        popup.left = POPUP_SECONDS -- still around: keep the popup up
-        return
+    for _, p in ipairs(popups) do
+        if p:IsShown() and p.npc == npc then
+            p.left = POPUP_SECONDS -- still around: keep its popup up
+            return
+        end
     end
     if lastAlert[npc] and now - lastAlert[npc] < RE_ALERT_SECONDS then return end
     lastAlert[npc] = now
 
-    local p = ns.profile
-    if p.rareAlertSoundEnabled ~= false then Alert.PlaySound() end
-    if p.rareAlertFlash ~= false then Flash() end
-    if p.rareAlertPopup ~= false then ShowPopup(npc, info, unit, unitName) end
+    local prof = ns.profile
+    if prof.rareAlertSoundEnabled ~= false then Alert.PlaySound() end
+    if prof.rareAlertFlash ~= false then Flash() end
+    if prof.rareAlertPopup ~= false then ShowPopup(npc, info, unit, unitName) end
     print("|cff569965PetSmart:|r " .. L["Tameable rare nearby: %s"]:format(unitName or ns.LocCreature(info.name)))
 end
 
@@ -632,27 +781,32 @@ events:SetScript("OnEvent", function(_, event, arg1, arg2)
         BuildZoneList()
     elseif event == "PLAYER_REGEN_ENABLED" then
         -- Finish what combat held back on the Target button.
-        if popup:IsShown() and pendingTarget then
-            ShowTargetButton(pendingTarget)
-        elseif not popup:IsShown() then
-            target:Hide()
-        end
+        AfterCombat()
     end
 end)
 
 -- Options "Test" line: shows the alert for a rare from this client's list.
+-- Options "Test Alert": shows the alert for up to three rares from this
+-- client's list, so the stacked popups can be seen and placed.
 function Alert.Test()
     if not watch then BuildWatchList() end
-    -- Prefer a rare from the Rare Index (it has a map spot for Track).
-    local npc, info
+    -- Prefer rares from the Rare Index (they have a map spot for Track).
+    local picks = {}
     for id, i in pairs(watch) do
-        if not npc or (i.rare and not info.rare) then npc, info = id, i end
+        if i.rare then picks[#picks + 1] = id end
+        if #picks >= 3 then break end
     end
-    if not npc then return end
-    lastAlert[npc] = nil
-    if popup:IsShown() then popup:Hide() end
-    local p = ns.profile
-    if p.rareAlertSoundEnabled ~= false then Alert.PlaySound() end
-    if p.rareAlertFlash ~= false then Flash() end
-    if p.rareAlertPopup ~= false then ShowPopup(npc, info, nil, nil) end
+    if #picks == 0 then
+        local id = next(watch)
+        if id then picks[1] = id end
+    end
+    if #picks == 0 then return end
+    for _, p in ipairs(popups) do p:Hide() end
+    wipe(queue)
+    local prof = ns.profile
+    if prof.rareAlertSoundEnabled ~= false then Alert.PlaySound() end
+    if prof.rareAlertFlash ~= false then Flash() end
+    if prof.rareAlertPopup ~= false then
+        for _, id in ipairs(picks) do ShowPopup(id, watch[id], nil, nil) end
+    end
 end
