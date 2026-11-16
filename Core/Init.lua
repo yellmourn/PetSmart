@@ -66,11 +66,12 @@ local PROFILE_DEFAULTS = {
     -- any old save on load.)
     trackedRareNames = nil,
     -- Tameable rare alerts (Tracking\RareAlert.lua): the alert as a whole,
-    -- then each part of it. rareAlertSound is an index into
-    -- ns.RareAlert.SOUNDS; rareAlertPos is where the popup was dragged to.
+    -- then each part of it. rareAlertSound is the chosen sound's name
+    -- (another addon's sound as "lsm:<name>"); rareAlertPos is where the
+    -- popup was dragged to.
     rareAlertEnabled = true,
     rareAlertSoundEnabled = true,
-    rareAlertSound = 1,
+    rareAlertSound = "Raid Warning",
     rareAlertFlash = true,
     rareAlertPopup = true,
     rareAlertPos = nil,

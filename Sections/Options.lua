@@ -197,6 +197,9 @@ StaticPopupDialogs["PETSMART_RESET_PROFILE"] = {
     OnAccept = function(self, data) ResetProfile(data) end,
     timeout = 0, whileDead = true, hideOnEscape = true,
 }
+-- Whether the Rare Alerts sound list is open on the Options page.
+local soundListOpen = false
+
 ns.Pages.options = function(ctx)
     abilitiesPanel.title:SetText(L["Options"])
 
@@ -297,13 +300,31 @@ ns.Pages.options = function(ctx)
     if ns.profile.rareAlertEnabled ~= false then
         AddToggle("Play Sound", "rareAlertSoundEnabled")
         if ns.profile.rareAlertSoundEnabled ~= false then
-            local sounds = ns.RareAlert.SOUNDS
-            local index = sounds[ns.profile.rareAlertSound] and ns.profile.rareAlertSound or 1
-            ctx.AddLine("    " .. L["Sound: %s"]:format(L[sounds[index].name]) .. "  |cff999999(" .. L["click to change"] .. ")|r", 0.6, 0.8, 1, function()
-                ns.profile.rareAlertSound = index % #sounds + 1
-                ns.RareAlert.PlaySound(ns.profile.rareAlertSound)
+            local Alert = ns.RareAlert
+            local current = Alert.SoundKey()
+            ctx.AddLine("    " .. L["Sound: %s"]:format(Alert.SoundLabel(current)) .. "  |cff999999("
+                .. (soundListOpen and L["click to close"] or L["click to choose"]) .. ")|r", 0.6, 0.8, 1, function()
+                soundListOpen = not soundListOpen
                 ns.RefreshAbilitiesPanel()
             end)
+            if soundListOpen then
+                -- One row per sound; clicking a row picks it and plays it.
+                local function SoundRow(key)
+                    local chosen = key == current
+                    ctx.AddLine((chosen and "      > " or "        ") .. Alert.SoundLabel(key),
+                        chosen and 0.2 or 0.85, chosen and 1 or 0.85, chosen and 0.2 or 0.85, function()
+                        ns.profile.rareAlertSound = key
+                        Alert.PlaySound(key)
+                        ns.RefreshAbilitiesPanel()
+                    end)
+                end
+                for _, s in ipairs(Alert.SOUNDS) do SoundRow(s.name) end
+                local shared = Alert.SharedSounds()
+                if #shared > 0 then
+                    ctx.AddLine("      " .. L["From other addons:"], 1, 0.82, 0)
+                    for _, name in ipairs(shared) do SoundRow(Alert.LSM_PREFIX .. name) end
+                end
+            end
         end
         AddToggle("Flash Screen Edges", "rareAlertFlash")
         AddToggle("Show Popup", "rareAlertPopup")

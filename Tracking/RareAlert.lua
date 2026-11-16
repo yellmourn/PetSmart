@@ -23,14 +23,29 @@ local RE_ALERT_SECONDS = 300 -- same rare again: wait this long before another a
 local POPUP_SECONDS = 60     -- the popup closes itself after this long
 local FLASH_SECONDS = 3
 
--- Built-in sounds the player can pick from (Options). Sound kits and file
--- IDs that exist on every client PetSmart runs on.
+-- Built-in sounds the player can pick from (Options): game sounds from the
+-- original game, so they're on every client PetSmart runs on. The first
+-- four keep their places so older saved choices (stored as a list number)
+-- still point at the same sound.
 local SOUNDS = {
     { name = "Raid Warning", kit = 8959 },
     { name = "Ready Check", kit = 8960 },
     { name = "War Drums", file = 567275 },
     { name = "Scourge Horn", file = 567386 },
+    { name = "Level Up", file = 567431 },
+    { name = "Flag Taken", file = 569200 },
+    { name = "Flag Captured", file = 567434 },
+    { name = "PvP Warning (Alliance)", file = 568320 },
+    { name = "PvP Warning (Horde)", file = 569112 },
+    { name = "Alliance Bell", file = 566564 },
+    { name = "Horde Bell", file = 565853 },
+    { name = "Night Elf Bell", file = 566558 },
+    { name = "Tribal Bell", file = 566027 },
+    { name = "Dwarf Horn", file = 566064 },
+    { name = "Thunder Crack", file = 566202 },
 }
+local DEFAULT_SOUND = "Raid Warning"
+local LSM_PREFIX = "lsm:" -- saved choices from other addons' sounds start with this
 
 local Alert = {}
 ns.RareAlert = Alert
@@ -85,13 +100,82 @@ end
 ----------------------------------------------------------------------
 -- Sound and screen flash
 ----------------------------------------------------------------------
-function Alert.PlaySound(index)
-    local s = SOUNDS[index or (ns.profile and ns.profile.rareAlertSound) or 1] or SOUNDS[1]
-    if s.kit then
-        pcall(PlaySound, s.kit, "Master")
-    elseif s.file then
-        pcall(PlaySoundFile, s.file, "Master")
+-- Sounds other addons share through LibSharedMedia (SilverDragon, DBM,
+-- WeakAuras, SharedMedia packs...). PetSmart doesn't ship the library; it
+-- uses it only when another addon has loaded it.
+local function SharedMedia()
+    return LibStub and LibStub("LibSharedMedia-3.0", true)
+end
+
+local builtinByName, builtinFiles = {}, {}
+for _, s in ipairs(SOUNDS) do
+    builtinByName[s.name] = s
+    if s.file then builtinFiles[s.file] = true end
+end
+
+-- Other addons' sounds, sorted by name, leaving out "None" and any that
+-- are just one of PetSmart's own built-in sounds again.
+function Alert.SharedSounds()
+    local lsm = SharedMedia()
+    local out = {}
+    if not lsm then return out end
+    local ok, list = pcall(lsm.List, lsm, "sound")
+    if not ok or type(list) ~= "table" then return out end
+    for _, name in ipairs(list) do
+        local path = lsm:Fetch("sound", name, true)
+        if path and name ~= "None" and not builtinByName[name] and not builtinFiles[path]
+            and not (type(path) == "string" and path:lower():find("quiet%.ogg$")) then
+            out[#out + 1] = name
+        end
     end
+    table.sort(out, function(a, b) return a:lower() < b:lower() end)
+    return out
+end
+
+-- The saved choice as a key: a built-in sound's name, or "lsm:<name>" for
+-- another addon's sound. Older saves hold a list number instead.
+function Alert.SoundKey()
+    local v = ns.profile and ns.profile.rareAlertSound
+    if type(v) == "number" then v = SOUNDS[v] and SOUNDS[v].name end
+    if type(v) ~= "string" then v = DEFAULT_SOUND end
+    return v
+end
+
+-- What to show for a key: the built-in name (translated) or the other
+-- addon's own name for its sound.
+function Alert.SoundLabel(key)
+    key = key or Alert.SoundKey()
+    if key:sub(1, #LSM_PREFIX) == LSM_PREFIX then return key:sub(#LSM_PREFIX + 1) end
+    return L[key]
+end
+Alert.LSM_PREFIX = LSM_PREFIX
+
+local function PlayBuiltin(s)
+    if s.kit then
+        local ok, willPlay = pcall(PlaySound, s.kit, "Master")
+        return ok and willPlay ~= false
+    end
+    local ok, willPlay = pcall(PlaySoundFile, s.file, "Master")
+    return ok and willPlay ~= false
+end
+
+-- Plays the chosen sound (or `key`). If it can't be played - another
+-- addon's sound whose addon is gone, or a sound missing from this
+-- client - Raid Warning plays instead, so an alert is never silent.
+function Alert.PlaySound(key)
+    key = key or Alert.SoundKey()
+    local played
+    if key:sub(1, #LSM_PREFIX) == LSM_PREFIX then
+        local lsm = SharedMedia()
+        local path = lsm and lsm:Fetch("sound", key:sub(#LSM_PREFIX + 1), true)
+        if path then
+            local ok, willPlay = pcall(PlaySoundFile, path, "Master")
+            played = ok and willPlay ~= false
+        end
+    elseif builtinByName[key] then
+        played = PlayBuiltin(builtinByName[key])
+    end
+    if not played then PlayBuiltin(builtinByName[DEFAULT_SOUND]) end
 end
 
 local flash = CreateFrame("Frame", nil, UIParent)
