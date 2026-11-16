@@ -74,6 +74,8 @@ local PROFILE_DEFAULTS = {
     rareAlertSound = "Raid Warning",
     rareAlertFlash = true,
     rareAlertPopup = true,
+    rareAlertBackgroundScan = true, -- try-to-target scan for rares not yet on screen
+    rareAlertHideBlocked = true,    -- hide the game's "blocked from an action" message it causes
     rareAlertPos = nil,
 }
 local DEFAULT_PROFILE_NAME = "Default"

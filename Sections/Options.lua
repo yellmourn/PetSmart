@@ -326,10 +326,17 @@ ns.Pages.options = function(ctx)
                 end
             end
         end
+        AddToggle("Background Scan", "rareAlertBackgroundScan", function() ns.RareAlert.BuildZoneList() end, "finds rares before they're on screen")
+        if ns.profile.rareAlertBackgroundScan ~= false then
+            AddToggle("Hide \"Blocked From an Action\" Message", "rareAlertHideBlocked")
+        end
         AddToggle("Flash Screen Edges", "rareAlertFlash")
         AddToggle("Show Popup", "rareAlertPopup")
         ctx.AddLine("    " .. L["Test Alert"], 0.6, 0.8, 1, function() ns.RareAlert.Test() end)
         ctx.AddLine(L["Enemy nameplates (V) let rares be spotted from further away."], 0.6, 0.6, 0.6)
+        if ns.profile.rareAlertBackgroundScan ~= false then
+            ctx.AddLine(L["Background Scan tries to target each rare in your zone; the game blocks it, but only when that rare is close by, which is how it's found. Your target never changes."], 0.6, 0.6, 0.6)
+        end
     end
 
     ctx.AddLine(" ", 1, 1, 1)

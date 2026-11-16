@@ -5,11 +5,10 @@
 -- and shows a small popup with the rare's details, a Target button and a
 -- Track button.
 --
--- How a rare is spotted: only from units the game itself hands to addons -
--- enemy nameplates as they appear, the unit under the mouse, your target
--- and, on clients that have them, minimap vignettes. Nothing scans for
--- units that aren't already in view, so turning on enemy nameplates
--- (default key V) lets rares be spotted from further away.
+-- How a rare is spotted: enemy nameplates as they appear, the unit under
+-- the mouse, your target, minimap vignettes on clients that have them,
+-- and a background scan (see "Background scan" below) that finds rares
+-- in the current zone before they're on screen.
 --
 -- Only hunters get alerts, only for rares in the addon's own lists (so
 -- only tameable ones), never for another player's pet, a dead rare, or a
@@ -421,11 +420,103 @@ local function CheckVignette(id)
     Notify(npc, info, nil, (v.name and not ns.AnySecret(v.name)) and v.name or nil)
 end
 
+----------------------------------------------------------------------
+-- Background scan: finding rares before they're on screen.
+-- Every half second PetSmart asks the game to target one rare from the
+-- current zone by name. Addons aren't allowed to change your target, so
+-- the game always refuses - but it only bothers to refuse (with an
+-- ADDON_ACTION_FORBIDDEN event) when a creature with that name is
+-- actually close enough to target. That refusal is the "found it".
+-- Your target never changes. The game's "PetSmart has been blocked from
+-- an action" message is hidden straight away unless that's turned off in
+-- Options. Skipped in combat, inside dungeons, and for rares that
+-- alerted in the last few minutes (so a rare standing nearby doesn't
+-- keep getting tried).
+----------------------------------------------------------------------
+local SCAN_INTERVAL = 0.5
+
+-- English zone name for the zone the player is in (the data is in
+-- English), from its map ID.
+local zoneByMap
+local function CurrentZone()
+    if not zoneByMap then
+        zoneByMap = {}
+        for name, id in pairs(ns.ZONE_UIMAP or {}) do zoneByMap[id] = name end
+    end
+    local mapID = C_Map and C_Map.GetBestMapForUnit and C_Map.GetBestMapForUnit("player")
+    local zoneType = Enum and Enum.UIMapType and Enum.UIMapType.Zone or 3
+    while mapID do
+        if zoneByMap[mapID] then return zoneByMap[mapID], mapID end
+        local info = C_Map.GetMapInfo(mapID)
+        if not info or info.mapType == zoneType or not info.parentMapID or info.parentMapID == 0 then
+            return nil, mapID
+        end
+        mapID = info.parentMapID
+    end
+    if ns.LOCALE == "enUS" and GetRealZoneText then return GetRealZoneText(), nil end
+end
+
+local zoneList, zoneIndex = {}, 0
+local function BuildZoneList()
+    wipe(zoneList)
+    zoneIndex = 0
+    if not watch then BuildWatchList() end
+    local zone, mapID = CurrentZone()
+    for npc, info in pairs(watch) do
+        local here = (info.rare and mapID and info.rare.mapID == mapID)
+            or (zone and info.zone and ns.SameZone(info.zone, zone) and info.zone ~= "")
+        if here and not (info.horde and UnitFactionGroup("player") ~= "Horde") then
+            zoneList[#zoneList + 1] = npc
+        end
+    end
+end
+Alert.BuildZoneList = BuildZoneList
+
+local scanning, forbidden = false, false
+local function HideBlockedMessage()
+    for i = 1, (STATICPOPUP_NUMDIALOGS or 4) do
+        local dialog = _G["StaticPopup" .. i]
+        if dialog and dialog:IsShown() and dialog.which == "ADDON_ACTION_FORBIDDEN" then
+            local text = dialog.text and dialog.text.GetText and dialog.text:GetText()
+            if not text or text:find(addonName, 1, true) then dialog:Hide() end
+        end
+    end
+end
+
+local function ScanStep()
+    local p = ns.profile
+    if not Enabled() or not p or p.rareAlertBackgroundScan == false then return end
+    if InCombatLockdown() or (IsInInstance and IsInInstance()) then return end
+    if #zoneList == 0 then return end
+    zoneIndex = zoneIndex % #zoneList + 1
+    local npc = zoneList[zoneIndex]
+    local info = watch[npc]
+    if lastAlert[npc] and GetTime() - lastAlert[npc] < RE_ALERT_SECONDS then return end
+    local name = ns.LocCreature(info.name)
+    if not name or name == "" then return end
+    forbidden = false
+    scanning = true
+    TargetUnit(name)
+    scanning = false
+    if forbidden then
+        forbidden = false
+        if p.rareAlertHideBlocked ~= false then HideBlockedMessage() end
+        Notify(npc, info, nil, name)
+    end
+end
+
+if C_Timer and C_Timer.NewTicker then
+    C_Timer.NewTicker(SCAN_INTERVAL, ScanStep)
+end
+
 local events = CreateFrame("Frame")
 events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 events:RegisterEvent("PLAYER_TARGET_CHANGED")
 events:RegisterEvent("PLAYER_REGEN_ENABLED")
+events:RegisterEvent("ADDON_ACTION_FORBIDDEN")
+events:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+events:RegisterEvent("PLAYER_ENTERING_WORLD")
 local hasVignettes = C_EventUtils and C_EventUtils.IsEventValid and C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED")
 if hasVignettes then events:RegisterEvent("VIGNETTE_MINIMAP_UPDATED") end
 events:SetScript("OnEvent", function(_, event, arg1, arg2)
@@ -437,6 +528,10 @@ events:SetScript("OnEvent", function(_, event, arg1, arg2)
         CheckUnit("target")
     elseif event == "VIGNETTE_MINIMAP_UPDATED" then
         if arg2 then CheckVignette(arg1) end
+    elseif event == "ADDON_ACTION_FORBIDDEN" then
+        if scanning and arg1 == addonName then forbidden = true end
+    elseif event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_ENTERING_WORLD" then
+        BuildZoneList()
     elseif event == "PLAYER_REGEN_ENABLED" then
         -- Finish what combat held back on the Target button.
         if popup:IsShown() and pendingTarget then
