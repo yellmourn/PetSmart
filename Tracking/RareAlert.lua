@@ -398,9 +398,9 @@ local function CreatePopup(i)
     -- Creature portrait on the left, in the art's round frame.
     p.modelBg = p:CreateTexture(nil, "BACKGROUND")
     p.modelBg:SetColorTexture(0, 0, 0, 0.6)
-    p.modelBg:SetSize(48, 48) -- fits inside the art's square frame
+    p.modelBg:SetSize(50, 50) -- fits inside the art's square frame
     if useToast then
-        p.modelBg:SetPoint("LEFT", area, "LEFT", 34, 0)
+        p.modelBg:SetPoint("LEFT", area, "LEFT", 37, 0)
     else
         p.modelBg:SetPoint("LEFT", area, "LEFT", 12, 0)
     end
@@ -413,7 +413,7 @@ local function CreatePopup(i)
     p.model:SetAllPoints(p.modelBg)
 
     p.heading = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 30, 2)
+    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 25, 2)
     p.heading:SetText(L["Tameable rare nearby!"])
 
     p.name = p:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -430,7 +430,7 @@ local function CreatePopup(i)
     p.detail:SetWordWrap(false)
 
     p.note = p:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 30, -2)
+    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 25, -2)
     p.note:SetPoint("RIGHT", area, "RIGHT", -16, 0)
     p.note:SetJustifyH("LEFT")
 
