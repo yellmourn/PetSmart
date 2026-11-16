@@ -398,7 +398,7 @@ local function CreatePopup(i)
     -- Creature portrait on the left, in the art's round frame.
     p.modelBg = p:CreateTexture(nil, "BACKGROUND")
     p.modelBg:SetColorTexture(0, 0, 0, 0.6)
-    p.modelBg:SetSize(54, 54)
+    p.modelBg:SetSize(48, 48) -- fits inside the art's square frame
     if useToast then
         p.modelBg:SetPoint("LEFT", area, "LEFT", 34, 0)
     else
@@ -408,11 +408,12 @@ local function CreatePopup(i)
     -- PetSmart has a unit for it; otherwise a close-up of its model.
     p.portrait = p:CreateTexture(nil, "ARTWORK")
     p.portrait:SetAllPoints(p.modelBg)
+    p.portrait:SetTexCoord(1, 0, 0, 1) -- mirrored, so it faces right like the models
     p.model = CreateFrame("PlayerModel", nil, p)
     p.model:SetAllPoints(p.modelBg)
 
     p.heading = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 22, 2)
+    p.heading:SetPoint("TOPLEFT", p.modelBg, "TOPRIGHT", 30, 2)
     p.heading:SetText(L["Tameable rare nearby!"])
 
     p.name = p:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -429,7 +430,7 @@ local function CreatePopup(i)
     p.detail:SetWordWrap(false)
 
     p.note = p:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 22, -2)
+    p.note:SetPoint("BOTTOMLEFT", p.modelBg, "BOTTOMRIGHT", 30, -2)
     p.note:SetPoint("RIGHT", area, "RIGHT", -16, 0)
     p.note:SetJustifyH("LEFT")
 
@@ -540,6 +541,7 @@ local function SetPicture(p, npc, unit)
     p.model:ClearModel()
     if p.model.SetCreature then pcall(p.model.SetCreature, p.model, npc) end
     pcall(p.model.SetPortraitZoom, p.model, 1)
+    pcall(p.model.SetFacing, p.model, -math.pi / 4) -- turned to face right, into the popup
 end
 
 local function FillPopup(p, npc, info, unit, unitName)
