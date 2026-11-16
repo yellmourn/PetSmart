@@ -12,13 +12,12 @@
 --
 -- Only hunters get alerts, only for rares in the addon's own lists (so
 -- only tameable ones), never for another player's pet, a dead rare, or a
--- Horde-only tame on an Alliance character, and at most once every few
--- minutes per rare.
+-- Horde-only tame on an Alliance character, and only once per rare until
+-- the UI is reloaded or you log back in.
 --------------------------------------------------------------------------
 local addonName, ns = ...
 local L = ns.L
 
-local RE_ALERT_SECONDS = 300 -- same rare again: wait this long before another alert
 local POPUP_SECONDS = 60     -- the popup closes itself after this long
 local FLASH_SECONDS = 3
 
@@ -616,10 +615,11 @@ end
 ----------------------------------------------------------------------
 -- Spotting
 ----------------------------------------------------------------------
-local lastAlert = {}
+-- Rares already alerted this session. Not saved, so it starts empty again
+-- after a /reload or logging back in.
+local alerted = {}
 
 local function Notify(npc, info, unit, unitName)
-    local now = GetTime()
     for _, p in ipairs(popups) do
         if p:IsShown() and p.npc == npc then
             p.left = POPUP_SECONDS -- still around: keep its popup up
@@ -627,8 +627,8 @@ local function Notify(npc, info, unit, unitName)
             return
         end
     end
-    if lastAlert[npc] and now - lastAlert[npc] < RE_ALERT_SECONDS then return end
-    lastAlert[npc] = now
+    if alerted[npc] then return end
+    alerted[npc] = true
 
     local prof = ns.profile
     if prof.rareAlertSoundEnabled ~= false then Alert.PlaySound() end
@@ -674,9 +674,8 @@ end
 -- actually close enough to target. That refusal is the "found it".
 -- Your target never changes. The game's "PetSmart has been blocked from
 -- an action" message is hidden straight away unless that's turned off in
--- Options. Skipped in combat, inside dungeons, and for rares that
--- alerted in the last few minutes (so a rare standing nearby doesn't
--- keep getting tried).
+-- Options. Skipped in combat, inside dungeons, and for rares that have
+-- already alerted this session.
 ----------------------------------------------------------------------
 local SCAN_INTERVAL = 0.5
 
@@ -766,7 +765,7 @@ local function ScanStep()
     zoneIndex = zoneIndex % #zoneList + 1
     local npc = zoneList[zoneIndex]
     local info = watch[npc]
-    if lastAlert[npc] and GetTime() - lastAlert[npc] < RE_ALERT_SECONDS then return end
+    if alerted[npc] then return end
     local name = ns.LocCreature(info.name)
     if not name or name == "" then return end
     forbidden = false
