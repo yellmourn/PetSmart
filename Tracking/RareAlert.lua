@@ -465,17 +465,10 @@ local function CreatePopup(i)
         p.dragging = true
         stackAnchor:StartMoving()
     end)
-    -- Right-click dismisses it; hovering says so.
+    -- Right-click dismisses it.
     p:SetScript("OnMouseUp", function(self, button)
         if button == "RightButton" then self:Hide() end
     end)
-    p:SetScript("OnEnter", function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_TOP")
-        GameTooltip:AddLine(L["Right-click to dismiss"], 1, 1, 1)
-        if not InCombatLockdown() then GameTooltip:AddLine(L["Drag to move"], 0.7, 0.7, 0.7) end
-        GameTooltip:Show()
-    end)
-    p:SetScript("OnLeave", function() GameTooltip:Hide() end)
     p:SetScript("OnDragStop", function()
         if not p.dragging then return end
         p.dragging = false
@@ -503,7 +496,6 @@ local function CreatePopup(i)
     end)
 
     p:SetScript("OnHide", function(self)
-        if GameTooltip:IsOwned(self) then GameTooltip:Hide() end
         self.npc, self.info, self.pendingTarget = nil, nil, nil
         if not InCombatLockdown() then self.target:Hide() end
         if ShowNextQueued then ShowNextQueued() end
