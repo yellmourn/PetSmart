@@ -3,6 +3,30 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("koKR")
 if not L then return end
+-- Tameable rare alerts
+L["Tameable rare nearby!"] = "길들일 수 있는 희귀 몬스터 근처!"
+L["Tameable rare nearby: %s"] = "길들일 수 있는 희귀 몬스터 근처: %s"
+L["Target"] = "대상"
+L["Targeting is available after combat."] = "전투가 끝나면 대상 지정이 가능합니다."
+L["Track"] = "추적"
+L["Untrack"] = "추적 해제"
+L["Level %s %s"] = "레벨 %s %s"
+L["Tameable at level %d"] = "%d레벨부터 길들이기 가능"
+L["Zone: %s"] = "지역: %s"
+L["Rare Alerts"] = "희귀 몬스터 알림"
+L["Alert When a Tameable Rare Is Nearby"] = "길들일 수 있는 희귀 몬스터가 근처에 있으면 알림"
+L["Play Sound"] = "소리 재생"
+L["Sound: %s"] = "소리: %s"
+L["click to change"] = "클릭하여 변경"
+L["Raid Warning"] = "공격대 경보"
+L["Ready Check"] = "전투 준비 확인"
+L["War Drums"] = "전쟁의 북"
+L["Scourge Horn"] = "스컬지 뿔피리"
+L["Flash Screen Edges"] = "화면 가장자리 깜빡임"
+L["Show Popup"] = "팝업 표시"
+L["Test Alert"] = "알림 테스트"
+L["Enemy nameplates (V) let rares be spotted from further away."] = "적 이름표(V)를 켜면 더 멀리서 희귀 몬스터를 발견합니다."
+
 L["Can't feed your pet while in combat."] = "전투 중에는 소환수에게 먹이를 줄 수 없습니다."
 L["You have no active pet out."] = "활성화된 소환수가 없습니다."
 L["your pet"] = "소환수"

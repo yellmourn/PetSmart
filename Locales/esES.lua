@@ -3,6 +3,30 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("esES")
 if not L then return end
+-- Tameable rare alerts
+L["Tameable rare nearby!"] = "¡Raro domesticable cerca!"
+L["Tameable rare nearby: %s"] = "Raro domesticable cerca: %s"
+L["Target"] = "Seleccionar"
+L["Targeting is available after combat."] = "Podrás seleccionarlo después del combate."
+L["Track"] = "Rastrear"
+L["Untrack"] = "Dejar de rastrear"
+L["Level %s %s"] = "Nivel %s %s"
+L["Tameable at level %d"] = "Domesticable a nivel %d"
+L["Zone: %s"] = "Zona: %s"
+L["Rare Alerts"] = "Alertas de raros"
+L["Alert When a Tameable Rare Is Nearby"] = "Avisar si hay un raro domesticable cerca"
+L["Play Sound"] = "Reproducir sonido"
+L["Sound: %s"] = "Sonido: %s"
+L["click to change"] = "clic para cambiar"
+L["Raid Warning"] = "Aviso de banda"
+L["Ready Check"] = "Comprobación de listos"
+L["War Drums"] = "Tambores de guerra"
+L["Scourge Horn"] = "Cuerno de la Plaga"
+L["Flash Screen Edges"] = "Destellar bordes de la pantalla"
+L["Show Popup"] = "Mostrar ventana"
+L["Test Alert"] = "Probar alerta"
+L["Enemy nameplates (V) let rares be spotted from further away."] = "Las placas de nombre enemigas (V) detectan raros desde más lejos."
+
 L["Can't feed your pet while in combat."] = "No puedes alimentar a tu mascota en combate."
 L["You have no active pet out."] = "No tienes ninguna mascota activa."
 L["your pet"] = "tu mascota"

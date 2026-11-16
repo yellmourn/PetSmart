@@ -92,6 +92,9 @@
 <Script file="Tracking\MapPins.lua"/>
 <Script file="Tracking\Tracking.lua"/>
 
+<!-- Tameable rare alerts (sound, screen flash, popup) -->
+<Script file="Tracking\RareAlert.lua"/>
+
 <!-- Compendium navigation and page drawing -->
 <Script file="Compendium\Navigation.lua"/>
 <Script file="Compendium\Refresh.lua"/>

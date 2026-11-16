@@ -3,6 +3,30 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("itIT")
 if not L then return end
+-- Tameable rare alerts
+L["Tameable rare nearby!"] = "Raro addomesticabile nelle vicinanze!"
+L["Tameable rare nearby: %s"] = "Raro addomesticabile nelle vicinanze: %s"
+L["Target"] = "Bersaglio"
+L["Targeting is available after combat."] = "Il bersaglio sarà disponibile dopo il combattimento."
+L["Track"] = "Traccia"
+L["Untrack"] = "Non tracciare"
+L["Level %s %s"] = "Livello %s %s"
+L["Tameable at level %d"] = "Addomesticabile al livello %d"
+L["Zone: %s"] = "Zona: %s"
+L["Rare Alerts"] = "Avvisi rari"
+L["Alert When a Tameable Rare Is Nearby"] = "Avvisa quando un raro addomesticabile è vicino"
+L["Play Sound"] = "Riproduci suono"
+L["Sound: %s"] = "Suono: %s"
+L["click to change"] = "clic per cambiare"
+L["Raid Warning"] = "Avviso incursione"
+L["Ready Check"] = "Appello"
+L["War Drums"] = "Tamburi di guerra"
+L["Scourge Horn"] = "Corno del Flagello"
+L["Flash Screen Edges"] = "Lampeggia i bordi dello schermo"
+L["Show Popup"] = "Mostra finestra"
+L["Test Alert"] = "Prova avviso"
+L["Enemy nameplates (V) let rares be spotted from further away."] = "Le targhette nemiche (V) rilevano i rari da più lontano."
+
 L["Can't feed your pet while in combat."] = "Non puoi nutrire il tuo famiglio in combattimento."
 L["You have no active pet out."] = "Non hai un famiglio attivo."
 L["your pet"] = "il tuo famiglio"

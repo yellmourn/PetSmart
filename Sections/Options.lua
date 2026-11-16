@@ -292,6 +292,26 @@ ns.Pages.options = function(ctx)
     end, "can break immersion")
 
     ctx.AddLine(" ", 1, 1, 1)
+    ctx.AddLine(L["Rare Alerts"], 1, 0.82, 0)
+    AddToggle("Alert When a Tameable Rare Is Nearby", "rareAlertEnabled")
+    if ns.profile.rareAlertEnabled ~= false then
+        AddToggle("Play Sound", "rareAlertSoundEnabled")
+        if ns.profile.rareAlertSoundEnabled ~= false then
+            local sounds = ns.RareAlert.SOUNDS
+            local index = sounds[ns.profile.rareAlertSound] and ns.profile.rareAlertSound or 1
+            ctx.AddLine("    " .. L["Sound: %s"]:format(L[sounds[index].name]) .. "  |cff999999(" .. L["click to change"] .. ")|r", 0.6, 0.8, 1, function()
+                ns.profile.rareAlertSound = index % #sounds + 1
+                ns.RareAlert.PlaySound(ns.profile.rareAlertSound)
+                ns.RefreshAbilitiesPanel()
+            end)
+        end
+        AddToggle("Flash Screen Edges", "rareAlertFlash")
+        AddToggle("Show Popup", "rareAlertPopup")
+        ctx.AddLine("    " .. L["Test Alert"], 0.6, 0.8, 1, function() ns.RareAlert.Test() end)
+        ctx.AddLine(L["Enemy nameplates (V) let rares be spotted from further away."], 0.6, 0.6, 0.6)
+    end
+
+    ctx.AddLine(" ", 1, 1, 1)
     ctx.AddLine(L["Compendium Panel"], 1, 0.82, 0)
     AddToggle("Lock Panel (Move/Resize)", "abilitiesPanelLocked", function() UpdateAbilitiesPanelLockState() end)
 

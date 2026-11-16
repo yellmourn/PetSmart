@@ -3,6 +3,30 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("zhCN")
 if not L then return end
+-- Tameable rare alerts
+L["Tameable rare nearby!"] = "附近有可驯服的稀有怪！"
+L["Tameable rare nearby: %s"] = "附近有可驯服的稀有怪：%s"
+L["Target"] = "目标"
+L["Targeting is available after combat."] = "战斗结束后才能选为目标。"
+L["Track"] = "追踪"
+L["Untrack"] = "取消追踪"
+L["Level %s %s"] = "等级 %s %s"
+L["Tameable at level %d"] = "%d级可驯服"
+L["Zone: %s"] = "区域：%s"
+L["Rare Alerts"] = "稀有怪警报"
+L["Alert When a Tameable Rare Is Nearby"] = "附近有可驯服稀有怪时警报"
+L["Play Sound"] = "播放声音"
+L["Sound: %s"] = "声音：%s"
+L["click to change"] = "点击更换"
+L["Raid Warning"] = "团队警告"
+L["Ready Check"] = "就位确认"
+L["War Drums"] = "战鼓"
+L["Scourge Horn"] = "天灾号角"
+L["Flash Screen Edges"] = "屏幕边缘闪烁"
+L["Show Popup"] = "显示弹窗"
+L["Test Alert"] = "测试警报"
+L["Enemy nameplates (V) let rares be spotted from further away."] = "开启敌方姓名板（V）可在更远处发现稀有怪。"
+
 L["Can't feed your pet while in combat."] = "战斗中无法喂养宠物。"
 L["You have no active pet out."] = "你没有活动的宠物。"
 L["your pet"] = "你的宠物"

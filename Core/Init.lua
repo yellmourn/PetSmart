@@ -65,6 +65,15 @@ local PROFILE_DEFAULTS = {
     -- singular `trackedRareName` field - ApplyProfileDefaults migrates
     -- any old save on load.)
     trackedRareNames = nil,
+    -- Tameable rare alerts (Tracking\RareAlert.lua): the alert as a whole,
+    -- then each part of it. rareAlertSound is an index into
+    -- ns.RareAlert.SOUNDS; rareAlertPos is where the popup was dragged to.
+    rareAlertEnabled = true,
+    rareAlertSoundEnabled = true,
+    rareAlertSound = 1,
+    rareAlertFlash = true,
+    rareAlertPopup = true,
+    rareAlertPos = nil,
 }
 local DEFAULT_PROFILE_NAME = "Default"
 

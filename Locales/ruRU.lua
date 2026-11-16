@@ -3,6 +3,30 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("ruRU")
 if not L then return end
+-- Tameable rare alerts
+L["Tameable rare nearby!"] = "Рядом редкий приручаемый зверь!"
+L["Tameable rare nearby: %s"] = "Рядом редкий приручаемый зверь: %s"
+L["Target"] = "Цель"
+L["Targeting is available after combat."] = "Выбор цели будет доступен после боя."
+L["Track"] = "Отслеживать"
+L["Untrack"] = "Не отслеживать"
+L["Level %s %s"] = "Уровень %s %s"
+L["Tameable at level %d"] = "Можно приручить с %d-го уровня"
+L["Zone: %s"] = "Зона: %s"
+L["Rare Alerts"] = "Оповещения о редких"
+L["Alert When a Tameable Rare Is Nearby"] = "Оповещать о редком приручаемом звере рядом"
+L["Play Sound"] = "Звук"
+L["Sound: %s"] = "Звук: %s"
+L["click to change"] = "нажмите, чтобы сменить"
+L["Raid Warning"] = "Объявление рейду"
+L["Ready Check"] = "Проверка готовности"
+L["War Drums"] = "Боевые барабаны"
+L["Scourge Horn"] = "Рог Плети"
+L["Flash Screen Edges"] = "Вспышка по краям экрана"
+L["Show Popup"] = "Показывать окно"
+L["Test Alert"] = "Проверить оповещение"
+L["Enemy nameplates (V) let rares be spotted from further away."] = "Индикаторы врагов (V) замечают редких зверей издалека."
+
 L["Can't feed your pet while in combat."] = "Нельзя кормить питомца во время боя."
 L["You have no active pet out."] = "У вас нет активного питомца."
 L["your pet"] = "ваш питомец"
