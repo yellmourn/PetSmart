@@ -197,8 +197,46 @@ StaticPopupDialogs["PETSMART_RESET_PROFILE"] = {
     OnAccept = function(self, data) ResetProfile(data) end,
     timeout = 0, whileDead = true, hideOnEscape = true,
 }
--- Whether the Rare Alerts sound list is open on the Options page.
-local soundListOpen = false
+-- Rare Alerts dropdowns (persistent widgets placed by hand, like the sliders).
+local soundDropdown = ns.Dropdown.Create(scrollChild, "PetSmartRareSoundDropdown")
+local colorDropdown = ns.Dropdown.Create(scrollChild, "PetSmartRareColorDropdown")
+
+-- Opens the game's colour picker for a custom flash colour, previewing it
+-- as it changes; Cancel puts the previous choice back.
+local function PickCustomFlashColor(before)
+    local cp = ColorPickerFrame
+    if not cp then return end
+    local _, r, g, b = ns.RareAlert.FlashColor()
+    local function picked()
+        local nr, ng, nb = cp:GetColorRGB()
+        ns.profile.rareAlertFlashColor = { nr, ng, nb }
+        ns.RefreshAbilitiesPanel()
+    end
+    local function cancelled()
+        ns.profile.rareAlertFlashColor = before
+        ns.RefreshAbilitiesPanel()
+    end
+    if cp.SetupColorPickerAndShow then
+        cp:SetupColorPickerAndShow({ r = r, g = g, b = b, hasOpacity = false,
+            swatchFunc = picked, cancelFunc = cancelled })
+    else
+        cp.hasOpacity = false
+        cp.previousValues = { r, g, b }
+        cp.func, cp.swatchFunc, cp.cancelFunc = picked, picked, cancelled
+        cp:SetColorRGB(r, g, b)
+        cp:Hide()
+        cp:Show()
+    end
+end
+
+-- Places a dropdown at the current spot on the Options page.
+local function PlaceDropdown(ctx, dd)
+    dd:ClearAllPoints()
+    dd:SetPoint("TOPLEFT", scrollChild, "TOPLEFT", 12, -ctx.y)
+    dd:SetWidth(math.max(200, ctx.rowWidth - 24))
+    dd:Show()
+    ctx.y = ctx.y + 26 + ROW_PADDING
+end
 
 ns.Pages.options = function(ctx)
     abilitiesPanel.title:SetText(L["Options"])
@@ -301,36 +339,52 @@ ns.Pages.options = function(ctx)
         AddToggle("Play Sound", "rareAlertSoundEnabled")
         if ns.profile.rareAlertSoundEnabled ~= false then
             local Alert = ns.RareAlert
-            local current = Alert.SoundKey()
-            ctx.AddLine("    " .. L["Sound: %s"]:format(Alert.SoundLabel(current)) .. "  |cff999999("
-                .. (soundListOpen and L["click to close"] or L["click to choose"]) .. ")|r", 0.6, 0.8, 1, function()
-                soundListOpen = not soundListOpen
-                ns.RefreshAbilitiesPanel()
-            end)
-            if soundListOpen then
-                -- One row per sound; clicking a row picks it and plays it.
-                local function SoundRow(key)
-                    local chosen = key == current
-                    ctx.AddLine((chosen and "      > " or "        ") .. Alert.SoundLabel(key),
-                        chosen and 0.2 or 0.85, chosen and 1 or 0.85, chosen and 0.2 or 0.85, function()
-                        ns.profile.rareAlertSound = key
-                        Alert.PlaySound(key)
-                        ns.RefreshAbilitiesPanel()
-                    end)
-                end
-                for _, s in ipairs(Alert.SOUNDS) do SoundRow(s.name) end
-                local shared = Alert.SharedSounds()
-                if #shared > 0 then
-                    ctx.AddLine("      " .. L["From other addons:"], 1, 0.82, 0)
-                    for _, name in ipairs(shared) do SoundRow(Alert.LSM_PREFIX .. name) end
+            local items = {}
+            for _, snd in ipairs(Alert.SOUNDS) do
+                items[#items + 1] = { text = L[snd.name], value = snd.name }
+            end
+            local shared = Alert.SharedSounds()
+            if #shared > 0 then
+                items[#items + 1] = { text = L["From other addons:"], header = true }
+                for _, name in ipairs(shared) do
+                    items[#items + 1] = { text = name, value = Alert.LSM_PREFIX .. name }
                 end
             end
+            soundDropdown:SetLabel(L["Sound:"])
+            -- Stays open after a pick so sounds can be tried one after another.
+            soundDropdown:SetItems(items, Alert.SoundKey(), function(key)
+                ns.profile.rareAlertSound = key
+                Alert.PlaySound(key)
+                soundDropdown:SetItems(items, key, soundDropdown.onSelect, true)
+            end, true)
+            PlaceDropdown(ctx, soundDropdown)
         end
         AddToggle("Background Scan", "rareAlertBackgroundScan", function() ns.RareAlert.BuildZoneList() end, "finds rares before they're on screen")
         if ns.profile.rareAlertBackgroundScan ~= false then
             AddToggle("Hide \"Blocked From an Action\" Message", "rareAlertHideBlocked")
         end
         AddToggle("Flash Screen Edges", "rareAlertFlash")
+        if ns.profile.rareAlertFlash ~= false then
+            local Alert = ns.RareAlert
+            local current, cr, cg, cb = Alert.FlashColor()
+            local items = {}
+            for _, c in ipairs(Alert.FLASH_COLORS) do
+                items[#items + 1] = { text = L[c.name], value = c.name, color = c.color }
+            end
+            items[#items + 1] = { text = L["Custom..."], value = "Custom",
+                color = current == "Custom" and { cr, cg, cb } or { 1, 1, 1 } }
+            colorDropdown:SetLabel(L["Color:"])
+            colorDropdown:SetItems(items, current, function(value)
+                if value == "Custom" then
+                    PickCustomFlashColor(ns.profile.rareAlertFlashColor)
+                    return
+                end
+                ns.profile.rareAlertFlashColor = value
+                Alert.Flash()
+                ns.RefreshAbilitiesPanel()
+            end)
+            PlaceDropdown(ctx, colorDropdown)
+        end
         AddToggle("Show Popup", "rareAlertPopup")
         ctx.AddLine("    " .. L["Test Alert"], 0.6, 0.8, 1, function() ns.RareAlert.Test() end)
         ctx.AddLine(L["Enemy nameplates (V) let rares be spotted from further away."], 0.6, 0.6, 0.6)

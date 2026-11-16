@@ -99,6 +99,7 @@
 <Script file="Compendium\Navigation.lua"/>
 <Script file="Compendium\Refresh.lua"/>
 <Script file="Compendium\DressingRoom.lua"/>
+<Script file="Compendium\Dropdown.lua"/>
 
 <!-- Compendium sections (one file per section icon) -->
 <Script file="Sections\Pet.lua"/>

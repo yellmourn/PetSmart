@@ -151,6 +151,7 @@ ns.RefreshAbilitiesPanel = function()
     XP.widthSlider:Hide()
     XP.heightSlider:Hide()
     XP.colorRow:Hide()
+    if ns.Dropdown then ns.Dropdown.HideAll() end
     if PetPage.HideWidgets then PetPage.HideWidgets() end
     -- 3D model viewer: only the rare and tame-creature pages show it.
     if ns.DressingRoom then ns.DressingRoom.Hide() end

@@ -73,6 +73,7 @@ local PROFILE_DEFAULTS = {
     rareAlertSoundEnabled = true,
     rareAlertSound = "Raid Warning",
     rareAlertFlash = true,
+    rareAlertFlashColor = "Red", -- a name from ns.RareAlert.FLASH_COLORS, or {r, g, b} for a custom colour
     rareAlertPopup = true,
     rareAlertBackgroundScan = true, -- try-to-target scan for rares not yet on screen
     rareAlertHideBlocked = true,    -- hide the game's "blocked from an action" message it causes

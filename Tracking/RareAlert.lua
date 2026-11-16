@@ -177,16 +177,82 @@ function Alert.PlaySound(key)
     if not played then PlayBuiltin(builtinByName[DEFAULT_SOUND]) end
 end
 
+-- Flash colours to pick from (Options). "Custom" is any colour chosen in
+-- the game's colour picker, saved as {r, g, b}.
+local FLASH_COLORS = {
+    { name = "Red", color = { 1, 0.1, 0.1 } },
+    { name = "Orange", color = { 1, 0.5, 0 } },
+    { name = "Yellow", color = { 1, 0.9, 0.1 } },
+    { name = "Green", color = { 0.2, 1, 0.3 } },
+    { name = "Hunter Green", color = { 0.67, 0.83, 0.45 } }, -- the hunter class colour
+    { name = "Teal", color = { 0.1, 0.9, 0.8 } },
+    { name = "Blue", color = { 0.2, 0.5, 1 } },
+    { name = "Purple", color = { 0.7, 0.3, 1 } },
+    { name = "Pink", color = { 1, 0.4, 0.8 } },
+    { name = "White", color = { 1, 1, 1 } },
+}
+local DEFAULT_FLASH = "Red"
+Alert.FLASH_COLORS = FLASH_COLORS
+
+-- The chosen colour's name ("Custom" for a picked colour) and its r, g, b.
+function Alert.FlashColor()
+    local v = ns.profile and ns.profile.rareAlertFlashColor
+    if type(v) == "table" then return "Custom", v[1], v[2], v[3] end
+    for _, c in ipairs(FLASH_COLORS) do
+        if c.name == v then return c.name, c.color[1], c.color[2], c.color[3] end
+    end
+    local c = FLASH_COLORS[1]
+    return c.name, c.color[1], c.color[2], c.color[3]
+end
+
+-- The flash: a soft glow along each edge of the screen, strongest at the
+-- edge and fading inward, so it can be any colour.
 local flash = CreateFrame("Frame", nil, UIParent)
 flash:SetAllPoints(UIParent)
 flash:SetFrameStrata("FULLSCREEN_DIALOG")
 flash:EnableMouse(false)
 flash:Hide()
-flash.tex = flash:CreateTexture(nil, "BACKGROUND")
-flash.tex:SetAllPoints()
-flash.tex:SetTexture("Interface\\FullScreenTextures\\LowHealth")
-flash.tex:SetBlendMode("ADD")
-flash.tex:SetVertexColor(0.35, 1, 0.45) -- PetSmart green
+flash.edges = {}
+for _, side in ipairs({ "TOP", "BOTTOM", "LEFT", "RIGHT" }) do
+    local t = flash:CreateTexture(nil, "BACKGROUND")
+    t.side = side
+    if side == "TOP" or side == "BOTTOM" then
+        t:SetPoint(side .. "LEFT", flash, side .. "LEFT")
+        t:SetPoint(side .. "RIGHT", flash, side .. "RIGHT")
+    else
+        t:SetPoint("TOP" .. side, flash, "TOP" .. side)
+        t:SetPoint("BOTTOM" .. side, flash, "BOTTOM" .. side)
+    end
+    flash.edges[#flash.edges + 1] = t
+end
+
+-- Fades a texture from `outer` alpha at the screen edge to 0 inside it.
+-- Newer clients take colour objects, older ones separate numbers.
+local function EdgeGradient(t, r, g, b, outer)
+    t:SetColorTexture(1, 1, 1, 1)
+    local orientation = (t.side == "TOP" or t.side == "BOTTOM") and "VERTICAL" or "HORIZONTAL"
+    -- VERTICAL runs bottom -> top, HORIZONTAL left -> right.
+    local a1, a2 = outer, 0
+    if t.side == "TOP" or t.side == "RIGHT" then a1, a2 = 0, outer end
+    if CreateColor and pcall(t.SetGradient, t, orientation, CreateColor(r, g, b, a1), CreateColor(r, g, b, a2)) then
+        return
+    end
+    if t.SetGradientAlpha then
+        t:SetGradientAlpha(orientation, r, g, b, a1, r, g, b, a2)
+    else
+        t:SetColorTexture(r, g, b, outer * 0.5)
+    end
+end
+
+local function PaintFlash()
+    local _, r, g, b = Alert.FlashColor()
+    local depth = math.floor((UIParent:GetHeight() or 768) * 0.12)
+    for _, t in ipairs(flash.edges) do
+        if t.side == "TOP" or t.side == "BOTTOM" then t:SetHeight(depth) else t:SetWidth(depth) end
+        EdgeGradient(t, r, g, b, 0.85)
+    end
+end
+
 flash:SetScript("OnUpdate", function(self, dt)
     self.t = self.t + dt
     if self.t >= FLASH_SECONDS then
@@ -198,10 +264,12 @@ flash:SetScript("OnUpdate", function(self, dt)
 end)
 
 local function Flash()
+    PaintFlash()
     flash.t = 0
     flash:SetAlpha(0)
     flash:Show()
 end
+Alert.Flash = Flash
 
 ----------------------------------------------------------------------
 -- Popup
