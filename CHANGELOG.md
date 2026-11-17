@@ -1,5 +1,21 @@
 # PetSmart Changelog
 
+## v1.60.1l
+
+### New: Tameable rare alerts
+- When a tameable rare pet is nearby, PetSmart plays a sound, flashes the edges of your screen and shows a popup for it. Only hunters get alerts, and only for rares that can be tamed.
+- **One popup per rare:** up to four stack on screen at once, each with the rare's portrait, name, level and family. Drag any popup to move the stack, right-click a popup or use its X to dismiss it, and they close by themselves after a minute.
+- **Target and Track buttons:** Target selects the rare (out of combat only, as the game requires) and Track pins it on your map.
+- **Finding rares:** rares are spotted from enemy nameplates, mouseover and your target, plus a background scan that can find rares in your zone before they're on screen.
+- Each rare alerts once, until you /reload or log back in.
+- **Options > Rare Alerts:** turn the alert, sound, flash, popup and background scan on or off, pick a sound from a list (including sounds from other addons such as SilverDragon, DBM or WeakAuras), pick a flash colour or your own custom colour, and try it all with Test Alert.
+
+> **Note:** The background scan works by asking the game to target each rare. The game blocks that, which is how PetSmart knows the rare is close. PetSmart hides the game's "blocked from an action" message and removes the entry from BugSack, but BugSack may still play its sound or post a chat line the first time a rare is found each session. You can turn the background scan off in Options.
+
+### WoW: Forever pet updates
+- **New tameable creature:** Gharrik, a level 40 Carrion Bird in the Badlands that teaches Demoralizing Screech 2.
+- **King Bangalash** now teaches Prowl 2.
+
 ## v1.60.1k
 
 ### New: Eating timer
