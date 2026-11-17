@@ -107,14 +107,17 @@ ns.PETOPIA_TAME_MOBS = {
         [5] = {
             {"Plains Creeper","Spider","32-33","Arathi Highlands"},
             {"Sparkleshell Snapper","Turtle","34-35","Thousand Needles"},
+            {"Giggler","Hyena","34","Desolace"},
             {"Crag Coyote","Wolf","35-36","Badlands"},
             {"Drywallow Crocolisk","Crocolisk","35-36","Dustwallow Marsh"},
             {"Giant Plains Creeper","Spider","35-36","Arathi Highlands"},
             {"Darkfang Spider","Spider","35-36","Dustwallow Marsh"},
             {"Mudrock Tortoise","Turtle","36-37","Dustwallow Marsh"},
             {"Darkfang Lurker","Spider","36-37","Dustwallow Marsh"},
+            {"Plains Coyote","Wolf","37","Riverglades"},
             {"Mottled Drywallow Crocolisk","Crocolisk","38-39","Dustwallow Marsh"},
             {"Darkfang Creeper","Spider","38-39","Dustwallow Marsh"},
+            {"Sootfur","Wolf","38","Riverglades"},
             {"Plains Prowler","Wolf","39-40","Riverglades"},
         },
         [6] = {
@@ -146,6 +149,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [8] = {
             {"Bloodaxe Worg","Wolf","56-57","Blackrock Spire (Dungeon)"},
+            {"Giant Moonstrider","Tallstrider","60","Moonglade"},
         },
     },
 
@@ -251,6 +255,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Vile Sting","Scorpid","35","Thousand Needles"},
             {"Drywallow Snapper","Crocolisk","37-38","Dustwallow Marsh"},
             {"Low Plains Buzzard","Carrion Bird","37-38","Riverglades"},
+            {"High Plains Buzzard","Carrion Bird","38-39","Riverglades"},
             {"Venomlash Scorpid","Scorpid","39-40","Uldaman (Dungeon)"},
         },
         [6] = {
@@ -274,6 +279,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Diseased Grizzly","Bear","55-56","Western Plaguelands"},
         },
         [8] = {
+            {"Ursius","Bear","56","Winterspring"},
             {"Winterspring Screecher","Bird of Prey","57-59","Winterspring"},
             {"Elder Shardtooth","Bear","57-58","Winterspring"},
         },
@@ -315,8 +321,11 @@ ns.PETOPIA_TAME_MOBS = {
             {"Savannah Patriarch","Cat","15-16","The Barrens"},
             {"Ridge Stalker","Cat","36-37","Badlands"},
             {"Roving Tallstrider","Tallstrider","37-38","Riverglades"},
+            {"Crazed Sandstrider","Tallstrider","37-39","Desolace"},
             {"Shrike Bat","Bat","38-39","Uldaman (Dungeon)"},
             {"Ridge Huntress","Cat","38-39","Badlands"},
+            {"Wildplains Patriarch","Cat","38-39","Riverglades"},
+            {"Wildplains Huntress","Cat","38-39","Riverglades"},
         },
         [5] = {
             {"Jaguero Stalker","Cat","50","Stranglethorn Vale"},
@@ -326,6 +335,7 @@ ns.PETOPIA_TAME_MOBS = {
         [6] = {
             {"Frostsaber Cub","Cat","55-56","Winterspring"},
             {"Monstrous Plaguebat","Bat","56-58","Eastern Plaguelands"},
+            {"Ta'shkal","Cat","58","Mount Hyjal"},
         },
     },
 
@@ -343,6 +353,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Feral Crag Coyote","Wolf","37-38","Badlands"},
             {"Broken Tooth","Cat","37","Badlands"},
             {"Sin'Dall","Cat","37","Stranglethorn Vale"},
+            {"Crazed Sandstrider","Tallstrider","37-39","Desolace"},
             {"Elder Crag Coyote","Wolf","39-40","Badlands"},
         },
         [2] = {
@@ -358,6 +369,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Blisterpaw Hyena","Hyena","44-45","Tanaris"},
             {"Silvermane Stalker","Wolf","47-48","The Hinterlands"},
             {"Rabid Blisterpaw","Hyena","47-48","Tanaris"},
+            {"Nightsaber Guardian","Cat","57-59","Mount Hyjal"},
         },
         [3] = {
             {"Broodwidow","Spider","16","Ruins of Lordaeron (Dungeon)"},
@@ -406,6 +418,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Winterspring Owl","Bird of Prey","54-56","Winterspring"},
             {"Zaricotl","Carrion Bird","55","Badlands"},
             {"Winterspring Screecher","Bird of Prey","57-59","Winterspring"},
+            {"Vale Screamer","Wind Serpent","60","Feralas"},
         },
     },
 
@@ -422,6 +435,10 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [3] = {
             {"Roving Tallstrider","Tallstrider","37-38","Riverglades"},
+            {"Crazed Sandstrider","Tallstrider","37-39","Desolace"},
+        },
+        [5] = {
+            {"Giant Moonstrider","Tallstrider","60","Moonglade"},
         },
     },
 
@@ -433,6 +450,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Worg","Wolf","10-11","Silverpine Forest"},
             {"Coyote Packleader","Wolf","11-12","Westfall"},
             {"Coldrasp","Wolf","12","Tirisfal Glades"},
+            {"Gorefang","Wolf","13","Silverpine Forest"},
             {"Mist Howler","Wolf","22","Ashenvale"},
         },
         [2] = {
@@ -483,6 +501,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [6] = {
             {"Son of Hakkar","Wind Serpent","60","Zul'Gurub (Raid)"},
+            {"Vale Screamer","Wind Serpent","60","Feralas"},
         },
     },
 
@@ -497,9 +516,11 @@ ns.PETOPIA_TAME_MOBS = {
             {"Ridge Stalker Patriarch","Cat","40-41","Badlands"},
             {"Elder Shadowmaw Panther","Cat","42-43","Stranglethorn Vale"},
             {"King Bangalash","Cat","43","Stranglethorn Vale"},
+            {"Nightsaber Guardian","Cat","57-59","Mount Hyjal"},
         },
         [3] = {
             {"Jaguero Stalker","Cat","50","Stranglethorn Vale"},
+            {"Ta'shkal","Cat","58","Mount Hyjal"},
             {"Frostsaber Stalker","Cat","59-60","Winterspring"},
         },
     },
@@ -527,9 +548,11 @@ ns.PETOPIA_TAME_MOBS = {
             {"Elder Razormaw","Raptor","29","Wetlands"},
             {"Young Stranglethorn Raptor","Raptor","30-31","Stranglethorn Vale"},
             {"Stranglethorn Raptor","Raptor","33-34","Stranglethorn Vale"},
+            {"Young Lashtail Raptor","Raptor","33-34","Stranglethorn Vale"},
         },
         [3] = {
             {"Highland Fleshstalker","Raptor","36-37","Arathi Highlands"},
+            {"Bloodfen Scytheclaw","Raptor","37-38","Dustwallow Marsh"},
             {"Jungle Stalker","Raptor","40-41","Stranglethorn Vale"},
         },
     },
@@ -581,6 +604,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [4] = {
             {"Blind Screecher","Bat","41-42","Shen'dralas"},
+            {"Plaguebat","Bat","53-55","Eastern Plaguelands"},
         },
     },
 
@@ -634,6 +658,7 @@ ns.PETOPIA_TAME_MOBS = {
     tricklersdance = {
         [1] = {
             {"Gray Fox","Fox","22-23","Duskwood"},
+            {"Rustleaf Fox","Fox","56-57","Mount Hyjal"},
         },
     },
 
@@ -648,8 +673,11 @@ ns.PETOPIA_TAME_MOBS = {
             {"Marsh Crocolisk","Crocolisk","26","Excavation Site: Wetlands (Dungeon)"},
             {"Elder Crocolisk","Crocolisk","27","Excavation Site: Wetlands (Dungeon)"},
             {"River Crocolisk","Crocolisk","30-31","Stranglethorn Vale"},
+            {"Young Sawtooth Crocolisk","Crocolisk","35-36","Swamp of Sorrows"},
+            {"Saltwater Crocolisk","Crocolisk","35-36","Stranglethorn Vale"},
         },
         [3] = {
+            {"Drywallow Vicejaw","Crocolisk","36-37","Dustwallow Marsh"},
             {"Freshwater Crocolisk","Crocolisk","39","Riverglades"},
         },
     },
@@ -659,6 +687,16 @@ ns.PETOPIA_TAME_MOBS = {
             {"Nightscreech","Bird of Prey","10","Teldrassil"},
             {"Child of Jai'vhanel","Bird of Prey","11-12","Darkshore"},
             {"Jai'vhanel","Bird of Prey","12","Darkshore"},
+        },
+        [3] = {
+            {"Marsh Owl","Bird of Prey","34-35","Hillsbrad Foothills"},
+        },
+        [4] = {
+            {"Ironbeak Owl","Bird of Prey","48-49","Felwood"},
+            {"Winterspring Owl","Bird of Prey","54-56","Winterspring"},
+        },
+        [5] = {
+            {"Winterspring Screecher","Bird of Prey","57-59","Winterspring"},
         },
     },
 
@@ -692,9 +730,16 @@ ns.PETOPIA_TAME_MOBS = {
         [2] = {
             {"Elder Gray Bear","Bear","25-26","Hillsbrad Foothills"},
             {"Maddened Rotclaw","Bear","25-26","Wetlands"},
+            {"Big Samras","Bear","27","Hillsbrad Foothills"},
         },
         [3] = {
             {"Ironfur Bear","Bear","41-42","Feralas"},
+        },
+        [4] = {
+            {"Angerclaw Mauler","Bear","49-50","Felwood"},
+        },
+        [5] = {
+            {"Ursius","Bear","56","Winterspring"},
         },
     },
 
@@ -706,9 +751,11 @@ ns.PETOPIA_TAME_MOBS = {
             {"Hecklefang Stalker","Hyena","22-23","The Barrens"},
         },
         [2] = {
+            {"Galak Packhound","Hyena","24","Thousand Needles"},
             {"Pesterhide Hyena","Hyena","26-27","Thousand Needles"},
             {"Pesterhide Snarler","Hyena","28-29","Thousand Needles"},
             {"Steelsnap","Hyena","30","Thousand Needles"},
+            {"Giggler","Hyena","34","Desolace"},
         },
     },
 
@@ -734,6 +781,16 @@ ns.PETOPIA_TAME_MOBS = {
             {"Giant Moss Creeper","Spider","24-25","Hillsbrad Foothills"},
             {"Wildthorn Venomspitter","Spider","24-25","Ashenvale"},
             {"Black Widow Hatchling","Spider","24-25","Duskwood"},
+        },
+        [3] = {
+            {"Sorrow Spinner","Spider","36-37","Swamp of Sorrows"},
+            {"Darkfang Venomspitter","Spider","37-38","Dustwallow Marsh"},
+        },
+        [4] = {
+            {"Greater Lava Spider","Spider","47-49","Searing Gorge"},
+            {"Venom Mist Lurker","Spider","50-51","Western Plaguelands"},
+            {"Carrion Lurker","Spider","52-53","Western Plaguelands"},
+            {"Sand Skitterer","Spider","55-56","Silithus"},
         },
     },
 }
