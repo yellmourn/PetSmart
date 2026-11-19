@@ -1,5 +1,20 @@
 # PetSmart Changelog
 
+## v1.60.1m
+
+### New: Pet search
+- The Pet Index now has a search box. Type part of a pet's name or a family to find it.
+
+### Changed
+- PetSmart now only runs on hunters. On other classes it stays idle, with no icon or /ps command.
+
+### WoW: Forever pet updates
+- **New tameable creatures:** Crazed Sandstrider, Ta'shkal, Head Scratcher, Tainted Hyjal Owl, Old Rusthowl, Kuroma, Kamuro, Tunnelweb Matriarch, Bloated Grizzly, Slavering Hound and Enormous Crustacean.
+- **Ta'shkal:** its page explains how to make it appear, and it can be tracked on the map.
+- **Teacher pets:** about 45 new teachers from Wowhead and Petopia.
+- **Attack speeds and levels** updated for several creatures.
+- **Fixed:** Coldrasp now shows Furious Howl 1.
+
 ## v1.60.1l
 
 ### New: Tameable rare alerts
