@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("ruRU")
 if not L then return end
+L["Search by name or family"] = "Поиск по имени или семейству"
+L["Families"] = "Семейства"
+L["No pets match \"%s\"."] = "Нет питомцев по запросу «%s»."
+L["Showing the first %d. Type more of the name to narrow it down."] = "Показаны первые %d. Введите больше букв, чтобы сузить поиск."
+L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "Сбежавший эксперимент, который появляется только после использования Lonely Lantern в точке 26, 65 в зоне {z:Mount Hyjal}. Сначала фонарь недоступен: нужна Corrupted Cat Figurine, которая лежит в точке 47, 75 в озерце Скверны среди костей."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "Рядом редкий приручаемый зверь!"
 L["Tameable rare nearby: %s"] = "Рядом редкий приручаемый зверь: %s"

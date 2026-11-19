@@ -100,11 +100,115 @@ local function CreatureIcons(c, familyName)
     return (RareFor(c, familyName) and ICON_RARE or "") .. (TeacherFor(c, familyName) and ICON_TEACHER or "")
 end
 
+----------------------------------------------------------------------
+-- Search box at the top of the Pet Index: type part of a pet's name or a
+-- family's name to list every match. A persistent widget placed by hand,
+-- like the Options sliders; Compendium/Refresh.lua hides it on every
+-- other page.
+----------------------------------------------------------------------
+local MAX_RESULTS = 150
+local search = CreateFrame("EditBox", "PetSmartPetSearch", ns.scrollChild, "InputBoxTemplate")
+search:SetHeight(20)
+search:SetAutoFocus(false)
+search:SetMaxLetters(40)
+search:Hide()
+search.hint = search:CreateFontString(nil, "OVERLAY", "GameFontDisable")
+search.hint:SetPoint("LEFT", search, "LEFT", 2, 0)
+search.hint:SetText(L["Search by name or family"])
+local function UpdateHint()
+    search.hint:SetShown(search:GetText() == "" and not search:HasFocus())
+end
+search:SetScript("OnEditFocusGained", UpdateHint)
+search:SetScript("OnEditFocusLost", UpdateHint)
+search:SetScript("OnEscapePressed", function(self)
+    self:SetText("")
+    self:ClearFocus()
+end)
+search:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
+search:SetScript("OnTextChanged", function(self, userInput)
+    UpdateHint()
+    if userInput or self:GetText() == "" then ns.RefreshAbilitiesPanel() end
+end)
+ns.PetSearch = search
+
+-- Lower-case, for matching without caring about capitals.
+local function Lower(text) return (tostring(text or "")):lower() end
+
+local function DrawSearchResults(ctx, query)
+    local q = Lower(query)
+    BuildLookups()
+    local familyIds = {}
+    for familyId, familyName in pairs(ns.PET_FAMILIES or {}) do
+        familyIds[#familyIds + 1] = familyId
+    end
+    table.sort(familyIds, function(a, b) return ns.LocFamily(ns.PET_FAMILIES[a]) < ns.LocFamily(ns.PET_FAMILIES[b]) end)
+
+    -- Families whose name matches.
+    local families = {}
+    for _, familyId in ipairs(familyIds) do
+        local name = ns.PET_FAMILIES[familyId]
+        if Lower(name):find(q, 1, true) or Lower(ns.LocFamily(name)):find(q, 1, true) then
+            families[#families + 1] = familyId
+        end
+    end
+    if #families > 0 then
+        ctx.AddLine(L["Families"], 1, 0.82, 0)
+        for _, familyId in ipairs(families) do
+            ctx.AddLine(ns.LocFamily(ns.PET_FAMILIES[familyId]), 1, 1, 1, function()
+                SetAbilitiesMode("typedetail", familyId)
+            end)
+        end
+        ctx.AddLine(" ", 1, 1, 1)
+    end
+
+    -- Creatures whose name (in English or the game's language) or family matches.
+    local matches = {}
+    for _, familyId in ipairs(familyIds) do
+        local familyName = ns.PET_FAMILIES[familyId]
+        local familyHit = Lower(familyName):find(q, 1, true) or Lower(ns.LocFamily(familyName)):find(q, 1, true)
+        for _, c in ipairs(ns.TAMEABLE_CREATURES and ns.TAMEABLE_CREATURES[familyName] or {}) do
+            if familyHit or Lower(c.name):find(q, 1, true) or Lower(ns.LocCreature(c.name)):find(q, 1, true) then
+                matches[#matches + 1] = { c = c, familyId = familyId, familyName = familyName }
+            end
+        end
+    end
+    if #families == 0 and #matches == 0 then
+        ctx.AddLine(L["No pets match \"%s\"."]:format(query), 0.8, 0.8, 0.8)
+        return
+    end
+    ctx.AddLine(L["Tameable Creatures (%d):"]:format(#matches), 1, 0.82, 0)
+    for i, m in ipairs(matches) do
+        if i > MAX_RESULTS then
+            ctx.AddLine(L["Showing the first %d. Type more of the name to narrow it down."]:format(MAX_RESULTS), 0.7, 0.7, 0.7)
+            break
+        end
+        local c = m.c
+        local icons = CreatureIcons(c, m.familyName)
+        local text = (icons ~= "" and (icons .. " ") or "") .. ns.LocCreature(c.name)
+            .. "  |cff9d9d9d" .. ns.LocFamily(m.familyName) .. " (" .. c.level .. ")  " .. ns.LocZone(c.zone) .. "|r"
+        ctx.AddLine(text, 1, 1, 1, function()
+            SetAbilitiesMode("creaturedetail", { creature = c, familyId = m.familyId })
+        end)
+    end
+end
+
 ns.Pages.types = function(ctx)
     abilitiesPanel.title:SetText(L["Pet Index"])
     abilitiesPanel.subtitle:SetText(L["Select a pet type to view family information and tamable pets."])
     abilitiesPanel.subtitle:SetTextColor(0.6, 0.6, 0.6)
     abilitiesPanel.subtitle:Show()
+
+    search:ClearAllPoints()
+    search:SetPoint("TOPLEFT", ns.scrollChild, "TOPLEFT", 8, -(ctx.y + 2))
+    search:SetWidth(math.max(140, ctx.rowWidth - 16))
+    search:Show()
+    UpdateHint()
+    ctx.y = ctx.y + 26 + (ns.ROW_PADDING or 0)
+    local query = search:GetText():match("^%s*(.-)%s*$")
+    if query ~= "" then
+        DrawSearchResults(ctx, query)
+        return
+    end
     local familyIds = {}
     if ns.PET_FAMILIES then
         for familyId in pairs(ns.PET_FAMILIES) do

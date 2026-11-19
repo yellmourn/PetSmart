@@ -427,7 +427,7 @@ function ns.EatTimerDebug()
     UpdateEatTimer()
 end
 
-local eatEvents = CreateFrame("Frame")
+local eatEvents = ns.HunterOnly(CreateFrame("Frame"))
 eatEvents:RegisterEvent("UNIT_AURA")
 eatEvents:RegisterEvent("UNIT_PET")
 eatEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -443,7 +443,9 @@ end)
 -- Safety net for clients that don't send UNIT_AURA for the pet: a cheap
 -- once-a-second look while a pet is out.
 if C_Timer and C_Timer.NewTicker then
-    C_Timer.NewTicker(1, function() if UnitExists("pet") or shownStart then UpdateEatTimer() end end)
+    C_Timer.NewTicker(1, function()
+        if not ns.dormant and (UnitExists("pet") or shownStart) then UpdateEatTimer() end
+    end)
 end
 
 -- Exported for the other PetSmart files.

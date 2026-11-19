@@ -149,6 +149,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [8] = {
             {"Bloodaxe Worg","Wolf","56-57","Blackrock Spire (Dungeon)"},
+            {"Old Rusthowl","Wolf","57-58","Mount Hyjal"},
             {"Giant Moonstrider","Tallstrider","60","Moonglade"},
         },
     },
@@ -469,6 +470,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [4] = {
             {"Bloodaxe Worg","Wolf","56-57","Blackrock Spire (Dungeon)"},
+            {"Old Rusthowl","Wolf","57-58","Mount Hyjal"},
         },
     },
 
@@ -552,6 +554,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [3] = {
             {"Highland Fleshstalker","Raptor","36-37","Arathi Highlands"},
+            {"Bloodfen Screecher","Raptor","36-37","Dustwallow Marsh"},
             {"Bloodfen Scytheclaw","Raptor","37-38","Dustwallow Marsh"},
             {"Jungle Stalker","Raptor","40-41","Stranglethorn Vale"},
         },
@@ -737,9 +740,11 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [4] = {
             {"Angerclaw Mauler","Bear","49-50","Felwood"},
+            {"Hyjal Bear","Bear","55-56","Mount Hyjal"},
         },
         [5] = {
             {"Ursius","Bear","56","Winterspring"},
+            {"Head Scratcher","Bear","60","Mount Hyjal"},
         },
     },
 
@@ -756,6 +761,9 @@ ns.PETOPIA_TAME_MOBS = {
             {"Pesterhide Snarler","Hyena","28-29","Thousand Needles"},
             {"Steelsnap","Hyena","30","Thousand Needles"},
             {"Giggler","Hyena","34","Desolace"},
+        },
+        [3] = {
+            {"Blisterpaw Hyena","Hyena","44-45","Tanaris"},
         },
     },
 

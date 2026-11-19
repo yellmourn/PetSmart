@@ -294,7 +294,7 @@ do
     end)
     f:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
-    local evf = CreateFrame("Frame")
+    local evf = ns.HunterOnly(CreateFrame("Frame"))
     for _, e in ipairs({ "UNIT_PET_EXPERIENCE", "UNIT_PET", "UNIT_LEVEL", "PET_UI_UPDATE", "PET_BAR_UPDATE", "PLAYER_ENTERING_WORLD" }) do
         pcall(evf.RegisterEvent, evf, e)
     end

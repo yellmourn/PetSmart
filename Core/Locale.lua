@@ -58,6 +58,8 @@ ns.ZONE_UIMAP = {
     ["Hellfire Peninsula"] = 1944, ["Zangarmarsh"] = 1946, ["Shadowmoon Valley"] = 1948,
     ["Blade's Edge Mountains"] = 1949, ["Bloodmyst Isle"] = 1950, ["Nagrand"] = 1951,
     ["Terokkar Forest"] = 1952, ["Netherstorm"] = 1953, ["Shattrath City"] = 1955,
+    -- WoW: Forever
+    ["Mount Hyjal"] = 2482,
 }
 
 local zoneNameCache = {}

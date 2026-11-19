@@ -93,6 +93,10 @@ local raw = {
     { name = "Vulgara the Insatiable", zone = "Zephras Isle", x = 42.8, y = 52.2, radius = 2.5,
       description = "A wolf found on Zephras Isle, at the spot marked on the map." },
 
+    -- wowhead.com/forever NPC page and its comments (2026-11-18).
+    { name = "Ta'shkal", zone = "Mount Hyjal", x = 26.4, y = 65.2, radius = 2.0,
+      description = "An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it." },
+
     -- Spread across wide areas: the highlighted zones (and pin spots) come from
     -- Data/TameTeacherAreaData.lua, traced around wowhead.com/classic's pin cloud.
     { name = "Prairie Wolf", zone = "Mulgore", fromAreas = true,

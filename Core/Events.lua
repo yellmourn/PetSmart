@@ -44,9 +44,11 @@ ev:RegisterEvent("PLAYER_LOGOUT")
 local abilitiesPanelShownBeforeCombat = false
 
 local activated = false
+local RegisterSlashCommands -- defined at the bottom of this file
 local function ActivateAddon(self)
     if activated then return end
     activated = true
+    RegisterSlashCommands()
 
     if PetSmartDB.pos then
         toggle:ClearAllPoints()
@@ -92,6 +94,7 @@ end
 
 ev:SetScript("OnEvent", function(self, event, arg1)
     if event == "PLAYER_LOGOUT" then
+        if not activated then return end
         -- Remember whether the Compendium panel was actually on screen for
         -- THIS character, independent of profile (a shared profile
         -- shouldn't force the panel open/closed for every character using
@@ -100,6 +103,15 @@ ev:SetScript("OnEvent", function(self, event, arg1)
             PetSmartDB.panelShownByChar = PetSmartDB.panelShownByChar or {}
             PetSmartDB.panelShownByChar[GetCharKey()] = abilitiesPanel:IsShown()
         end
+        return
+    end
+
+    if event == "PLAYER_LOGIN" and not IsEligible() then
+        -- Not a hunter: PetSmart stays dormant for this character - no
+        -- feed icon, minimap button or /ps command, and its event frames
+        -- are stopped.
+        self:UnregisterAllEvents()
+        ns.GoDormant()
         return
     end
 
@@ -175,13 +187,6 @@ ev:SetScript("OnEvent", function(self, event, arg1)
         RestoreTrackedRareFromProfile()
         Tame.Restore()
 
-        local _, class = UnitClass("player")
-        if class ~= "HUNTER" then
-            -- Not a hunter: this character will never be eligible, nothing
-            -- more to do.
-            return
-        end
-
         -- A hunter is eligible immediately at login now (no level or
         -- known-spell requirement), but keep watching PLAYER_LEVEL_UP and
         -- SPELLS_CHANGED as a harmless safety net in case ActivateAddon
@@ -234,10 +239,11 @@ end)
 ----------------------------------------------------------------------
 -- Slash commands
 ----------------------------------------------------------------------
-SLASH_PETSMART1, SLASH_PETSMART2 = "/petsmart", "/ps"
+-- Registered only once PetSmart activates for a hunter, so other classes
+-- don't get a /ps command at all.
 -- Developer-only troubleshooting commands (e.g. /ps bt). Off in releases.
 local DEBUG_COMMANDS = false
-SlashCmdList["PETSMART"] = function(msg)
+local function SlashHandler(msg)
     local cmd = ((msg or ""):match("^%s*(%S+)") or ""):lower()
     if DEBUG_COMMANDS and cmd == "bt" then
         -- Troubleshooting: what PetSmart can read from the open Beast Training window.
@@ -252,4 +258,9 @@ SlashCmdList["PETSMART"] = function(msg)
         -- Same as the launcher's left-click: show/hide the Compendium.
         LauncherOnClick("LeftButton")
     end
+end
+
+RegisterSlashCommands = function()
+    SLASH_PETSMART1, SLASH_PETSMART2 = "/petsmart", "/ps"
+    SlashCmdList["PETSMART"] = SlashHandler
 end

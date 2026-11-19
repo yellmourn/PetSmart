@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("zhTW")
 if not L then return end
+L["Search by name or family"] = "依名稱或種類搜尋"
+L["Families"] = "種類"
+L["No pets match \"%s\"."] = "沒有與「%s」相符的寵物。"
+L["Showing the first %d. Type more of the name to narrow it down."] = "顯示前 %d 個。輸入更多名稱以縮小範圍。"
+L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "一隻逃脫的實驗體，只有在使用{z:Mount Hyjal} 26, 65 處的 Lonely Lantern 後才會出現。燈籠一開始無法使用：你需要 Corrupted Cat Figurine，它位於 47, 75 處周圍散落著骨頭的魔化池中。"
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "附近有可馴服的稀有怪！"
 L["Tameable rare nearby: %s"] = "附近有可馴服的稀有怪：%s"

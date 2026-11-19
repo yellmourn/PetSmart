@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("koKR")
 if not L then return end
+L["Search by name or family"] = "이름 또는 계열로 검색"
+L["Families"] = "계열"
+L["No pets match \"%s\"."] = "\"%s\"와(과) 일치하는 야수가 없습니다."
+L["Showing the first %d. Type more of the name to narrow it down."] = "처음 %d개를 표시합니다. 이름을 더 입력해 범위를 좁히세요."
+L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "{z:Mount Hyjal}의 26, 65에 있는 Lonely Lantern을 사용해야만 나타나는 탈출한 실험체입니다. 처음에는 등불을 사용할 수 없으며, 뼈로 둘러싸인 지옥 웅덩이(47, 75)에 있는 Corrupted Cat Figurine이 필요합니다."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "길들일 수 있는 희귀 몬스터 근처!"
 L["Tameable rare nearby: %s"] = "길들일 수 있는 희귀 몬스터 근처: %s"

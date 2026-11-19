@@ -333,6 +333,29 @@ function ns.AnySecret(...)
     return false
 end
 
+-- PetSmart is for hunters only. On any other class it stays dormant:
+-- Core/Events.lua calls ns.GoDormant() at login, which stops every event
+-- frame registered here with ns.HunterOnly(), and no slash command,
+-- feed icon or minimap button is set up.
+function ns.IsHunter()
+    local _, class = UnitClass("player")
+    return class == "HUNTER"
+end
+
+local hunterOnlyFrames = {}
+function ns.HunterOnly(frame)
+    hunterOnlyFrames[#hunterOnlyFrames + 1] = frame
+    return frame
+end
+
+function ns.GoDormant()
+    ns.dormant = true
+    for _, f in ipairs(hunterOnlyFrames) do
+        f:UnregisterAllEvents()
+        f:SetScript("OnUpdate", nil)
+    end
+end
+
 -- Experience-bar look shared by the pet page's bar and the floating pet
 -- XP bar: left-to-right fill gradients (blue while levelling, gold at max).
 ns.BAR_COLORS = {

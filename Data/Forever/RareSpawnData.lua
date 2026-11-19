@@ -57,6 +57,7 @@ ns.ZONE_MAP_IDS = {
     ["Felwood"]                = 77,
     ["Hillsbrad Foothills"]    = 267,  -- verify in-game
     ["Loch Modan"]             = 38,
+    ["Mount Hyjal"]            = 2482, -- Forever's own map (wowhead.com/forever)
     ["Mulgore"]                = 87,
     ["Razorfen Kraul"]         = 2057, -- verify in-game (dungeon map id, low confidence)
     ["Redridge Mountains"]     = 44,

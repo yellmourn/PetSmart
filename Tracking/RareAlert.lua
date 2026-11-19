@@ -758,6 +758,7 @@ local function HideBlockedMessage()
 end
 
 local function ScanStep()
+    if ns.dormant then return end
     local p = ns.profile
     if not Enabled() or not p or p.rareAlertBackgroundScan == false then return end
     if InCombatLockdown() or (IsInInstance and IsInInstance()) then return end
@@ -783,7 +784,7 @@ if C_Timer and C_Timer.NewTicker then
     C_Timer.NewTicker(SCAN_INTERVAL, ScanStep)
 end
 
-local events = CreateFrame("Frame")
+local events = ns.HunterOnly(CreateFrame("Frame"))
 events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 events:RegisterEvent("PLAYER_TARGET_CHANGED")

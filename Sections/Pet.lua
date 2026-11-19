@@ -580,7 +580,7 @@ end
 -- ticks don't rebuild it every frame. Movement speed has no event of its
 -- own (e.g. Dash), so the open page is also refreshed every half second.
 do
-    local f = CreateFrame("Frame")
+    local f = ns.HunterOnly(CreateFrame("Frame"))
     PetPage.events = f
     for _, e in ipairs({ "UNIT_PET", "PET_UI_UPDATE", "PLAYER_ENTERING_WORLD", "UNIT_PET_EXPERIENCE",
         "UNIT_HEALTH", "UNIT_HEALTH_FREQUENT", "UNIT_MAXHEALTH", "UNIT_STATS", "UNIT_RESISTANCES",

@@ -492,7 +492,7 @@ function BT.Paw(data, size)
 end
 
 do
-    local f = CreateFrame("Frame")
+    local f = ns.HunterOnly(CreateFrame("Frame"))
     for _, e in ipairs({ "TRAINER_SHOW", "TRAINER_UPDATE", "CRAFT_SHOW", "CRAFT_UPDATE", "TRADE_SKILL_SHOW", "TRADE_SKILL_UPDATE",
         "TRADE_SKILL_LIST_UPDATE", "TRADE_SKILL_DATA_SOURCE_CHANGED", "SPELLS_CHANGED" }) do
         pcall(f.RegisterEvent, f, e) -- not every event exists on every client

@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("frFR")
 if not L then return end
+L["Search by name or family"] = "Rechercher par nom ou famille"
+L["Families"] = "Familles"
+L["No pets match \"%s\"."] = "Aucun familier ne correspond à « %s »."
+L["Showing the first %d. Type more of the name to narrow it down."] = "Affichage des %d premiers. Tapez davantage du nom pour affiner."
+L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "Une expérience évadée qui n'apparaît qu'après avoir utilisé la Lonely Lantern en 26, 65 au {z:Mount Hyjal}. La lanterne n'est pas utilisable au début : il vous faut la Corrupted Cat Figurine, trouvée en 47, 75 dans le bassin gangrené entouré d'ossements."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "Rare apprivoisable à proximité !"
 L["Tameable rare nearby: %s"] = "Rare apprivoisable à proximité : %s"
