@@ -9,9 +9,10 @@
 - PetSmart now only runs on hunters. On other classes it stays idle, with no icon or /ps command.
 
 ### WoW: Forever pet updates
-- **New tameable creatures:** Crazed Sandstrider, Ta'shkal, Head Scratcher, Tainted Hyjal Owl, Old Rusthowl, Kuroma, Kamuro, Tunnelweb Matriarch, Bloated Grizzly, Slavering Hound and Enormous Crustacean.
-- **Ta'shkal:** its page explains how to make it appear, and it can be tracked on the map.
-- **Teacher pets:** about 45 new teachers from Wowhead and Petopia.
+- **New tameable creatures:** Crazed Sandstrider, Ta'shkal, Head Scratcher, Tainted Hyjal Owl, Old Rusthowl, Kuroma, Kamuro, Tunnelweb Matriarch, Bloated Grizzly, Slavering Hound, Enormous Crustacean and Sand Crawler (Riverglades).
+- **Ta'shkal:** its page explains how to get the Corrupted Cat Figurine and summon it at the Lonely Lantern, and tracking pins both spots on the map.
+- **Teacher pets:** about 55 new teachers from Wowhead and Petopia, including several in Riverglades.
+- **Krek the Noxious:** now shows its level and can be tracked on the map.
 - **Attack speeds and levels** updated for several creatures.
 - **Fixed:** Coldrasp now shows Furious Howl 1.
 
