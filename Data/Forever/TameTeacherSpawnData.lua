@@ -93,9 +93,20 @@ local raw = {
     { name = "Vulgara the Insatiable", zone = "Zephras Isle", x = 42.8, y = 52.2, radius = 2.5,
       description = "A wolf found on Zephras Isle, at the spot marked on the map." },
 
-    -- wowhead.com/forever NPC page and its comments (2026-11-18).
-    { name = "Ta'shkal", zone = "Mount Hyjal", x = 26.4, y = 65.2, radius = 2.0,
-      description = "An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it." },
+    -- Lonely Lantern spot from wow-petopia.com/forever, plus the Felblood
+    -- Scar pools where the figurine is found (wowhead.com/forever news,
+    -- 2026-11-19).
+    { name = "Ta'shkal", zone = "Mount Hyjal", x = 26.8, y = 63.7, radius = 2.0,
+      extraPoints = { { x = 47.0, y = 75.0, r = 3.0 } },
+      description = "An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII." },
+
+    -- Riverglades (wow-petopia.com/forever and wowhead.com/forever, 2026-11-19).
+    { name = "Krek the Noxious", zone = "Riverglades", x = 59.3, y = 30.8, radius = 3.0,
+      description = "An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed." },
+    { name = "Young Paletusk", zone = "Riverglades",
+      description = "Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again." },
+    { name = "Hungry Crocolisk", zone = "Riverglades",
+      description = "Only appears when summoned during the quest Helping Hands." },
 
     -- Spread across wide areas: the highlighted zones (and pin spots) come from
     -- Data/TameTeacherAreaData.lua, traced around wowhead.com/classic's pin cloud.

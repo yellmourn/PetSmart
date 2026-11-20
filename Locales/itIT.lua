@@ -3,11 +3,14 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("itIT")
 if not L then return end
+L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "Un esperimento fuggito con l'aspetto del gatto corrotto. Prima ottieni una Corrupted Cat Figurine cliccando sui mucchi d'ossa attorno alle pozze vili della Felblood Scar, verso 47, 75 (può comparire in più punti). Poi clicca la Lonely Lantern luminosa verso 26.8, 63.7 per evocare Ta'shkal e addomesticarlo. Insieme a Broken Tooth, è uno dei soli due felini con Faster Attack VII."
+L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "Una tartaruga élite lungo un tratto di fiume nel nord della zona, ai piedi di una cascata vicino a 59, 30. Mantiene la sua nube di veleno verde una volta addomesticata."
+L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "La sua Charge 4 è al momento buggata: dopo l'addomesticamento l'abilità non ha descrizione e non si può usare, e il cinghiale la perde del tutto una volta congedato e richiamato."
+L["Only appears when summoned during the quest Helping Hands."] = "Appare solo quando viene evocato durante la missione Helping Hands."
 L["Search by name or family"] = "Cerca per nome o famiglia"
 L["Families"] = "Famiglie"
 L["No pets match \"%s\"."] = "Nessun famiglio corrisponde a \"%s\"."
 L["Showing the first %d. Type more of the name to narrow it down."] = "Mostrati i primi %d. Scrivi di più del nome per restringere."
-L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "Un esperimento fuggito che appare solo dopo aver usato la Lonely Lantern a 26, 65 nel {z:Mount Hyjal}. All'inizio la lanterna non è utilizzabile: serve la Corrupted Cat Figurine, che si trova a 47, 75 nella pozza vile circondata da ossa."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "Raro addomesticabile nelle vicinanze!"
 L["Tameable rare nearby: %s"] = "Raro addomesticabile nelle vicinanze: %s"

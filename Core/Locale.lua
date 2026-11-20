@@ -59,7 +59,7 @@ ns.ZONE_UIMAP = {
     ["Blade's Edge Mountains"] = 1949, ["Bloodmyst Isle"] = 1950, ["Nagrand"] = 1951,
     ["Terokkar Forest"] = 1952, ["Netherstorm"] = 1953, ["Shattrath City"] = 1955,
     -- WoW: Forever
-    ["Mount Hyjal"] = 2482,
+    ["Mount Hyjal"] = 2482, ["Riverglades"] = 2548,
 }
 
 local zoneNameCache = {}

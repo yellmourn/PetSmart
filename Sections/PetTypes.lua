@@ -332,7 +332,7 @@ ns.Pages.creaturedetail = function(ctx)
             SetTrackedRare(rare)
             ns.RefreshAbilitiesPanel()
         end)
-    elseif spawnInfo then
+    elseif spawnInfo and (spawnInfo.points or spawnInfo.isDungeon) then
         rareTrackBtn:SetState(Tame.IsTracking(c.name), nil, function()
             Tame.Set(c.name, spawnInfo)
             ns.RefreshAbilitiesPanel()

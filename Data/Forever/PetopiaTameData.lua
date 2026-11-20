@@ -106,6 +106,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [5] = {
             {"Plains Creeper","Spider","32-33","Arathi Highlands"},
+            {"Juvenile Paletusk","Boar","33-34","Riverglades"},
             {"Sparkleshell Snapper","Turtle","34-35","Thousand Needles"},
             {"Giggler","Hyena","34","Desolace"},
             {"Crag Coyote","Wolf","35-36","Badlands"},
@@ -114,7 +115,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Darkfang Spider","Spider","35-36","Dustwallow Marsh"},
             {"Mudrock Tortoise","Turtle","36-37","Dustwallow Marsh"},
             {"Darkfang Lurker","Spider","36-37","Dustwallow Marsh"},
-            {"Plains Coyote","Wolf","37","Riverglades"},
+            {"Plains Coyote","Wolf","36-37","Riverglades"},
             {"Mottled Drywallow Crocolisk","Crocolisk","38-39","Dustwallow Marsh"},
             {"Darkfang Creeper","Spider","38-39","Dustwallow Marsh"},
             {"Sootfur","Wolf","38","Riverglades"},
@@ -130,6 +131,8 @@ ns.PETOPIA_TAME_MOBS = {
             {"Mudrock Snapjaw","Turtle","41-42","Dustwallow Marsh"},
             {"Old Cliff Jumper","Wolf","42","The Hinterlands"},
             {"Snarler","Wolf","42","Feralas"},
+            {"Ghostmaw","Crocolisk","42","Riverglades"},
+            {"Krek the Noxious","Turtle","42","Riverglades"},
             {"Deadmire","Crocolisk","45","Dustwallow Marsh"},
             {"Timberweb Recluse","Spider","47-48","Azshara"},
             {"Felpaw Wolf","Wolf","47-48","Felwood"},
@@ -191,6 +194,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         -- [4] intentionally omitted: "No known training source" per Petopia
         [4] = {
+            {"Young Paletusk","Boar","36-37","Riverglades"},
             {"Mature Paletusk","Boar","38-39","Riverglades"},
         },
         [5] = {
@@ -605,6 +609,9 @@ ns.PETOPIA_TAME_MOBS = {
         [2] = {
             {"Bloodwing Bat","Bat","25-26","Hillsbrad Foothills"},
         },
+        [3] = {
+            {"Roosting Duskbat","Bat","37-38","Riverglades"},
+        },
         [4] = {
             {"Blind Screecher","Bat","41-42","Shen'dralas"},
             {"Plaguebat","Bat","53-55","Eastern Plaguelands"},
@@ -639,6 +646,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Aku'mai Snapjaw","Turtle","26-27","Blackfathom Deeps (Dungeon)"},
             {"Snapjaw","Turtle","30-31","Hillsbrad Foothills"},
             {"Cranky Benj","Turtle","32","Alterac Mountains"},
+            {"Krek the Noxious","Turtle","42","Riverglades"},
         },
     },
 
@@ -681,7 +689,9 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [3] = {
             {"Drywallow Vicejaw","Crocolisk","36-37","Dustwallow Marsh"},
-            {"Freshwater Crocolisk","Crocolisk","39","Riverglades"},
+            {"Hungry Crocolisk","Crocolisk","37-38","Riverglades"},
+            {"Freshwater Crocolisk","Crocolisk","38-39","Riverglades"},
+            {"Ghostmaw","Crocolisk","42","Riverglades"},
         },
     },
 
@@ -716,6 +726,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Enraged Reef Crawler","Crab","30-32","Desolace"},
         },
         [3] = {
+            {"Sand Crawler","Crab","36-37","Riverglades"},
             {"Silt Crawler","Crab","40-41","Swamp of Sorrows"},
         },
         [4] = {
@@ -793,6 +804,7 @@ ns.PETOPIA_TAME_MOBS = {
         [3] = {
             {"Sorrow Spinner","Spider","36-37","Swamp of Sorrows"},
             {"Darkfang Venomspitter","Spider","37-38","Dustwallow Marsh"},
+            {"Venomweb Spitter","Spider","37-38","Riverglades"},
         },
         [4] = {
             {"Greater Lava Spider","Spider","47-49","Searing Gorge"},

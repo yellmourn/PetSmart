@@ -3,11 +3,14 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("ruRU")
 if not L then return end
+L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "Сбежавший эксперимент с обликом осквернённой кошки. Сначала добудьте Corrupted Cat Figurine, щёлкая по грудам костей у озёр Скверны в Felblood Scar, около 47, 75 (она может появляться в нескольких местах). Затем щёлкните по светящемуся Lonely Lantern около 26.8, 63.7, чтобы призвать Ta'shkal и приручить его. Вместе с Broken Tooth это одна из двух кошек с Faster Attack VII."
+L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "Элитная черепаха на участке реки на севере зоны, у подножия водопада около 59, 30. После приручения сохраняет своё зелёное ядовитое облако."
+L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "Его Charge 4 сейчас работает с ошибкой: после приручения у способности нет описания и её нельзя использовать, а если отпустить и снова призвать кабана, он теряет её совсем."
+L["Only appears when summoned during the quest Helping Hands."] = "Появляется, только если его призвать во время задания Helping Hands."
 L["Search by name or family"] = "Поиск по имени или семейству"
 L["Families"] = "Семейства"
 L["No pets match \"%s\"."] = "Нет питомцев по запросу «%s»."
 L["Showing the first %d. Type more of the name to narrow it down."] = "Показаны первые %d. Введите больше букв, чтобы сузить поиск."
-L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "Сбежавший эксперимент, который появляется только после использования Lonely Lantern в точке 26, 65 в зоне {z:Mount Hyjal}. Сначала фонарь недоступен: нужна Corrupted Cat Figurine, которая лежит в точке 47, 75 в озерце Скверны среди костей."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "Рядом редкий приручаемый зверь!"
 L["Tameable rare nearby: %s"] = "Рядом редкий приручаемый зверь: %s"

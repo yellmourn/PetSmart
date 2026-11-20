@@ -3,11 +3,14 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("koKR")
 if not L then return end
+L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "타락한 고양이의 모습을 한 탈출한 실험체입니다. 먼저 Felblood Scar의 지옥 웅덩이 주변(47, 75 근처)에 있는 뼈 더미를 클릭해 Corrupted Cat Figurine을 얻으세요(여러 곳에서 나올 수 있습니다). 그런 다음 26.8, 63.7 근처의 빛나는 Lonely Lantern을 클릭해 Ta'shkal을 소환하고 길들이세요. Broken Tooth와 함께 Faster Attack VII을 가진 단 두 고양이 중 하나입니다."
+L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "지역 북쪽 강줄기, 59, 30 근처 폭포 아래에서 찾을 수 있는 정예 거북입니다. 길들인 후에도 초록색 독구름을 유지합니다."
+L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "현재 Charge 4에 버그가 있습니다. 길들인 후 능력에 설명이 없고 사용할 수 없으며, 소환을 해제했다가 다시 부르면 멧돼지가 능력을 완전히 잃습니다."
+L["Only appears when summoned during the quest Helping Hands."] = "Helping Hands 퀘스트 도중 소환될 때만 나타납니다."
 L["Search by name or family"] = "이름 또는 계열로 검색"
 L["Families"] = "계열"
 L["No pets match \"%s\"."] = "\"%s\"와(과) 일치하는 야수가 없습니다."
 L["Showing the first %d. Type more of the name to narrow it down."] = "처음 %d개를 표시합니다. 이름을 더 입력해 범위를 좁히세요."
-L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "{z:Mount Hyjal}의 26, 65에 있는 Lonely Lantern을 사용해야만 나타나는 탈출한 실험체입니다. 처음에는 등불을 사용할 수 없으며, 뼈로 둘러싸인 지옥 웅덩이(47, 75)에 있는 Corrupted Cat Figurine이 필요합니다."
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "길들일 수 있는 희귀 몬스터 근처!"
 L["Tameable rare nearby: %s"] = "길들일 수 있는 희귀 몬스터 근처: %s"

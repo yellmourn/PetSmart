@@ -3,11 +3,14 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("zhCN")
 if not L then return end
+L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "一只逃脱的实验体，外形与腐化之猫相同。先在 Felblood Scar 的邪能池周围（约 47, 75）点击骨堆，获得 Corrupted Cat Figurine（它可能出现在多个地点）。然后点击约 26.8, 63.7 处发光的 Lonely Lantern 召唤 Ta'shkal 并驯服它。它与 Broken Tooth 是仅有的两只拥有 Faster Attack VII 的猫。"
+L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "一只精英海龟，出没于该区域北部的一段河流，在 59, 30 附近的瀑布脚下。驯服后仍保留它的绿色毒云。"
+L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "它的 Charge 4 目前有错误：驯服后该技能没有说明且无法使用，解散后再召唤，野猪会完全失去这个技能。"
+L["Only appears when summoned during the quest Helping Hands."] = "只有在任务 Helping Hands 中被召唤时才会出现。"
 L["Search by name or family"] = "按名称或种类搜索"
 L["Families"] = "种类"
 L["No pets match \"%s\"."] = "没有与“%s”匹配的宠物。"
 L["Showing the first %d. Type more of the name to narrow it down."] = "显示前 %d 个。输入更多名称以缩小范围。"
-L["An escaped experiment that only appears once you use the Lonely Lantern at 26, 65 in Mount Hyjal. The lantern can't be used at first: you need the Corrupted Cat Figurine, found at 47, 75 in the fel pool with bones around it."] = "一只逃脱的实验体，只有在使用{z:Mount Hyjal} 26, 65 处的 Lonely Lantern 后才会出现。灯笼一开始无法使用：你需要 Corrupted Cat Figurine，它位于 47, 75 处周围散落着骨头的邪能池中。"
 -- Tameable rare alerts
 L["Tameable rare nearby!"] = "附近有可驯服的稀有怪！"
 L["Tameable rare nearby: %s"] = "附近有可驯服的稀有怪：%s"

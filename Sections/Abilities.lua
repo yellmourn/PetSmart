@@ -470,7 +470,8 @@ ns.Pages.tamedetail = function(ctx)
 
     local spawnInfo = mob and ns.SpawnInfoFor(mob.name, mob.zone)
     local creature = mob and ns.FindTameableCreature and ns.FindTameableCreature(mob.name, mob.family, mob.zone)
-    if spawnInfo then
+    -- No Track button for a description-only entry (no map spot on record).
+    if spawnInfo and (spawnInfo.points or spawnInfo.isDungeon) then
         local tracked = Tame.IsTracking(mob.name)
         rareTrackBtn:SetState(tracked,
             nil,

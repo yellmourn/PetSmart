@@ -61,6 +61,7 @@ ns.ZONE_MAP_IDS = {
     ["Mulgore"]                = 87,
     ["Razorfen Kraul"]         = 2057, -- verify in-game (dungeon map id, low confidence)
     ["Redridge Mountains"]     = 44,
+    ["Riverglades"]            = 2548, -- Forever's own map (wowhead.com/forever)
     ["Searing Gorge"]          = 32,
     ["Silithus"]               = 81,
     ["Silverpine Forest"]      = 130,
