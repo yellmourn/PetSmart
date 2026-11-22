@@ -33,10 +33,11 @@ local FAMILY_DIET = {
     ["hyena"]        = { "Fruit", "Meat" },
     ["nether ray"]   = { "Meat" },
     ["owl"]          = { "Meat" },
+    ["bird of prey"] = { "Meat" }, -- Forever's name for Owls
+    ["core hound"]   = { "Meat" },
     ["raptor"]       = { "Meat" },
     ["ravager"]      = { "Meat" },
     ["scorpid"]      = { "Meat" },
-    ["serpent"]      = { "Fish", "Meat" },
     ["serpent"]      = { "Fish", "Meat" },
     ["spider"]       = { "Meat" },
     ["sporebat"]     = { "Bread", "Cheese", "Fruit", "Fungus" },
@@ -113,7 +114,8 @@ local KNOWN_NAMES = {
 
 local KEYWORDS = {
     { "Cheese", { "cheese", "bleu", "brie", "swiss", "sharp", "cheddar" } },
-    { "Fungus", { "mushroom", "mushrooms", "truffle", "fungus", "morel", "shroom" } },
+    { "Fungus", { "mushroom", "mushrooms", "truffle", "fungus", "morel", "shroom", "bolete", "mold",
+                  "forestshroom" } },
     { "Fruit",  { "apple", "stormapple", "banana", "melon", "berry", "berries", "pear", "grape", "grapes",
                   "peach", "pineapple", "plum", "cherry", "orange", "lemon", "fruit", "fig",
                   "coconut", "mango", "papaya", "pomegranate" } },
@@ -122,18 +124,23 @@ local KEYWORDS = {
     { "Fish",   { "fish", "salmon", "trout", "bass", "snapper", "mackerel", "cod", "eel",
                   "lobster", "catfish", "tuna", "herring", "sardine", "smallfish", "clam",
                   "oyster", "squid", "sunfish", "grouper", "flounder", "crab", "shrimp",
-                  "calamari", "seafood" } },
+                  "calamari", "seafood", "albacore", "yellowtail", "halibut", "fillet",
+                  "mightfish", "sagefish", "redgill", "armorfish" } },
     { "Meat",   { "meat", "steak", "jerky", "ham", "sausage", "chop", "chops", "rib", "ribs",
                   "haunch", "drumstick", "wing", "wings", "leg", "tenderloin", "venison",
                   "turkey", "chicken", "egg", "eggs", "brain", "liver", "heart", "flank",
                   "filet", "shank", "kabob", "kebab", "gizzard", "rump", "roast", "mutton",
-                  "lamb", "beef", "pork", "bacon", "stew", "spare", "tail", "tails" } },
+                  "lamb", "beef", "pork", "bacon", "stew", "spare", "tail", "tails", "quail",
+                  "brisket", "ribs", "sliders" } },
 }
 
 local function Classify(itemID, name)
     local override = PetSmartDB.custom[itemID]
     if override then return override end
     if KNOWN_ITEMS[itemID] then return KNOWN_ITEMS[itemID] end
+    -- The game's own food type for the item (Feeding/FoodItems.lua).
+    local known = ns.FOOD_ITEM_TYPES and ns.FOOD_ITEM_TYPES[itemID]
+    if known then return known end
     local lname = (name or ""):lower()
     if KNOWN_NAMES[lname] then return KNOWN_NAMES[lname] end
     for _, group in ipairs(KEYWORDS) do
@@ -155,6 +162,9 @@ local function Classify(itemID, name)
 end
 
 local function IsFoodItemClass(itemID)
+    -- Anything with a known food type is food, whatever its item class
+    -- (a few, like Dig Rat, are quest items).
+    if ns.FOOD_ITEM_TYPES and ns.FOOD_ITEM_TYPES[itemID] then return true end
     local classID, subID = ItemClassIDs(itemID)
     if not classID then return true end            -- unknown -> let name check decide
     if classID == 0 and subID == 5 then return true end  -- Consumable: Food & Drink

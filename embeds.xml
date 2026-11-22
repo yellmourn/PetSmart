@@ -74,6 +74,7 @@
 <Script file="Core\Init.lua"/>
 
 <!-- Pet feeding -->
+<Script file="Feeding\FoodItems.lua"/>
 <Script file="Feeding\Food.lua"/>
 
 <!-- Tracking state (needed by the Feed Pet icon's tooltip) -->
