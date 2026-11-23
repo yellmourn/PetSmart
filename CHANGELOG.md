@@ -1,5 +1,18 @@
 # PetSmart Changelog
 
+## v1.60.1n
+
+### Fixed
+- **Pet feeding:** the food panel now recognizes every food by its in-game food type, so fish, cheese, fungus and other foods show for every pet family that eats them.
+
+### WoW: Forever pet updates
+- **No longer tameable:** Olm the Wise and Broodmother Valraxx have been removed, following in-game hotfixes.
+- **Drywallow Snapper** now teaches Bite 5 instead of Claw 5.
+- **Renamed:** Greater Lava Spider is now Searing Lava Spider.
+- **New tameable creature:** Riding Wolf (Krol'dok Stronghold).
+- **Teacher pets:** about 20 new teachers, including Ghostfang Alpha, Hyjal Owl, Methuselah Crab and Rabid Shardtooth.
+- **Spawn notes and map pins** for Ghostfang Alpha, Old Rusthowl and Methuselah Crab, plus missing zones and levels for several creatures.
+
 ## v1.60.1m
 
 ### New: Pet search
