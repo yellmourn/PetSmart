@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("zhCN")
 if not L then return end
+L["Found at one spot in the north-west of the zone, west of the Cradle of Tranquility and north of Mourning's Rest, around 26, 42."] = "只出现在该区域西北部的一个地点，宁静摇篮以西、Mourning's Rest 以北，约 26, 42。"
+L["Found in an alcove above (north-east of) the Felblood Scar. To reach it, jump down from the Shrine of Aviana area above with some kind of slow fall."] = "位于 Felblood Scar 上方（东北方）的一处凹壁中。需要从艾维娜圣殿一带借助缓落效果跳下去才能到达。"
+L["Found along the south-eastern shore of the Swamp of Sorrows. It's a higher level than most creatures in the zone."] = "出没于悲伤沼泽东南海岸。等级高于该区域的大多数生物。"
+L["Found in the south-eastern part of Alcaz Prison."] = "位于 Alcaz Prison 的东南部。"
+L["Found roughly north of the eastern end of the Cauldron, and south of the middle of the Cauldron."] = "大致位于大锅东端以北，以及大锅中部以南。"
 L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "一只逃脱的实验体，外形与腐化之猫相同。先在 Felblood Scar 的邪能池周围（约 47, 75）点击骨堆，获得 Corrupted Cat Figurine（它可能出现在多个地点）。然后点击约 26.8, 63.7 处发光的 Lonely Lantern 召唤 Ta'shkal 并驯服它。它与 Broken Tooth 是仅有的两只拥有 Faster Attack VII 的猫。"
 L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "一只精英海龟，出没于该区域北部的一段河流，在 59, 30 附近的瀑布脚下。驯服后仍保留它的绿色毒云。"
 L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "它的 Charge 4 目前有错误：驯服后该技能没有说明且无法使用，解散后再召唤，野猪会完全失去这个技能。"

@@ -5,6 +5,9 @@ if not ns.IS_FOREVER then return end
 --------------------------------------------------------------------------
 -- Rare/unique tameable pet spawns.
 --
+-- (Olm the Wise was taken out on 2026-11-22: Petopia Forever notes he
+-- can't be tamed on Forever, as you can't be at war with the Cenarion Circle.)
+--
 -- List of which 66 rares to include: Petopia Classic's rare-pet index
 -- (https://www.wow-petopia.com/classic/browse.php?id=rare).
 -- Per-rare spawn coordinates and descriptions: wowhead.com and
@@ -258,9 +261,6 @@ local raw = {
       description = "A rare hyena prowling the Blasted Lands." },
 
     -- Owls
-    { name = "Olm the Wise", family = "Owl", level = "52", zone = "Felwood",
-      x = 55.0, y = 45.0, -- approximate (between Irontree Woods and Talonbranch Glade)
-      description = "A spectral-looking rare owl that flies between Irontree Woods and Talonbranch Glade in Felwood; taming it briefly angers the Cenarion Circle but costs no reputation." },
     { name = "Nightscreech", family = "Owl", level = "10", zone = "Teldrassil",
       x = 46.8, y = 32.0,
       description = "A rare owl haunting the moonlit boughs of Teldrassil, whose piercing shriek carries long after it's gone quiet again." },
@@ -460,7 +460,6 @@ local RARE_LOCATION_OVERRIDES = {
     ["Old Cliff Jumper"] = { mapID = 1425, x = 19.66, y = 52.32 }, -- 17 pts
     ["Old Grizzlegut"] = { mapID = 1444, x = 63.88, y = 52.38 }, -- 12 pts
     ["Old Vicejaw"] = { mapID = 1421, x = 53.44, y = 58.95 }, -- 22 pts
-    ["Olm the Wise"] = { mapID = 1448, x = 55.62, y = 17.98 }, -- 11 pts
     ["Rak'Shiri"] = { mapID = 1452, x = 51.36, y = 13.58 }, -- 25 pts
     ["Ravage"] = { mapID = 1419, x = 54.41, y = 36.41 }, -- 23 pts
     ["Razormaw Matriarch"] = { mapID = 1437, x = 68.89, y = 30.29 }, -- 9 pts

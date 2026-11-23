@@ -79,6 +79,17 @@ local function TeacherFor(c, familyName)
             if gap <= 5 and (not bestGap or gap < bestGap) then best, bestGap = t, gap end
         end
     end
+    -- Two same-named creatures of one family a few levels apart (the two
+    -- Searing Lava Spiders): the teacher belongs only to the closer one.
+    if best then
+        local tl = LowLevel(best.mob.levels)
+        for _, other in ipairs(ns.TAMEABLE_CREATURES and ns.TAMEABLE_CREATURES[familyName] or {}) do
+            if other ~= c and other.name == c.name and tl then
+                local ol = LowLevel(other.level)
+                if ol and math.abs(ol - tl) < bestGap then return nil end
+            end
+        end
+    end
     return best
 end
 
@@ -326,7 +337,7 @@ ns.Pages.creaturedetail = function(ctx)
     -- Track button: a rare tracks like it does on Rare Pet Spawns; a
     -- teacher pet with known spawn areas tracks like it does from the
     -- Abilities Index.
-    local spawnInfo = (not rare) and teacher and ns.SpawnInfoFor(c.name, c.zone)
+    local spawnInfo = (not rare) and ns.SpawnInfoFor(c.name, c.zone)
     if rare then
         rareTrackBtn:SetState(IsTrackedRare(rare) or false, nil, function()
             SetTrackedRare(rare)

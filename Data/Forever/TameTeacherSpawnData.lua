@@ -100,6 +100,18 @@ local raw = {
       extraPoints = { { x = 47.0, y = 75.0, r = 3.0 } },
       description = "An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII." },
 
+    -- wow-petopia.com/forever notes and wowhead.com/forever spawn maps (2026-11-22).
+    { name = "Ghostfang Alpha", zone = "Mount Hyjal", x = 25.6, y = 42.0, radius = 2.0,
+      description = "Found at one spot in the north-west of the zone, west of the Cradle of Tranquility and north of Mourning's Rest, around 26, 42." },
+    { name = "Old Rusthowl", zone = "Mount Hyjal", x = 54.2, y = 68.6, radius = 2.5,
+      description = "Found in an alcove above (north-east of) the Felblood Scar. To reach it, jump down from the Shrine of Aviana area above with some kind of slow fall." },
+    { name = "Methuselah Crab", zone = "Swamp of Sorrows", x = 79.0, y = 94.0, radius = 4.0,
+      description = "Found along the south-eastern shore of the Swamp of Sorrows. It's a higher level than most creatures in the zone." },
+    { name = "Slavering Hound", zone = "Alcaz Prison", dungeon = true,
+      description = "Found in the south-eastern part of Alcaz Prison." },
+    { name = "Famished Blackworg", zone = "Searing Gorge",
+      description = "Found roughly north of the eastern end of the Cauldron, and south of the middle of the Cauldron." },
+
     -- Riverglades (wow-petopia.com/forever and wowhead.com/forever, 2026-11-19).
     { name = "Krek the Noxious", zone = "Riverglades", x = 59.3, y = 30.8, radius = 3.0,
       description = "An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed." },
