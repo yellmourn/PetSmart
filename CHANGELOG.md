@@ -1,5 +1,13 @@
 # PetSmart Changelog
 
+## v1.60.1o
+
+### WoW: Forever pet updates
+- **New tameable creatures:** 15 raptors and gorillas in The Shaper's Terrace, plus Venomhide Ravasaur and the rare Zopilote.
+- **Teacher pets:** about a dozen new or corrected teachers, including Gargantuan Plaguebat, Mirrorscale and Child of Tortolla.
+- **Gharrik:** its page now explains how to summon it.
+- **Spawn notes and map pins** for several creatures.
+
 ## v1.60.1n
 
 ### Fixed
