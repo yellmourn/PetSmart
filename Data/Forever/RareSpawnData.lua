@@ -160,6 +160,9 @@ local raw = {
     { name = "Greater Firebird", family = "Carrion Bird", level = "46", zone = "Tanaris",
       x = 50.0, y = 45.0, -- approximate
       description = "A rare two-headed vulture wreathed in fire, found in Tanaris, using Crimson Fury and Fire Nova attacks." },
+    { name = "Zopilote", family = "Carrion Bird", level = "43 Elite", zone = "Tanaris",
+      x = 43.0, y = 33.0, points = { { x = 43.0, y = 33.0 }, { x = 49.5, y = 36.5 }, { x = 56.0, y = 40.0 } }, -- wow-petopia.com/forever, 2026-11-26
+      description = "A rare elite vulture that can appear in the area just south of Gadgetzan, anywhere from around 43, 33 in the south-west to 56, 40 in the south-east." },
     { name = "Zaricotl", family = "Carrion Bird", level = "55 Elite", zone = "Badlands",
       x = 57.0, y = 52.0,
       description = "A rare white buzzard, one of the rarest colorations in the Badlands, found circling the central part of the zone." },

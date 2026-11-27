@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("zhTW")
 if not L then return end
+L["Summoned during a quest chain. It starts when a Primitive Drawing drops from one of the Badlands ogres, which begins Terror of the Desert Skies and sends you to Hemet Nesingwary in Stranglethorn Vale. His follow-up quest of the same name sends you back to the Badlands to summon Gharrik at a Large Nest north-east of Camp Cagg, around 22, 67. Taming her still completes the quest. If you can't get the quest, another player on it can summon her for you."] = "在一系列任務中被召喚。荒蕪之地的巨魔掉落 Primitive Drawing 後開始任務 Terror of the Desert Skies，引你去荊棘谷找赫米特·奈辛瓦里。他的同名後續任務讓你回到荒蕪之地，在卡格營地東北方（約 22, 67）的 Large Nest 召喚 Gharrik。馴服她同樣會完成任務。如果你接不到任務，可以請有這個任務的其他玩家幫你召喚。"
+L["Found in the east of Un'Goro Crater. It currently loses Savage Rend once dismissed, because its level is too low to keep it, but you can learn the ability from it before then."] = "位於安戈洛環形山東部。目前解散後會失去 Savage Rend，因為牠的等級太低無法保留，但你可以在此之前學會這個技能。"
+L["Found in the west of the zone, north and south of the road to the Western Plaguelands."] = "位於該區域西部，通往西瘟疫之地的道路南北兩側。"
+L["Found around the bridge at about 49, 46 on the Forgotten Coast."] = "位於被遺忘海岸約 49, 46 的橋附近。"
+L["A rare elite vulture that can appear in the area just south of Gadgetzan, anywhere from around 43, 33 in the south-west to 56, 40 in the south-east."] = "一隻稀有精英禿鷹，可能出現在加基森正南方，從西南的 43, 33 到東南的 56, 40 之間。"
 L["Found at one spot in the north-west of the zone, west of the Cradle of Tranquility and north of Mourning's Rest, around 26, 42."] = "只出現在該區域西北部的一個地點，寧靜搖籃以西、Mourning's Rest 以北，約 26, 42。"
 L["Found in an alcove above (north-east of) the Felblood Scar. To reach it, jump down from the Shrine of Aviana area above with some kind of slow fall."] = "位於 Felblood Scar 上方（東北方）的一處凹壁中。需要從艾維娜聖壇一帶藉助緩落效果跳下去才能到達。"
 L["Found along the south-eastern shore of the Swamp of Sorrows. It's a higher level than most creatures in the zone."] = "出沒於悲傷沼澤東南海岸。等級高於該區域的大多數生物。"
@@ -10,7 +15,6 @@ L["Found in the south-eastern part of Alcaz Prison."] = "位於 Alcaz Prison 的
 L["Found roughly north of the eastern end of the Cauldron, and south of the middle of the Cauldron."] = "大致位於大鍋東端以北，以及大鍋中部以南。"
 L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "一隻逃脫的實驗體，外形與腐化之貓相同。先在 Felblood Scar 的魔化池周圍（約 47, 75）點擊骨堆，取得 Corrupted Cat Figurine（它可能出現在多個地點）。然後點擊約 26.8, 63.7 處發光的 Lonely Lantern 召喚 Ta'shkal 並馴服它。它與 Broken Tooth 是僅有的兩隻擁有 Faster Attack VII 的貓。"
 L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "一隻精英海龜，出沒於該區域北部的一段河流，在 59, 30 附近的瀑布腳下。馴服後仍保留牠的綠色毒雲。"
-L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "牠的 Charge 4 目前有錯誤：馴服後該技能沒有說明且無法使用，解散後再召喚，野豬會完全失去這個技能。"
 L["Only appears when summoned during the quest Helping Hands."] = "只有在任務 Helping Hands 中被召喚時才會出現。"
 L["Search by name or family"] = "依名稱或種類搜尋"
 L["Families"] = "種類"

@@ -151,6 +151,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Uhk'loc","Gorilla","52","Un'Goro Crater"},
             {"Diseased Wolf","Wolf","53-54","Western Plaguelands"},
             {"Plague Lurker","Spider","54-55","Western Plaguelands"},
+            {"Child of Tortolla","Turtle","57-58","Mount Hyjal"},
         },
         [8] = {
             {"Bloodaxe Worg","Wolf","56-57","Blackrock Spire (Dungeon)"},
@@ -380,7 +381,6 @@ ns.PETOPIA_TAME_MOBS = {
             {"Nightsaber Guardian","Cat","57-59","Mount Hyjal"},
         },
         [3] = {
-            {"Broodwidow","Spider","16","Ruins of Lordaeron (Dungeon)"},
             {"Vilebranch Raiding Wolf","Wolf","50-51","The Hinterlands"},
             {"Grunter","Boar","50","Blasted Lands"},
             {"Ravage","Hyena","51","Blasted Lands"},
@@ -408,6 +408,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Vale Screecher","Wind Serpent","41-43","Feralas"},
             {"Roc","Carrion Bird","42-43","Tanaris"},
             {"Fire Roc","Carrion Bird","43-45","Tanaris"},
+            {"Zopilote","Carrion Bird","43","Tanaris"},
             {"Rogue Vale Screecher","Wind Serpent","44-46","Feralas"},
             {"Greater Firebird","Carrion Bird","46","Tanaris"},
             {"Searing Roc","Carrion Bird","47-49","Tanaris"},
@@ -506,6 +507,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Rogue Vale Screecher","Wind Serpent","44-46","Feralas"},
         },
         [5] = {
+            {"Mirrorscale","Wind Serpent","48","Feralas"},
             {"Hakkari Sapper","Wind Serpent","49-50","The Temple of Atal'Hakkar (Dungeon)"},
             {"Hakkari Frostwing","Wind Serpent","49-50","The Temple of Atal'Hakkar (Dungeon)"},
             {"Arash-ethis","Wind Serpent","49","Feralas"},
@@ -565,8 +567,12 @@ ns.PETOPIA_TAME_MOBS = {
         [3] = {
             {"Highland Fleshstalker","Raptor","36-37","Arathi Highlands"},
             {"Bloodfen Screecher","Raptor","36-37","Dustwallow Marsh"},
+            {"Young Jungle Stalker","Raptor","36-37","Stranglethorn Vale"},
             {"Bloodfen Scytheclaw","Raptor","37-38","Dustwallow Marsh"},
             {"Jungle Stalker","Raptor","40-41","Stranglethorn Vale"},
+        },
+        [5] = {
+            {"Venomhide Ravasaur","Raptor","50-51","Un'Goro Crater"},
         },
     },
 
@@ -617,10 +623,14 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [3] = {
             {"Roosting Duskbat","Bat","37-38","Riverglades"},
+            {"Shrike Bat","Bat","38-39","Uldaman (Dungeon)"},
         },
         [4] = {
             {"Blind Screecher","Bat","41-42","Shen'dralas"},
             {"Plaguebat","Bat","53-55","Eastern Plaguelands"},
+        },
+        [5] = {
+            {"Gargantuan Plaguebat","Bat","60","Eastern Plaguelands"},
         },
     },
 
@@ -638,9 +648,13 @@ ns.PETOPIA_TAME_MOBS = {
             {"Salt Flats Vulture","Carrion Bird","32-34","Thousand Needles"},
             {"Dread Ripper","Carrion Bird","39-40","Desolace"},
             {"Gharrik","Carrion Bird","40","Badlands"},
+            {"Zopilote","Carrion Bird","43","Tanaris"},
         },
         [3] = {
             {"Carrion Vulture","Carrion Bird","50-52","Western Plaguelands"},
+        },
+        [4] = {
+            {"Zaricotl","Carrion Bird","55","Badlands"},
         },
     },
 
@@ -653,6 +667,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Snapjaw","Turtle","30-31","Hillsbrad Foothills"},
             {"Cranky Benj","Turtle","32","Alterac Mountains"},
             {"Krek the Noxious","Turtle","42","Riverglades"},
+            {"Child of Tortolla","Turtle","57-58","Mount Hyjal"},
         },
     },
 
@@ -793,6 +808,7 @@ ns.PETOPIA_TAME_MOBS = {
         },
         [3] = {
             {"Blisterpaw Hyena","Hyena","44-45","Tanaris"},
+            {"Slavering Hound","Hyena","47","Alcaz Prison"},
         },
         [5] = {
             {"Snickerfang Matriarch","Hyena","60","Blasted Lands"},
@@ -808,6 +824,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Deepmoss Hatchling","Spider","14","Stonetalon Mountains"},
             {"Deep Widow","Spider","15-16","Ruins of Lordaeron (Dungeon)"},
             {"Spider","Spider","15-16","Ruins of Lordaeron (Dungeon)"},
+            {"Broodwidow","Spider","16","Ruins of Lordaeron"},
             {"Deepmoss Venomspitter","Spider","17-18","Stonetalon Mountains"},
             {"Pygmy Venom Web Spider","Spider","18-19","Duskwood"},
             {"Venom Web Spider","Spider","19-20","Duskwood"},
@@ -828,6 +845,7 @@ ns.PETOPIA_TAME_MOBS = {
             {"Darkmist Recluse","Spider","36-37","Dustwallow Marsh"},
             {"Darkfang Venomspitter","Spider","37-38","Dustwallow Marsh"},
             {"Venomweb Spitter","Spider","37-38","Riverglades"},
+            {"Giant Darkfang Spider","Spider","40-41","Dustwallow Marsh"},
         },
         [4] = {
             {"Searing Lava Spider","Spider","47-49","Searing Gorge"},

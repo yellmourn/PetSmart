@@ -3,6 +3,11 @@ local ADDON_NAME, ns = ...
 -- corrections are welcome. Any line left out shows in English.
 local L = ns.NewLocale("koKR")
 if not L then return end
+L["Summoned during a quest chain. It starts when a Primitive Drawing drops from one of the Badlands ogres, which begins Terror of the Desert Skies and sends you to Hemet Nesingwary in Stranglethorn Vale. His follow-up quest of the same name sends you back to the Badlands to summon Gharrik at a Large Nest north-east of Camp Cagg, around 22, 67. Taming her still completes the quest. If you can't get the quest, another player on it can summon her for you."] = "연계 퀘스트 도중 소환됩니다. 황야의 땅 오우거에게서 Primitive Drawing이 떨어지면 Terror of the Desert Skies가 시작되어 가시덤불 골짜기의 헤메트 네싱워리에게 가게 됩니다. 그의 같은 이름 후속 퀘스트를 받으면 황야의 땅으로 돌아가 캐그 야영지 북동쪽(22, 67 근처)의 Large Nest에서 Gharrik을 소환합니다. 길들여도 퀘스트는 완료됩니다. 퀘스트를 받을 수 없다면 퀘스트를 가진 다른 플레이어가 대신 소환해 줄 수 있습니다."
+L["Found in the east of Un'Goro Crater. It currently loses Savage Rend once dismissed, because its level is too low to keep it, but you can learn the ability from it before then."] = "운고로 분화구 동쪽에 있습니다. 현재는 레벨이 낮아 소환 해제하면 Savage Rend를 잃지만, 그 전에 이 능력을 배울 수 있습니다."
+L["Found in the west of the zone, north and south of the road to the Western Plaguelands."] = "지역 서쪽, 서부 역병지대로 가는 길의 북쪽과 남쪽에 있습니다."
+L["Found around the bridge at about 49, 46 on the Forgotten Coast."] = "잊혀진 해안의 49, 46 근처 다리 주변에 있습니다."
+L["A rare elite vulture that can appear in the area just south of Gadgetzan, anywhere from around 43, 33 in the south-west to 56, 40 in the south-east."] = "가젯잔 바로 남쪽, 남서쪽 43, 33부터 남동쪽 56, 40 사이 어디에서나 나타날 수 있는 희귀 정예 독수리입니다."
 L["Found at one spot in the north-west of the zone, west of the Cradle of Tranquility and north of Mourning's Rest, around 26, 42."] = "지역 북서쪽, 평온의 요람 서쪽이자 Mourning's Rest 북쪽의 한 곳(26, 42 근처)에서 볼 수 있습니다."
 L["Found in an alcove above (north-east of) the Felblood Scar. To reach it, jump down from the Shrine of Aviana area above with some kind of slow fall."] = "Felblood Scar 위쪽(북동쪽)의 움푹 들어간 곳에 있습니다. 아비아나의 성소 쪽에서 느린 낙하 효과를 써서 뛰어내려야 닿을 수 있습니다."
 L["Found along the south-eastern shore of the Swamp of Sorrows. It's a higher level than most creatures in the zone."] = "슬픔의 늪 남동쪽 해안을 따라 있습니다. 지역 대부분의 생물보다 레벨이 높습니다."
@@ -10,7 +15,6 @@ L["Found in the south-eastern part of Alcaz Prison."] = "Alcaz Prison 남동쪽 
 L["Found roughly north of the eastern end of the Cauldron, and south of the middle of the Cauldron."] = "대략 가마솥 동쪽 끝의 북쪽과 가마솥 중앙의 남쪽에 있습니다."
 L["An escaped experiment that shares its look with the Corrupted Cat. First get a Corrupted Cat Figurine by clicking the bone piles around the fel pools in the Felblood Scar, around 47, 75 (it can turn up in several spots there). Then click the glowing Lonely Lantern at about 26.8, 63.7 to summon Ta'shkal and tame it. Along with Broken Tooth, it's one of only two cats with Faster Attack VII."] = "타락한 고양이의 모습을 한 탈출한 실험체입니다. 먼저 Felblood Scar의 지옥 웅덩이 주변(47, 75 근처)에 있는 뼈 더미를 클릭해 Corrupted Cat Figurine을 얻으세요(여러 곳에서 나올 수 있습니다). 그런 다음 26.8, 63.7 근처의 빛나는 Lonely Lantern을 클릭해 Ta'shkal을 소환하고 길들이세요. Broken Tooth와 함께 Faster Attack VII을 가진 단 두 고양이 중 하나입니다."
 L["An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed."] = "지역 북쪽 강줄기, 59, 30 근처 폭포 아래에서 찾을 수 있는 정예 거북입니다. 길들인 후에도 초록색 독구름을 유지합니다."
-L["Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again."] = "현재 Charge 4에 버그가 있습니다. 길들인 후 능력에 설명이 없고 사용할 수 없으며, 소환을 해제했다가 다시 부르면 멧돼지가 능력을 완전히 잃습니다."
 L["Only appears when summoned during the quest Helping Hands."] = "Helping Hands 퀘스트 도중 소환될 때만 나타납니다."
 L["Search by name or family"] = "이름 또는 계열로 검색"
 L["Families"] = "계열"

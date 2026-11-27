@@ -112,11 +112,20 @@ local raw = {
     { name = "Famished Blackworg", zone = "Searing Gorge",
       description = "Found roughly north of the eastern end of the Cauldron, and south of the middle of the Cauldron." },
 
+    -- wow-petopia.com/forever notes (2026-11-26).
+    { name = "Gharrik", zone = "Badlands", x = 22.0, y = 67.0, radius = 2.0,
+      description = "Summoned during a quest chain. It starts when a Primitive Drawing drops from one of the Badlands ogres, which begins Terror of the Desert Skies and sends you to Hemet Nesingwary in Stranglethorn Vale. His follow-up quest of the same name sends you back to the Badlands to summon Gharrik at a Large Nest north-east of Camp Cagg, around 22, 67. Taming her still completes the quest. If you can't get the quest, another player on it can summon her for you." },
+    { name = "Venomhide Ravasaur", zone = "Un'Goro Crater",
+      description = "Found in the east of Un'Goro Crater. It currently loses Savage Rend once dismissed, because its level is too low to keep it, but you can learn the ability from it before then." },
+    { name = "Gargantuan Plaguebat", zone = "Eastern Plaguelands", x = 11.3, y = 67.5, radius = 2.5,
+      extraPoints = { { x = 18.3, y = 51.5 }, { x = 25.7, y = 59.9 }, { x = 31.1, y = 58.4 }, { x = 35.6, y = 61.1 } },
+      description = "Found in the west of the zone, north and south of the road to the Western Plaguelands." },
+    { name = "Mirrorscale", zone = "Feralas", x = 49.0, y = 46.0, radius = 2.0,
+      description = "Found around the bridge at about 49, 46 on the Forgotten Coast." },
+
     -- Riverglades (wow-petopia.com/forever and wowhead.com/forever, 2026-11-19).
     { name = "Krek the Noxious", zone = "Riverglades", x = 59.3, y = 30.8, radius = 3.0,
       description = "An elite turtle found along a stretch of river in the north of the zone, around the base of a waterfall near 59, 30. He keeps his green poison cloud after being tamed." },
-    { name = "Young Paletusk", zone = "Riverglades",
-      description = "Its Charge 4 is currently bugged: after taming it the ability has no description and can't be used, and the boar loses it altogether once dismissed and summoned again." },
     { name = "Hungry Crocolisk", zone = "Riverglades",
       description = "Only appears when summoned during the quest Helping Hands." },
 
